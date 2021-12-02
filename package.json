@@ -18,12 +18,18 @@
     "url": "https://github.com/rustybrooks/pgexplorer/issues"
   },
   "homepage": "https://github.com/rustybrooks/pgexplorer#readme",
-  "dependendices": {
-    "chalk": "latest",
-    "yargs": "latest",
-    "pg": "latest"
-  },
   "devDependencies": {
-    "typescript": "^4.5.2"
+    "@types/chalk": "latest",
+    "@types/node": "latest",
+    "@types/yargs": "latest",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-airbnb-base": "0.0.1-security",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "chalk": "latest",
+    "dotenv": "latest",
+    "pg": "latest",
+    "yargs": "latest"
   }
 }
