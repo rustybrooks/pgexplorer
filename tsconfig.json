@@ -12,7 +12,7 @@
     "sourceMap": true
   },
   "include": [
-    "index.ts",
+    "bin",
     "src"
   ],
   "exclude": ["node_modules", "**/*.spec.ts"]

@@ -1,20 +1,14 @@
-// require("dotenv").config({ path: env });
-
-const { Client } = require('pg')
+import { Client } from 'pg';
 
 let client = null;
 
 export async function factory() {
     if (client === null) {
-        console.log("connect")
-        const client = new Client()
-        await client.connect()
-        console.log("done connect")
+        console.log('connect');
+        client = new Client();
+        await client.connect();
+        console.log('done connect');
     }
-
-    return client
+    console.log('retclient', client);
+    return client;
 }
-
-
-
-
