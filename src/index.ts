@@ -23,6 +23,9 @@ yarg.option("env", {
 console.log(yarg.argv)
 require("dotenv").config({ path: yarg.argv['env'] });
 
-client = factory()
-const res = client.query('SELECT NOW()').then(x => console.log("query", x))
-client.end().then(x => console.log(done, x))
+factory().then(client => {
+    const res = client.query('SELECT NOW()').then(x => {
+        console.log("query", x)
+        client.end().then(x => console.log("done", x))
+    })
+})
