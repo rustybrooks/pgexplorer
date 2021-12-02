@@ -4,6 +4,8 @@ import chalk from "chalk";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
+import { factory } from "./db";
+
 const yarg = yargs(hideBin(process.argv));
 
 yarg.usage("Usage: <subcommand>");
@@ -20,3 +22,7 @@ yarg.option("env", {
 
 console.log(yarg.argv)
 require("dotenv").config({ path: yarg.argv['env'] });
+
+client = factory()
+const res = client.query('SELECT NOW()').then(x => console.log("query", x))
+client.end().then(x => console.log(done, x))
