@@ -1,2 +1,2 @@
 # pgexplorer
-Expore postgres stuff
+Explore postgres stuff
