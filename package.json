@@ -18,6 +18,11 @@
     "url": "https://github.com/rustybrooks/pgexplorer/issues"
   },
   "homepage": "https://github.com/rustybrooks/pgexplorer#readme",
+  "dependendices": {
+    "chalk": "latest",
+    "yargs": "latest",
+    "pg": "latest"
+  },
   "devDependencies": {
     "typescript": "^4.5.2"
   }
