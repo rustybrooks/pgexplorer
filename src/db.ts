@@ -63,7 +63,7 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   `;
   const constraints = await SQL.select(query, bindvars);
 
-  const out = await Promise.all(
+  return Promise.all(
     constraints.rows.map(async row => {
       const trow = { ...row };
       trow.attribute_constraint_columns = await Promise.all(
@@ -73,9 +73,7 @@ export async function tableConstraints(table: string = null, schema = 'public') 
           return r.attname;
         }),
       );
-      console.log('trow', trow.attribute_constraint_columns);
       return trow;
     }),
   );
-  return out;
 }
