@@ -9,7 +9,7 @@ import * as db from '../src/db';
 
 async function main() {
   const res = await db.tableConstraints();
-  console.table(res.rows);
+  console.table(res);
 }
 
 const yarg = yargs(hideBin(process.argv));
@@ -23,9 +23,6 @@ yarg.option('env', {
   type: 'string',
 });
 
-// yarg.parse();
-
-console.log(yarg.argv);
 // eslint-disable-next-line @typescript-eslint/dot-notation
 dotenv.config({ path: yarg.argv['env'] });
 

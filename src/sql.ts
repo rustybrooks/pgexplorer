@@ -31,7 +31,6 @@ export class SQLBase {
 
     const params = new URL(writeUrl);
 
-    console.log(writeUrl);
     const config = {
       user: params.username,
       password: params.password,
@@ -44,7 +43,6 @@ export class SQLBase {
       // connectionTimeoutMillis: 1000, // return an error after 1 second if connection could not be established
       maxUses: 1000, // close (and replace) a connection after it has been used 7500 times (see below for discussion)
     };
-    console.log(config);
     this.pool = new pg.Pool(config);
   }
 
@@ -59,7 +57,7 @@ export class SQLBase {
   }
 
   inClause(inList: any[]) {
-    return inList.forEach((el, i) => `\$${i + 1}`).join(',');
+    return inList.map((el, i) => `\$${i + 1}`).join(',');
   }
 
   async select(query, bindvars) {
@@ -75,14 +73,14 @@ export class SQLBase {
     const client = await this.pool.connect();
     try {
       const res = await client.query(query, bindvars);
+      console.log('res', res);
+      if (res.rows.length !== 1) {
+        throw new Error('Expected exactly 1 row, got res.rows.length');
+      }
+      return res.rows[0];
     } finally {
       client.release();
     }
-
-    if (res.rows.length !== 1) {
-      throw 'Expected exactly 1 row, got res.rows.length';
-    }
-    return res.rows[0];
   }
 }
 

@@ -15,16 +15,20 @@ export function setupDb() {
 
 const attributeMap = {};
 export async function lookupAttribute(tableName, attributeKey) {
-  if (!(attributeKey in attributeMap)) {
+  const attrKey = `${tableName}:${attributeKey}`;
+  console.log(attrKey);
+  if (!(attrKey in attributeMap)) {
     const query = `
         select *
         from pg_attribute
         where rename = $1
           and attkey = $2
     `;
-    const res = SQL.selectOne(query, [tableName, attributeKey]);
-    attributeMap[[tableName, attributeKey]] = res;
+    const res = await SQL.selectOne(query, [tableName, attributeKey]);
+    console.log(attrKey, res);
+    attributeMap[attrKey] = res;
   }
+  return attributeMap[attrKey];
 }
 
 export async function tables(schema = 'public') {
@@ -62,10 +66,15 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   const out = [];
   constraints.rows.forEach(row => {
     const trow = { ...row };
-    const attrs = row.constraint_attribute_keys.map(a => {
-      trow.attribute_constraint_columns = attrs.map(a => a.connname);
-      out.push(trow);
-    });
+    trow.attribute_constraint_columns = Promise.all(
+      row.constraint_attribute_keys.map(async a => {
+        const r = await lookupAttribute(row.constraint_table, a);
+        console.log('after await', r);
+        return r.conname;
+      }),
+    );
+    console.log('trow', trow.attribute_constraint_columns);
+    out.push(trow);
   });
   return out;
 }
