@@ -23,8 +23,7 @@ async function lookupAttribute(tableId, attributeKey) {
         where attrelid = $1
           and attnum = $2
     `;
-    const res = await SQL.selectOne(query, [tableId, attributeKey]);
-    attributeMap[attrKey] = res;
+    attributeMap[attrKey] = await SQL.selectOne(query, [tableId, attributeKey]);
   }
   return attributeMap[attrKey];
 }

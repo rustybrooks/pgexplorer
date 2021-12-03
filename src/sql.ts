@@ -19,16 +19,7 @@ interface SQLBaseParams {
 export class SQLBase {
   pool = null;
 
-  constructor(paramsx: SQLBaseParams) {
-    let { writeUrl, readUrls, poolSize, writerIsReader } = paramsx;
-    readUrls = readUrls || [];
-    if (writerIsReader) {
-      readUrls.push(writeUrl);
-    }
-    poolSize = poolSize || 5;
-    writeUrl = writeUrl || '';
-    writerIsReader = writerIsReader || false;
-
+  constructor({ writeUrl, poolSize = 5 }: SQLBaseParams) {
     const params = new URL(writeUrl);
 
     const config = {
@@ -57,15 +48,13 @@ export class SQLBase {
   }
 
   inClause(inList: any[]) {
-    return inList.map((el, i) => `\$${i + 1}`).join(',');
+    return inList.map((el, i) => `$${i + 1}`).join(',');
   }
 
   async select(query, bindvars) {
     const client = await this.pool.connect();
     try {
       return (await client.query(query, bindvars)).rows;
-    } catch (error) {
-      console.log(error);
     } finally {
       client.release();
     }
@@ -85,13 +74,13 @@ export class SQLBase {
   }
 }
 
-export function sqlFactory(params: SQLBaseParams) {
-  if (!(params.sqlKey in sqlObjects)) {
-    //    writeUrl = writeUrl.formatUnicorn({database, password})
-    //
-    //    readUrls = readUrls.map(u => u.formatUnicorn({database, password}))
-    sqlObjects[params.sqlKey] = new SQLBase(params);
+export function sqlFactory({ writeUrl, poolSize = 5, sqlKey }: SQLBaseParams) {
+  if (!(sqlKey in sqlObjects)) {
+    sqlObjects[sqlKey] = new SQLBase({
+      writeUrl,
+      poolSize,
+    });
   }
 
-  return sqlObjects[params.sqlKey];
+  return sqlObjects[sqlKey];
 }
