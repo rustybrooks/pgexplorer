@@ -13,21 +13,18 @@ export function setupDb() {
   return SQL;
 }
 
-const attributeLookup = {};
-export async function lookupAttribute(attribute_keys) {
-  const to_lookup = attribute_keys.filter(k => !(k in attributeLookup );
-
-  const query = `
-      select * 
-      from pg_attribute
-      where attkey in (${SQL.inClause(to_lookup)})
-  `;
-  const res = SQL.select(query, to_lookup);
-  res.rows.foreach(row => {
-    attributeLookup[row.attkey] = row;
-  });
-
-  return attribute_keys.forEach(k => attributeLookup k]);
+const attributeMap = {};
+export async function lookupAttribute(tableName, attributeKey) {
+  if (!(attributeKey in attributeMap)) {
+    const query = `
+        select *
+        from pg_attribute
+        where rename = $1
+          and attkey = $2
+    `;
+    const res = SQL.selectOne(query, [tableName, attributeKey]);
+    attributeMap[[tableName, attributeKey]] = res;
+  }
 }
 
 export async function tables(schema = 'public') {
@@ -62,8 +59,13 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   `;
   const constraints = await SQL.select(query, bindvars);
 
-  const attrkeys = constraints.rows.map(row => row.constraint_attribute_keys).flat();
-  const attrs = lookupAttribute(attrkeys);
-
-  // return constraints;
+  const out = [];
+  constraints.rows.forEach(row => {
+    const trow = { ...row };
+    const attrs = row.constraint_attribute_keys.map(a => {
+      trow.attribute_constraint_columns = attrs.map(a => a.connname);
+      out.push(trow);
+    });
+  });
+  return out;
 }

@@ -65,12 +65,24 @@ export class SQLBase {
   async select(query, bindvars) {
     const client = await this.pool.connect();
     try {
-      console.log(query);
-      console.log(bindvars);
       return client.query(query, bindvars);
     } finally {
       client.release();
     }
+  }
+
+  async selectOne(query, bindvars) {
+    const client = await this.pool.connect();
+    try {
+      const res = await client.query(query, bindvars);
+    } finally {
+      client.release();
+    }
+
+    if (res.rows.length !== 1) {
+      throw 'Expected exactly 1 row, got res.rows.length';
+    }
+    return res.rows[0];
   }
 }
 
