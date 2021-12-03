@@ -14,18 +14,17 @@ export function setupDb() {
 }
 
 const attributeMap = {};
-export async function lookupAttribute(tableName, attributeKey) {
-  const attrKey = `${tableName}:${attributeKey}`;
+export async function lookupAttribute(tableId, attributeKey) {
+  const attrKey = `${tableId}:${attributeKey}`;
   console.log(attrKey);
   if (!(attrKey in attributeMap)) {
     const query = `
         select *
         from pg_attribute
-        where rename = $1
-          and attkey = $2
+        where attrelid = $1
+          and attnum = $2
     `;
-    const res = await SQL.selectOne(query, [tableName, attributeKey]);
-    console.log(attrKey, res);
+    const res = await SQL.selectOne(query, [tableId, attributeKey]);
     attributeMap[attrKey] = res;
   }
   return attributeMap[attrKey];
@@ -53,9 +52,10 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   const query = `
     SELECT 
            rel.relname as constraint_table,
-           conname as constraint_name, 
-           contype as constraint_type, 
-           conkey as constraint_attribute_keys
+           con.conrelid as constraint_table_id,
+           con.conname as constraint_name, 
+           con.contype as constraint_type, 
+           con.conkey as constraint_attribute_keys
     FROM pg_catalog.pg_constraint con
     INNER JOIN pg_catalog.pg_class rel ON rel.oid = con.conrelid
     INNER JOIN pg_catalog.pg_namespace nsp ON nsp.oid = connamespace
@@ -63,18 +63,19 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   `;
   const constraints = await SQL.select(query, bindvars);
 
-  const out = [];
-  constraints.rows.forEach(row => {
-    const trow = { ...row };
-    trow.attribute_constraint_columns = Promise.all(
-      row.constraint_attribute_keys.map(async a => {
-        const r = await lookupAttribute(row.constraint_table, a);
-        console.log('after await', r);
-        return r.conname;
-      }),
-    );
-    console.log('trow', trow.attribute_constraint_columns);
-    out.push(trow);
-  });
+  const out = await Promise.all(
+    constraints.rows.map(async row => {
+      const trow = { ...row };
+      trow.attribute_constraint_columns = await Promise.all(
+        row.constraint_attribute_keys.map(async a => {
+          const r = await lookupAttribute(row.constraint_table_id, a);
+          console.log('after await', r);
+          return r.attname;
+        }),
+      );
+      console.log('trow', trow.attribute_constraint_columns);
+      return trow;
+    }),
+  );
   return out;
 }

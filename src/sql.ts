@@ -73,7 +73,6 @@ export class SQLBase {
     const client = await this.pool.connect();
     try {
       const res = await client.query(query, bindvars);
-      console.log('res', res);
       if (res.rows.length !== 1) {
         throw new Error('Expected exactly 1 row, got res.rows.length');
       }
