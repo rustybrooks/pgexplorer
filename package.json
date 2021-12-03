@@ -35,7 +35,7 @@
   "dependencies": {
     "chalk": "latest",
     "dotenv": "latest",
-    "pg": "latest",
+    "pg": "^8.7.1",
     "yargs": "latest"
   },
   "bin": {

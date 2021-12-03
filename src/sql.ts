@@ -1,48 +1,86 @@
-import { Pool } from 'pg';
+import * as pg from 'pg';
+// import pgspice from 'pg-spice';
+
+// import { Pool } from 'pg';
 import { URL } from 'url';
 
+// pgspice.patch(pg);
+
 const sqlObjects = {};
+
+interface SQLBaseParams {
+  writeUrl: string;
+  readUrls?: string[];
+  poolSize?: number;
+  writerIsReader?: boolean;
+  sqlKey?: string;
+}
 
 export class SQLBase {
   pool = null;
 
-  constructor({ writeUrl, readUrls, poolSize, writerIsReader }) {
-    let theseReadUrls = readUrls || [];
+  constructor(paramsx: SQLBaseParams) {
+    let { writeUrl, readUrls, poolSize, writerIsReader } = paramsx;
+    readUrls = readUrls || [];
     if (writerIsReader) {
-      theseReadUrls += writeUrl;
+      readUrls.push(writeUrl);
     }
+    poolSize = poolSize || 5;
+    writeUrl = writeUrl || '';
+    writerIsReader = writerIsReader || false;
 
     const params = new URL(writeUrl);
 
+    console.log(writeUrl);
     const config = {
       user: params.username,
       password: params.password,
       host: params.hostname,
       port: params.port,
       database: params.pathname.split('/')[1],
-      ssl: (params.protocol = 'https:'),
-      max: poolSize,
+      ssl: params.protocol === 'https:',
+      max: poolSize || 5,
       idleTimeoutMillis: 600 * 1000, // close idle clients after 1 second
       // connectionTimeoutMillis: 1000, // return an error after 1 second if connection could not be established
       maxUses: 1000, // close (and replace) a connection after it has been used 7500 times (see below for discussion)
     };
+    console.log(config);
+    this.pool = new pg.Pool(config);
+  }
 
-    this.pool = Pool(config);
+  whereClause(clauseList: string | string[], joinWith = 'and', prefix = 'where'): string {
+    if (!clauseList) {
+      return '';
+    }
+
+    const clause2 = typeof clauseList === 'string' ? [clauseList] : clauseList;
+    const joinWith2 = ` ${joinWith.trim()} `;
+    return `${prefix ? `${prefix} ` : ''}${clause2.join(joinWith2)}`;
+  }
+
+  inClause(inList: any[]) {
+    return inList.forEach((el, i) => `\$${i + 1}`).join(',');
+  }
+
+  async select(query, bindvars) {
+    const client = await this.pool.connect();
+    try {
+      console.log(query);
+      console.log(bindvars);
+      return client.query(query, bindvars);
+    } finally {
+      client.release();
+    }
   }
 }
 
-export function sqlFactory({ sqlKey, password, database, writeUrl, readUrls, poolSize, writerIsReader }) {
-  if (!(sqlKey in sqlObjects)) {
+export function sqlFactory(params: SQLBaseParams) {
+  if (!(params.sqlKey in sqlObjects)) {
     //    writeUrl = writeUrl.formatUnicorn({database, password})
     //
     //    readUrls = readUrls.map(u => u.formatUnicorn({database, password}))
-    sqlObjects[sqlKey] = new SQLBase({
-      writeUrl,
-      readUrls,
-      poolSize,
-      writerIsReader,
-    });
+    sqlObjects[params.sqlKey] = new SQLBase(params);
   }
 
-  return sqlObjects[sqlKey];
+  return sqlObjects[params.sqlKey];
 }
