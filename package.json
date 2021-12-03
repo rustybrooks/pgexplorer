@@ -1,6 +1,6 @@
 {
   "name": "@rustybrooks/pgexplorer",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Expore postgres stuff",
   "main": "./lib/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
   "dependencies": {
     "chalk": "latest",
     "dotenv": "latest",
-    "pg": "^8.7.1",
+    "pg": "latest",
     "yargs": "latest"
   },
   "bin": {
