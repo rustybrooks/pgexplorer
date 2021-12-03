@@ -1,10 +1,10 @@
 {
   "name": "@rustybrooks/pgexplorer",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Expore postgres stuff",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -39,6 +39,6 @@
     "yargs": "latest"
   },
   "bin": {
-    "pgexplorer": "./bin/index.js"
+    "pgexplorer": "./lib/bin/index.js"
   }
 }
