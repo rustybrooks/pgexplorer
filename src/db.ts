@@ -14,7 +14,7 @@ export function setupDb() {
 }
 
 const attributeMap = {};
-export async function lookupAttribute(tableId, attributeKey) {
+async function lookupAttribute(tableId, attributeKey) {
   const attrKey = `${tableId}:${attributeKey}`;
   if (!(attrKey in attributeMap)) {
     const query = `
@@ -29,7 +29,7 @@ export async function lookupAttribute(tableId, attributeKey) {
   return attributeMap[attrKey];
 }
 
-export async function tables(schema = 'public') {
+export async function tables({ schema = 'public' }: { schema?: string }) {
   const where = ['schemaname=$1'];
   const bindvars = [schema];
   const query = `
@@ -40,12 +40,38 @@ export async function tables(schema = 'public') {
   return SQL.select(query, bindvars);
 }
 
-export async function tableConstraints(table: string = null, schema = 'public') {
+enum TableConstraint {
+  'all',
+  'foreign',
+  'check',
+  'unique',
+}
+
+export async function tableConstraints({
+  table = null,
+  schema = 'public',
+  constraintTypes = TableConstraint.all,
+}: {
+  table?: string;
+  schema?: string;
+  constraintTypes?: TableConstraint | TableConstraint[];
+}) {
   const where = ['nsp.nspname = $1'];
   const bindvars = [schema];
   if (table) {
     where.push('rel.relname = $2');
     bindvars.push(table);
+  }
+
+  const constraintMap = {
+    [TableConstraint.foreign]: 'f',
+    [TableConstraint.check]: 'c',
+    [TableConstraint.unique]: 'u',
+  };
+
+  const theseConstraints: TableConstraint[] = constraintTypes instanceof Array ? constraintTypes : [constraintTypes];
+  if (!theseConstraints.includes(TableConstraint.all)) {
+    where.push(`contype in (${theseConstraints.map(c => `'${constraintMap[c]}'`)})`);
   }
 
   const query = `
@@ -67,7 +93,7 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   const constraints = await SQL.select(query, bindvars);
 
   return Promise.all(
-    constraints.rows.map(async row => {
+    constraints.map(async row => {
       const trow = { ...row };
       trow.constraint_attribute_columns = await Promise.all(
         row.constraint_attribute_keys.map(async a => {
@@ -88,4 +114,19 @@ export async function tableConstraints(table: string = null, schema = 'public') 
       return trow;
     }),
   );
+}
+
+export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema?: string }) {
+  const tbls = (await tables({ schema })).map(t => t.tablename);
+  let constraints = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
+
+  const out = [];
+  while (constraints.length) {
+    const constraintMap = Object.fromEntries(constraints.map(c => [c.constraint_foreign_table, c.constraint_table]));
+    out.push(...tbls.filter(t => !out.includes(t) && !(t in constraintMap)));
+    constraints = constraints.filter(c => !out.includes(c.constraint_table));
+  }
+
+  out.push(...tbls.filter(t => !out.includes(t)));
+  return out;
 }

@@ -8,7 +8,8 @@ import { hideBin } from 'yargs/helpers';
 import * as db from '../src/db';
 
 async function main() {
-  const res = await db.tableConstraints();
+  // const res = await db.tableConstraints();
+  const res = await db.tableConstraintDeleteOrder({});
   console.table(res);
 }
 

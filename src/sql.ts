@@ -63,7 +63,7 @@ export class SQLBase {
   async select(query, bindvars) {
     const client = await this.pool.connect();
     try {
-      return client.query(query, bindvars);
+      return (await client.query(query, bindvars)).rows;
     } catch (error) {
       console.log(error);
     } finally {
