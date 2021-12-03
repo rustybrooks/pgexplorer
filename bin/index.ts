@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import * as db from '../db';
+import * as db from '../src/db';
 
 async function main() {
   // const res = await db.tableConstraints();
