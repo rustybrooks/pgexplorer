@@ -10,8 +10,6 @@ import * as db from '../src/db';
 async function main() {
   const res = await db.tableConstraints();
   console.table(res);
-  // const rest = await db.lookupAttribute(16847, 3);
-  // console.log(rest);
 }
 
 const yarg = yargs(hideBin(process.argv));

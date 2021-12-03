@@ -64,6 +64,8 @@ export class SQLBase {
     const client = await this.pool.connect();
     try {
       return client.query(query, bindvars);
+    } catch (error) {
+      console.log(error);
     } finally {
       client.release();
     }

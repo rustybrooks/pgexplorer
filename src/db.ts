@@ -16,7 +16,6 @@ export function setupDb() {
 const attributeMap = {};
 export async function lookupAttribute(tableId, attributeKey) {
   const attrKey = `${tableId}:${attributeKey}`;
-  console.log(attrKey);
   if (!(attrKey in attributeMap)) {
     const query = `
         select *
@@ -50,15 +49,19 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   }
 
   const query = `
-    SELECT 
+    select 
            rel.relname as constraint_table,
            con.conrelid as constraint_table_id,
            con.conname as constraint_name, 
            con.contype as constraint_type, 
-           con.conkey as constraint_attribute_keys
-    FROM pg_catalog.pg_constraint con
-    INNER JOIN pg_catalog.pg_class rel ON rel.oid = con.conrelid
-    INNER JOIN pg_catalog.pg_namespace nsp ON nsp.oid = connamespace
+           con.conkey as constraint_attribute_keys,
+           con.confrelid as constraint_foreign_table_id,
+           con.confkey as constraint_foreign_table_attribute_keys,
+           relf.relname as constraint_foreign_table
+    from pg_catalog.pg_constraint con
+    join pg_catalog.pg_class rel ON rel.oid = con.conrelid
+    left join pg_catalog.pg_class relf ON relf.oid = con.confrelid
+    join pg_catalog.pg_namespace nsp ON nsp.oid = connamespace
     ${SQL.whereClause(where)}
   `;
   const constraints = await SQL.select(query, bindvars);
@@ -66,13 +69,22 @@ export async function tableConstraints(table: string = null, schema = 'public') 
   return Promise.all(
     constraints.rows.map(async row => {
       const trow = { ...row };
-      trow.attribute_constraint_columns = await Promise.all(
+      trow.constraint_attribute_columns = await Promise.all(
         row.constraint_attribute_keys.map(async a => {
           const r = await lookupAttribute(row.constraint_table_id, a);
-          console.log('after await', r);
           return r.attname;
         }),
       );
+
+      if (row.constraint_foreign_table_attribute_keys) {
+        trow.constraint_foreign_table_attribute_columns = await Promise.all(
+          row.constraint_foreign_table_attribute_keys.map(async a => {
+            const r = await lookupAttribute(row.constraint_foreign_table_id, a);
+            return r.attname;
+          }),
+        );
+      }
+
       return trow;
     }),
   );
