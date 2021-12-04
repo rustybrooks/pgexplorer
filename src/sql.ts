@@ -60,17 +60,21 @@ export class SQLBase {
     }
   }
 
-  async selectOne(query, bindvars) {
+  async selectOne(query, bindvars, allowZero = False) {
     const client = await this.pool.connect();
     try {
       const res = await client.query(query, bindvars);
-      if (res.rows.length !== 1) {
-        throw new Error('Expected exactly 1 row, got res.rows.length');
+      if (res.rows.length > 1 || (!allowZero && rows.length === 0)) {
+        throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
       }
-      return res.rows[0];
+      return res.rows[0] || [];
     } finally {
       client.release();
     }
+  }
+
+  async selectZeroOrOne(query, bindvars) {
+    return this.selectOne(query, bindvars, true);
   }
 }
 

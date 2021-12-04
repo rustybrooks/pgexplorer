@@ -129,3 +129,41 @@ export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema
   out.push(...tbls.filter(t => !out.includes(t)));
   return out;
 }
+
+// change to use pg_tables?
+export async function findTablesWithColumn({ column }: { column: string }) {
+  const query = `
+    select t.table_name
+    from information_schema.tables t
+    inner join information_schema.columns c using (table_name, table_schema)
+    where c.column_name = '${column}'
+    and t.table_schema not in ('information_schema', 'pg_catalog')
+    and t.table_type = 'BASE TABLE'
+    order by t.table_schema
+  `;
+  return (await SQL.select(query)).map(row => row.table_name);
+}
+
+export async function findIndexFromTableColumns({ table, columns }: { table: string; columns: string[] }) {
+  const query = `
+    select
+      t.relname as table_name,
+      i.relname as index_name,
+      array_agg(a.attname) as column_names
+    from
+      pg_class t,
+      pg_class i,
+      pg_index ix,
+      pg_attribute a
+    where
+      t.oid = ix.indrelid
+      and i.oid = ix.indexrelid
+      and a.attrelid = t.oid
+      and a.attnum = ANY(ix.indkey)
+      and t.relkind = 'r'
+      and t.relname='${table}'
+    group by 1, 2
+    having array_agg(a.attname)='{${columns.join(',')}}'
+  `;
+  return SQL.select(query);
+}
