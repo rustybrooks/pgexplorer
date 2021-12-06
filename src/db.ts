@@ -28,14 +28,16 @@ async function lookupAttribute(tableId, attributeKey) {
   return attributeMap[attrKey];
 }
 
-export async function tables({ schema = 'public' }: { schema?: string }) {
+export async function tables({ schema = 'public', sort = 'table_name' }: { schema?: string, sort?: string } = {}) {
   const where = ['schemaname=$1'];
   const bindvars = [schema];
   const query = `
-    select *
+    select tablename as table_name, hasindexes, hasrules, hastriggers, schemaname as schema_name
     from pg_catalog.pg_tables
     ${SQL.whereClause(where)}
+    ${SQL.orderBy(sort)}
   `;
+  console.log(query);
   return SQL.select(query, bindvars);
 }
 
@@ -116,7 +118,7 @@ export async function tableConstraints({
 }
 
 export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema?: string }) {
-  const tbls = (await tables({ schema })).map(t => t.tablename);
+  const tbls = (await tables({ schema })).map(t => t.table_name);
   let constraints = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
 
   const out = [];
@@ -131,7 +133,7 @@ export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema
 }
 
 // change to use pg_tables?
-export async function findTablesWithColumn({ column }: { column: string }) {
+export async function tablesWithColumn({ column }: { column: string }) {
   const query = `
     select t.table_name
     from information_schema.tables t
@@ -144,7 +146,7 @@ export async function findTablesWithColumn({ column }: { column: string }) {
   return (await SQL.select(query)).map(row => row.table_name);
 }
 
-export async function findIndexFromTableColumns({ table, columns }: { table: string; columns: string[] }) {
+export async function indexFromTableColumns({ table, columns }: { table: string; columns: string[] }) {
   const query = `
     select
       t.relname as table_name,
@@ -167,3 +169,5 @@ export async function findIndexFromTableColumns({ table, columns }: { table: str
   `;
   return SQL.select(query);
 }
+
+

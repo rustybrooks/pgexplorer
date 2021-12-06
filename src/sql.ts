@@ -51,7 +51,21 @@ export class SQLBase {
     return inList.map((el, i) => `$${i + 1}`).join(',');
   }
 
-  async select(query, bindvars) {
+  orderBy(sort_key : string) {
+    const sort_list = sort_key.split(',')
+    const orderby_list = sort_list.map(k => {
+      let order = ""
+      if (k[0] == '-') {
+        return `${k.slice(1)} desc`
+      } else {
+        return k
+      }
+    })
+
+    return `${orderby_list ? 'order by ' : ''}${orderby_list.join(', ')}`
+  }
+
+  async select(query, bindvars=[]) {
     const client = await this.pool.connect();
     try {
       return (await client.query(query, bindvars)).rows;
@@ -60,11 +74,11 @@ export class SQLBase {
     }
   }
 
-  async selectOne(query, bindvars, allowZero = False) {
+  async selectOne(query, bindvars=[], allowZero = false) {
     const client = await this.pool.connect();
     try {
       const res = await client.query(query, bindvars);
-      if (res.rows.length > 1 || (!allowZero && rows.length === 0)) {
+      if (res.rows.length > 1 || (!allowZero && res.rows.length === 0)) {
         throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
       }
       return res.rows[0] || [];
@@ -73,7 +87,7 @@ export class SQLBase {
     }
   }
 
-  async selectZeroOrOne(query, bindvars) {
+  async selectZeroOrOne(query, bindvars=[]) {
     return this.selectOne(query, bindvars, true);
   }
 }

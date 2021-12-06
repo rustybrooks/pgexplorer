@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env ts-node
 
 import dotenv from 'dotenv';
 import chalk from 'chalk';
@@ -6,6 +6,21 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 import * as db from '../src/db';
+
+
+const setupDbMiddleware = (argv) => {
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  dotenv.config({ path: argv['env'] });
+  db.setupDb();
+}
+
+async function cmdList(options) {
+  console.log(options)
+  if (["tables", 'table'].includes(options.type)) {
+    const tables = await db.tables()
+    console.table(tables);
+  }
+}
 
 async function main() {
   // const res = await db.tableConstraints();
@@ -24,8 +39,13 @@ yarg.option('env', {
   type: 'string',
 });
 
-// eslint-disable-next-line @typescript-eslint/dot-notation
-dotenv.config({ path: yarg.argv['env'] });
+yarg.command({
+  command: "list <type>",
+  handler: (options) =>
+      cmdList(options).then(() => process.exit()),
+});
 
-db.setupDb();
-main().then(() => process.exit(0));
+// Add normalizeCredentials to yargs
+yargs.middleware(setupDbMiddleware);
+yargs.parse();
+// main().then(() => process.exit(0));
