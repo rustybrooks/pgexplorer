@@ -52,20 +52,26 @@ export class SQLBase {
   }
 
   orderBy(sort_key : string) {
-    const sort_list = sort_key.split(',')
-    const orderby_list = sort_list.map(k => {
-      let order = ""
-      if (k[0] == '-') {
-        return `${k.slice(1)} desc`
-      } else {
-        return k
+    if (!sort_key) { return ''; }
+    const sortList = sort_key.split(',');
+    const orderbyList = sortList.map(k => {
+      if (k[0] === '-') {
+        return `${k.slice(1)} desc`;
       }
-    })
-
-    return `${orderby_list ? 'order by ' : ''}${orderby_list.join(', ')}`
+        return k;
+    });
+    return `${orderbyList ? 'order by ' : ''}${orderbyList.join(', ')}`;
   }
 
-  async select(query, bindvars=[]) {
+  limit(page = null, limit = null) {
+    if (page === null || limit === null) {
+      return '';
+    }
+
+    return `offset ${(page - 1) * limit} limit ${limit}`;
+  }
+
+  async select(query, bindvars = []) {
     const client = await this.pool.connect();
     try {
       return (await client.query(query, bindvars)).rows;
@@ -74,7 +80,7 @@ export class SQLBase {
     }
   }
 
-  async selectOne(query, bindvars=[], allowZero = false) {
+  async selectOne(query, bindvars = [], allowZero = false) {
     const client = await this.pool.connect();
     try {
       const res = await client.query(query, bindvars);
@@ -87,7 +93,7 @@ export class SQLBase {
     }
   }
 
-  async selectZeroOrOne(query, bindvars=[]) {
+  async selectZeroOrOne(query, bindvars = []) {
     return this.selectOne(query, bindvars, true);
   }
 }

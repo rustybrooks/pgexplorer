@@ -170,4 +170,14 @@ export async function indexFromTableColumns({ table, columns }: { table: string;
   return SQL.select(query);
 }
 
-
+export async function dumpTable({
+ table, sort = null, page = null, limit = null,
+} : { table: string, sort?: string, page?: number, limit?: number }) {
+  const query = `
+      select * 
+      from "${table}"
+      ${SQL.orderBy(sort)}
+      ${SQL.limit(page, limit)}
+  `;
+  return SQL.select(query);
+}
