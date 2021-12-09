@@ -25,10 +25,10 @@ async function cmdDump(options) {
   console.table(data);
 }
 
-async function main() {
-  // const res = await db.tableConstraints();
-  const res = await db.tableConstraintDeleteOrder({});
-  console.table(res);
+async function cmdStructure(options) {
+  // const tables = await db.tables();
+  const tblColumns = await db.classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
+  console.table(tblColumns);
 }
 
 const yarg = yargs(hideBin(process.argv));
@@ -52,6 +52,12 @@ yarg.command({
   command: 'dump <table>',
   handler: (options) =>
     cmdDump(options).then(() => process.exit()),
+});
+
+yarg.command({
+  command: 'structure',
+  handler: (options) =>
+    cmdStructure(options).then(() => process.exit()),
 });
 
 // Add normalizeCredentials to yargs

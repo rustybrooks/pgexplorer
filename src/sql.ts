@@ -51,9 +51,9 @@ export class SQLBase {
     return inList.map((el, i) => `$${i + 1}`).join(',');
   }
 
-  orderBy(sort_key : string) {
-    if (!sort_key) { return ''; }
-    const sortList = sort_key.split(',');
+  orderBy(sortKey : string | string[]) {
+    if (!sortKey) { return ''; }
+    const sortList = typeof (sortKey) === 'string' ? sortKey.split(',') : sortKey;
     const orderbyList = sortList.map(k => {
       if (k[0] === '-') {
         return `${k.slice(1)} desc`;

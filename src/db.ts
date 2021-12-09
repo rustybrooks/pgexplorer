@@ -2,9 +2,45 @@ import { sqlFactory } from './sql';
 
 let SQL = null;
 
+enum TableConstraint {
+  'all',
+  'foreign',
+  'check',
+  'unique',
+}
+
+enum TableClass {
+  'table',
+  'index',
+  'sequence',
+  'view',
+  'materializedView',
+  'compositeType',
+  'toastTable',
+  'foreignTable',
+}
+
+const constraintMap = {
+  [TableConstraint.foreign]: 'f',
+  [TableConstraint.check]: 'c',
+  [TableConstraint.unique]: 'u',
+};
+
+const tableClassMap = {
+  [TableClass.table]: 'r',
+  [TableClass.index]: 'i',
+  [TableClass.sequence]: 'S',
+  [TableClass.view]: 'v',
+  [TableClass.materializedView]: 'm',
+  [TableClass.compositeType]: 'c',
+  [TableClass.table]: 't',
+  [TableClass.foreignTable]: 'f',
+};
+
 export function setupDb() {
   const sqlKey = 'main';
-  const writeUrl = `http://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
+  const protocol = 'http';
+  const writeUrl = `${protocol}://${process.env.PGUSER.replace('%40', '@')}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
   const config = {
     sqlKey,
     writeUrl,
@@ -28,7 +64,7 @@ async function lookupAttribute(tableId, attributeKey) {
   return attributeMap[attrKey];
 }
 
-export async function tables({ schema = 'public', sort = 'table_name' }: { schema?: string, sort?: string } = {}) {
+export async function tables({ schema = 'public', sort = 'table_name' }: { schema?: string, sort?: string | string[] } = {}) {
   const where = ['schemaname=$1'];
   const bindvars = [schema];
   const query = `
@@ -39,13 +75,6 @@ export async function tables({ schema = 'public', sort = 'table_name' }: { schem
   `;
   console.log(query);
   return SQL.select(query, bindvars);
-}
-
-enum TableConstraint {
-  'all',
-  'foreign',
-  'check',
-  'unique',
 }
 
 export async function tableConstraints({
@@ -63,12 +92,6 @@ export async function tableConstraints({
     where.push('rel.relname = $2');
     bindvars.push(table);
   }
-
-  const constraintMap = {
-    [TableConstraint.foreign]: 'f',
-    [TableConstraint.check]: 'c',
-    [TableConstraint.unique]: 'u',
-  };
 
   const theseConstraints: TableConstraint[] = constraintTypes instanceof Array ? constraintTypes : [constraintTypes];
   if (!theseConstraints.includes(TableConstraint.all)) {
@@ -172,7 +195,7 @@ export async function indexFromTableColumns({ table, columns }: { table: string;
 
 export async function dumpTable({
  table, sort = null, page = null, limit = null,
-} : { table: string, sort?: string, page?: number, limit?: number }) {
+} : { table: string, sort?: string | string[], page?: number, limit?: number }) {
   const query = `
       select * 
       from "${table}"
@@ -180,4 +203,28 @@ export async function dumpTable({
       ${SQL.limit(page, limit)}
   `;
   return SQL.select(query);
+}
+
+export async function classColumns({
+ schema = 'public', sort = null, page = null, limit = null,
+} : { schema?: string, sort?: string | string[], page?: number, limit?: number }) {
+  const where = [
+    'n.nspname=$1',
+    'pg_catalog.pg_table_is_visible(c.oid)',
+  ];
+  const bindvars = [schema];
+  const query = `
+      select
+          c.relname as class_name,
+          a.attname as column_name,
+          pg_catalog.format_type(a.atttypid, a.atttypmod) as column_type,
+          relkind as class_type
+      from pg_catalog.pg_namespace n
+      join pg_catalog.pg_class c on (n.oid=c.relnamespace)
+      join pg_catalog.pg_attribute a on (a.attrelid=c.oid)
+      ${SQL.whereClause(where)}
+      ${SQL.orderBy(sort)}
+      ${SQL.limit(page, limit)}
+    `;
+  return SQL.select(query, bindvars);
 }
