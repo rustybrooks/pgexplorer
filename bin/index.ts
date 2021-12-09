@@ -26,9 +26,17 @@ async function cmdDump(options) {
 }
 
 async function cmdStructure(options) {
+  const out = {
+  };
   // const tables = await db.tables();
   const tblColumns = await db.classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
-  console.table(tblColumns);
+  tableColumns.forEach(row => {
+    const outKey = db.tableClassMapReversed[row.class_type];
+    if (!(outKey in out)) {
+      out[outKey] = [];
+    }
+    out[outKey].push(row);
+  });
 }
 
 const yarg = yargs(hideBin(process.argv));

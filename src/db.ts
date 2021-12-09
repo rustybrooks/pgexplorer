@@ -20,13 +20,13 @@ enum TableClass {
   'foreignTable',
 }
 
-const constraintMap = {
+export const constraintMap = {
   [TableConstraint.foreign]: 'f',
   [TableConstraint.check]: 'c',
   [TableConstraint.unique]: 'u',
 };
 
-const tableClassMap = {
+export const tableClassMap = {
   [TableClass.table]: 'r',
   [TableClass.index]: 'i',
   [TableClass.sequence]: 'S',
@@ -36,6 +36,10 @@ const tableClassMap = {
   [TableClass.table]: 't',
   [TableClass.foreignTable]: 'f',
 };
+
+export const tableClassMapReversed = Object.fromEntries(
+  Object.entries(tableClassMap).map((k, v) => [v, k]),
+);
 
 export function setupDb() {
   const sqlKey = 'main';
