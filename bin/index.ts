@@ -1,13 +1,13 @@
 #!/usr/bin/env ts-node
 
 import dotenv from 'dotenv';
-// import chalk from 'chalk';
-import yargs from 'yargs';
+import yargs, { describe } from 'yargs';
 import { hideBin } from 'yargs/helpers';
-
+// import * as JSON from 'JSON';
+import * as fs from 'fs';
 import * as db from '../src/db';
 
-const setupDbMiddleware = (argv) => {
+const setupDbMiddleware = argv => {
   // eslint-disable-next-line @typescript-eslint/dot-notation
   dotenv.config({ path: argv['env'] });
   db.setupDb();
@@ -17,6 +17,9 @@ async function cmdList(options) {
   if (['tables', 'table'].includes(options.type)) {
     const tables = await db.tables();
     console.table(tables);
+  } else if (['index', 'indexes', 'indices'].includes(options.type)) {
+    const indexes = await db.indexes();
+    console.table(indexes);
   }
 }
 
@@ -25,14 +28,13 @@ async function cmdDump(options) {
   console.table(data);
 }
 
-async function cmdStructure() {
-  const out : { [id: string]: any } = {
-  };
+async function cmdStructure(options) {
+  const out: { [id: string]: any } = {};
   // const tables = await db.tables();
   const tblColumns = await db.classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
   tblColumns.forEach(row => {
-    // const outKey = db.tableClassMapReversed[row.class_type];
-    const outKey = row.class_type;
+    const outKey: string = db.TableClass[db.tableClassMapReversed[row.class_type]];
+    // const outKey = row.class_type;
     if (!(outKey in out)) {
       out[outKey] = [];
     }
@@ -40,16 +42,26 @@ async function cmdStructure() {
   });
 
   const constraints = await db.tableConstraints({ sort: ['constraint_table', 'constraint_name'] });
-  out.constraints = await Promise.all(constraints.map(async row => ({
+  out.constraint = await Promise.all(
+    constraints.map(async row => ({
       constraint_table: row.constraint_table,
       constraint_name: row.constraint_name,
       constraint_type: row.constraint_type,
-      constraint_attribute_columns: await Promise.all(row.constraint_attribute_keys.map(async a => (await db.lookupAttribute(row.constraint_table_id, a)).attname)),
+      constraint_attribute_columns: await Promise.all(
+        row.constraint_attribute_keys.map(async a => (await db.lookupAttribute(row.constraint_table_id, a)).attname),
+      ),
       constraint_foreign_table_attribute_columns: await Promise.all(
-        (row.constraint_foreign_table_attribute_keys || []).map(async a => (await db.lookupAttribute(row.constraint_foreign_table_id, a)).attname)),
-    })));
+        (row.constraint_foreign_table_attribute_keys || []).map(
+          async a => (await db.lookupAttribute(row.constraint_foreign_table_id, a)).attname,
+        ),
+      ),
+    })),
+  );
 
-  console.log(out);
+  out.index = await db.indexes({ sort: ['class_name'] });
+
+  // console.log();
+  fs.writeFileSync(options.output, JSON.stringify(out, null, 2));
 }
 
 const yarg = yargs(hideBin(process.argv));
@@ -65,20 +77,21 @@ yarg.option('env', {
 
 yarg.command({
   command: 'list <type>',
-  handler: (options) =>
-      cmdList(options).then(() => process.exit()),
+  handler: options => cmdList(options).then(() => process.exit()),
 });
 
 yarg.command({
   command: 'dump <table>',
-  handler: (options) =>
-    cmdDump(options).then(() => process.exit()),
+  handler: options => cmdDump(options).then(() => process.exit()),
 });
 
 yarg.command({
   command: 'structure',
-  handler: () =>
-    cmdStructure().then(() => process.exit()),
+  builder: y => {
+    y.option('output', { describe: 'output file name', default: 'structure.json' });
+    return y;
+  },
+  handler: options => cmdStructure(options).then(() => process.exit()),
 });
 
 // Add normalizeCredentials to yargs

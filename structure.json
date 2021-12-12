@@ -1,0 +1,4542 @@
+{
+  "sequence": [
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_damages_attack_event_damage_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_event_destroys_attack_event_destroy_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "attack_events_attack_event_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "care_package_events_care_package_event_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "constants_constant_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "heal_events_heal_event_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "item_events_event_item_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_assets_match_asset_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_game_modes_match_game_mode_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_maps_match_map_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_participants_player_match_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_player_stats_match_stats_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_roster_participants_match_roster_participant_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "match_rosters_match_roster_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "matches_match_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "migrations_migration_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "periodic_events_periodic_event_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "players_player_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "position_events_position_event_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "revive_events_revive_event_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "seasons_season_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "shards_shard_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squad_members_squad_members_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "squads_squad_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "last_value",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "log_cnt",
+      "column_type": "bigint",
+      "class_type": "S"
+    },
+    {
+      "class_name": "vehicle_events_vehicle_event_id_seq",
+      "column_name": "is_called",
+      "column_type": "boolean",
+      "class_type": "S"
+    }
+  ],
+  "undefined": [
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "attack_event_damage_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "attack_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "victim_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "victim_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "victim_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "victim_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "victim_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "damage",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "damage_type_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "damage_reason_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "distance",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_damages",
+      "column_name": "is_kill",
+      "column_type": "boolean",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "attack_event_destroy_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "attack_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "victim_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "victim_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "victim_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "victim_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "victim_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "destroyed_item_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "damage_type_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "damage_reason_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_event_destroys",
+      "column_name": "distance",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "attack_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "character_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "character_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "character_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "character_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "character_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "attack_events",
+      "column_name": "weapon_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "care_package_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "action",
+      "column_type": "care_package_events_enum",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "package_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "care_package_events",
+      "column_name": "location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "constants",
+      "column_name": "constant_word",
+      "column_type": "character varying(200)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "heal_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "character_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "character_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "character_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "character_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "character_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "item_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "heal_events",
+      "column_name": "heal_amount",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "event_item_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "action",
+      "column_type": "item_events_action_enum",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "character_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "character_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "character_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "character_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "character_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "item_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "item_events",
+      "column_name": "child_item_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "match_asset_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_assets",
+      "column_name": "asset_url",
+      "column_type": "character varying(250)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "match_game_mode_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_game_modes",
+      "column_name": "game_mode",
+      "column_type": "character varying(20)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "match_map_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_maps",
+      "column_name": "map_name",
+      "column_type": "character varying(50)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "player_match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "dbnos",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "assists",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "boosts",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "damagedealt",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "death_type_constant_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "headshotkills",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "heals",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "killplace",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "killpoints",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "killpointsdelta",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "killstreaks",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "kills",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "lastkillpoints",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "lastwinpoints",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "longestkill",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "mostdamage",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "revives",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "ridedistance",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "walkdistance",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "swimdistance",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "roadkills",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "teamkills",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "timesurvived",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "vehicledestroys",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "weaponsacquired",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "winplace",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "winpoints",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "winpointsdelta",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_participants",
+      "column_name": "rankpoints",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "match_stats_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "team_average_distance",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "blue_ticks",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "blue_damage",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "knocks",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "knock_order",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "kill_order",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "knocked_order",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "killed_order",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "knocked",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "knocked_streamers",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "killed_streamers",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_hit",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_knock",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_kill",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_headshot",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_hit_iron",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_knock_iron",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_kill_iron",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "longest_headshot_iron",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "wheels_destroyed",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "windows_destroyed",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "armor_destroyed",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "other_destroyed",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "revived",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "items_picked_up",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "items_dropped",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "dist_squad_when_knocked",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "dist_squad_when_killed",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "team_damage",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_player_stats",
+      "column_name": "self_damage",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "match_roster_participant_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "match_roster_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_roster_participants",
+      "column_name": "player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "match_roster_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "won",
+      "column_type": "boolean",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "rank",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "match_rosters",
+      "column_name": "team_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "pubg_match_id",
+      "column_type": "character(36)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "created_at",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "inserted_at",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "duration",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "match_game_mode_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "match_map_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "shard_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "matches",
+      "column_name": "region",
+      "column_type": "character varying(10)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "migration_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "migration_datetime",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "version_pre",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "migrations",
+      "column_name": "version_post",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "periodic_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "num_join_players",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "num_alive_teams",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "num_alive_players",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "red_zone_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "red_zone_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "red_zone_radius",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "safety_zone_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "safety_zone_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "safety_zone_radius",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "warning_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "warning_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "periodic_events",
+      "column_name": "warning_location_radius",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "player_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "pubg_player_id",
+      "column_type": "character varying(100)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "player_name",
+      "column_type": "character varying(100)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "last_load_date",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "players",
+      "column_name": "twitch_stream",
+      "column_type": "character varying(100)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "position_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "character_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "character_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "character_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "character_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "character_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "position_events",
+      "column_name": "position_type",
+      "column_type": "position_type_enum",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "revive_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "character_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "character_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "character_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "character_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "character_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "victim_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "revive_events",
+      "column_name": "victim_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "season_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "start_date",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "end_date",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "seasons",
+      "column_name": "season_name",
+      "column_type": "character varying(100)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "shard_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "pubg_shard_id",
+      "column_type": "character varying(20)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "shards",
+      "column_name": "description",
+      "column_type": "character varying(100)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "squad_members_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "squad_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "player_name",
+      "column_type": "character varying(100)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "add_date",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "remove_date",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squad_members",
+      "column_name": "is_removed",
+      "column_type": "boolean",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "squad_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "squad_name",
+      "column_type": "character varying(100)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "squad_description",
+      "column_type": "character varying(10000)",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "add_date",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "delete_date",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "squads",
+      "column_name": "is_deleted",
+      "column_type": "boolean",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "tableoid",
+      "column_type": "oid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "cmax",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "xmax",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "cmin",
+      "column_type": "cid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "xmin",
+      "column_type": "xid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "ctid",
+      "column_type": "tid",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "vehicle_event_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "match_id",
+      "column_type": "integer",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "timestamp",
+      "column_type": "timestamp without time zone",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "character_player_id",
+      "column_type": "bigint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "character_location_x",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "character_location_y",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "character_location_z",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "character_health",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "action",
+      "column_type": "vehicle_events_action_enum",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "vehicle_constant_id",
+      "column_type": "smallint",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "fuel",
+      "column_type": "real",
+      "class_type": "r"
+    },
+    {
+      "class_name": "vehicle_events",
+      "column_name": "health",
+      "column_type": "real",
+      "class_type": "r"
+    }
+  ],
+  "constraint": [
+    {
+      "constraint_table": "attack_event_damages",
+      "constraint_name": "attack_event_damages_attack_event_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "attack_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "attack_event_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_damages",
+      "constraint_name": "attack_event_damages_damage_reason_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "damage_reason_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_damages",
+      "constraint_name": "attack_event_damages_damage_type_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "damage_type_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_damages",
+      "constraint_name": "attack_event_damages_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "attack_event_damage_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "attack_event_damages",
+      "constraint_name": "attack_event_damages_victim_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "victim_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_destroys",
+      "constraint_name": "attack_event_destroys_attack_event_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "attack_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "attack_event_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_destroys",
+      "constraint_name": "attack_event_destroys_damage_reason_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "damage_reason_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_destroys",
+      "constraint_name": "attack_event_destroys_damage_type_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "damage_type_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_destroys",
+      "constraint_name": "attack_event_destroys_destroyed_item_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "destroyed_item_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_event_destroys",
+      "constraint_name": "attack_event_destroys_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "attack_event_destroy_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "attack_event_destroys",
+      "constraint_name": "attack_event_destroys_victim_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "victim_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_events",
+      "constraint_name": "attack_events_character_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "character_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_events",
+      "constraint_name": "attack_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "attack_events",
+      "constraint_name": "attack_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "attack_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "attack_events",
+      "constraint_name": "attack_events_weapon_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "weapon_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "care_package_events",
+      "constraint_name": "care_package_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "care_package_events",
+      "constraint_name": "care_package_events_package_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "package_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "care_package_events",
+      "constraint_name": "care_package_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "care_package_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "constants",
+      "constraint_name": "constants_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "heal_events",
+      "constraint_name": "heal_events_character_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "character_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "heal_events",
+      "constraint_name": "heal_events_item_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "item_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "heal_events",
+      "constraint_name": "heal_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "heal_events",
+      "constraint_name": "heal_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "heal_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "item_events",
+      "constraint_name": "item_events_character_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "character_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "item_events",
+      "constraint_name": "item_events_child_item_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "child_item_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "item_events",
+      "constraint_name": "item_events_item_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "item_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "item_events",
+      "constraint_name": "item_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "item_events",
+      "constraint_name": "item_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "event_item_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "match_assets",
+      "constraint_name": "match_assets_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "match_assets",
+      "constraint_name": "match_assets_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "match_asset_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "match_game_modes",
+      "constraint_name": "match_game_modes_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "match_game_mode_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "match_maps",
+      "constraint_name": "match_maps_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "match_map_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "match_participants",
+      "constraint_name": "match_participants_death_type_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "death_type_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    },
+    {
+      "constraint_table": "match_participants",
+      "constraint_name": "match_participants_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "match_participants",
+      "constraint_name": "match_participants_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "player_match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "match_participants",
+      "constraint_name": "match_participants_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "match_player_stats",
+      "constraint_name": "match_player_stats_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "match_player_stats",
+      "constraint_name": "match_player_stats_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "match_stats_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "match_player_stats",
+      "constraint_name": "match_player_stats_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "match_roster_participants",
+      "constraint_name": "match_roster_participants_match_roster_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_roster_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_roster_id"
+      ]
+    },
+    {
+      "constraint_table": "match_roster_participants",
+      "constraint_name": "match_roster_participants_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "match_roster_participant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "match_roster_participants",
+      "constraint_name": "match_roster_participants_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "match_rosters",
+      "constraint_name": "match_rosters_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "match_rosters",
+      "constraint_name": "match_rosters_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "match_roster_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "matches",
+      "constraint_name": "matches_match_game_mode_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_game_mode_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_game_mode_id"
+      ]
+    },
+    {
+      "constraint_table": "matches",
+      "constraint_name": "matches_match_map_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_map_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_map_id"
+      ]
+    },
+    {
+      "constraint_table": "matches",
+      "constraint_name": "matches_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "matches",
+      "constraint_name": "matches_shard_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "shard_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "shard_id"
+      ]
+    },
+    {
+      "constraint_table": "migrations",
+      "constraint_name": "migrations_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "migration_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "periodic_events",
+      "constraint_name": "periodic_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "periodic_events",
+      "constraint_name": "periodic_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "periodic_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "players",
+      "constraint_name": "players_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "position_events",
+      "constraint_name": "position_events_character_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "character_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "position_events",
+      "constraint_name": "position_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "position_events",
+      "constraint_name": "position_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "position_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "revive_events",
+      "constraint_name": "revive_events_character_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "character_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "revive_events",
+      "constraint_name": "revive_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "revive_events",
+      "constraint_name": "revive_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "revive_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "revive_events",
+      "constraint_name": "revive_events_victim_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "victim_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "seasons",
+      "constraint_name": "seasons_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "season_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "shards",
+      "constraint_name": "shards_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "shard_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "squad_members",
+      "constraint_name": "squad_members_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "squad_members_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "squad_members",
+      "constraint_name": "squad_members_squad_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "squad_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "squad_id"
+      ]
+    },
+    {
+      "constraint_table": "squads",
+      "constraint_name": "squads_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "squad_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "vehicle_events",
+      "constraint_name": "vehicle_events_character_player_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "character_player_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "player_id"
+      ]
+    },
+    {
+      "constraint_table": "vehicle_events",
+      "constraint_name": "vehicle_events_match_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "match_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "match_id"
+      ]
+    },
+    {
+      "constraint_table": "vehicle_events",
+      "constraint_name": "vehicle_events_pkey",
+      "constraint_type": "p",
+      "constraint_attribute_columns": [
+        "vehicle_event_id"
+      ],
+      "constraint_foreign_table_attribute_columns": []
+    },
+    {
+      "constraint_table": "vehicle_events",
+      "constraint_name": "vehicle_events_vehicle_constant_id_fkey",
+      "constraint_type": "f",
+      "constraint_attribute_columns": [
+        "vehicle_constant_id"
+      ],
+      "constraint_foreign_table_attribute_columns": [
+        "constant_id"
+      ]
+    }
+  ],
+  "index": [
+    {
+      "class_name": "attack_event_damages_pkey",
+      "column_names": "{attack_event_damage_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "attack_event_destroys_pkey",
+      "column_names": "{attack_event_destroy_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "attack_events_pkey",
+      "column_names": "{attack_event_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "care_package_events_pkey",
+      "column_names": "{care_package_event_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "constants_constant",
+      "column_names": "{constant_word}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "constants_pkey",
+      "column_names": "{constant_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "heal_events_pkey",
+      "column_names": "{heal_event_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "item_events_pkey",
+      "column_names": "{event_item_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_assets_pkey",
+      "column_names": "{match_asset_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_assets_url",
+      "column_names": "{asset_url}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "match_game_maps",
+      "column_names": "{map_name}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "match_game_mode",
+      "column_names": "{game_mode}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "match_game_modes_pkey",
+      "column_names": "{match_game_mode_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_maps_pkey",
+      "column_names": "{match_map_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_participants_match_player",
+      "column_names": "{match_id,player_id}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "match_participants_pkey",
+      "column_names": "{player_match_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_player_stats_pkey",
+      "column_names": "{match_stats_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_roster_participants_pkey",
+      "column_names": "{match_roster_participant_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_roster_participants_players",
+      "column_names": "{match_roster_id,player_id}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "match_rosters_pkey",
+      "column_names": "{match_roster_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "match_rosters_teams",
+      "column_names": "{team_id,match_id}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "matches_match_id",
+      "column_names": "{pubg_match_id}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "matches_pkey",
+      "column_names": "{match_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "migrations_pkey",
+      "column_names": "{migration_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "periodic_events_pkey",
+      "column_names": "{periodic_event_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "players_pkey",
+      "column_names": "{player_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "players_pubg_player_id",
+      "column_names": "{pubg_player_id}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "position_events_pkey",
+      "column_names": "{position_event_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "revive_events_pkey",
+      "column_names": "{revive_event_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "seasons_pkey",
+      "column_names": "{season_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "seasons_season_name",
+      "column_names": "{season_name}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "shards_pkey",
+      "column_names": "{shard_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "shards_pubg_shard_id",
+      "column_names": "{pubg_shard_id}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "squad_members_pkey",
+      "column_names": "{squad_members_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "squad_members_squad_player_name",
+      "column_names": "{squad_id,player_name}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "squads_pkey",
+      "column_names": "{squad_id}",
+      "indisunique": true,
+      "indisprimary": true
+    },
+    {
+      "class_name": "squads_squad_name",
+      "column_names": "{squad_name}",
+      "indisunique": true,
+      "indisprimary": false
+    },
+    {
+      "class_name": "vehicle_events_pkey",
+      "column_names": "{vehicle_event_id}",
+      "indisunique": true,
+      "indisprimary": true
+    }
+  ]
+}
