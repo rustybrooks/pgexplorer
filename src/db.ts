@@ -54,7 +54,7 @@ export function setupDb() {
 }
 
 const attributeMap = {};
-async function lookupAttribute(tableId, attributeKey) {
+export async function lookupAttribute(tableId, attributeKey) {
   const attrKey = `${tableId}:${attributeKey}`;
   if (!(attrKey in attributeMap)) {
     const query = `
@@ -85,10 +85,12 @@ export async function tableConstraints({
   table = null,
   schema = 'public',
   constraintTypes = TableConstraint.all,
+  sort = null,
 }: {
   table?: string;
   schema?: string;
   constraintTypes?: TableConstraint | TableConstraint[];
+  sort?: string | string[]
 }) {
   const where = ['nsp.nspname = $1'];
   const bindvars = [schema];
@@ -117,6 +119,7 @@ export async function tableConstraints({
     left join pg_catalog.pg_class relf ON relf.oid = con.confrelid
     join pg_catalog.pg_namespace nsp ON nsp.oid = connamespace
     ${SQL.whereClause(where)}
+    ${SQL.orderBy(sort)}
   `;
   const constraints = await SQL.select(query, bindvars);
 

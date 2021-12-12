@@ -25,18 +25,31 @@ async function cmdDump(options) {
   console.table(data);
 }
 
-async function cmdStructure(options) {
-  const out = {
+async function cmdStructure() {
+  const out : { [id: string]: any } = {
   };
   // const tables = await db.tables();
   const tblColumns = await db.classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
-  tableColumns.forEach(row => {
-    const outKey = db.tableClassMapReversed[row.class_type];
+  tblColumns.forEach(row => {
+    // const outKey = db.tableClassMapReversed[row.class_type];
+    const outKey = row.class_type;
     if (!(outKey in out)) {
       out[outKey] = [];
     }
     out[outKey].push(row);
   });
+
+  const constraints = await db.tableConstraints({ sort: ['constraint_table', 'constraint_name'] });
+  out.constraints = await Promise.all(constraints.map(async row => ({
+      constraint_table: row.constraint_table,
+      constraint_name: row.constraint_name,
+      constraint_type: row.constraint_type,
+      constraint_attribute_columns: await Promise.all(row.constraint_attribute_keys.map(async a => (await db.lookupAttribute(row.constraint_table_id, a)).attname)),
+      constraint_foreign_table_attribute_columns: await Promise.all(
+        (row.constraint_foreign_table_attribute_keys || []).map(async a => (await db.lookupAttribute(row.constraint_foreign_table_id, a)).attname)),
+    })));
+
+  console.log(out);
 }
 
 const yarg = yargs(hideBin(process.argv));
@@ -64,8 +77,8 @@ yarg.command({
 
 yarg.command({
   command: 'structure',
-  handler: (options) =>
-    cmdStructure(options).then(() => process.exit()),
+  handler: () =>
+    cmdStructure().then(() => process.exit()),
 });
 
 // Add normalizeCredentials to yargs
