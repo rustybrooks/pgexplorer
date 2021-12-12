@@ -1,9 +1,9 @@
 #!/usr/bin/env ts-node
 
-import yargs, { describe } from 'yargs';
+import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-// import * as JSON from 'JSON';
 import * as fs from 'fs';
+import * as jsondiff from 'json-diff';
 import * as db from '../src/db';
 
 const setupDbMiddleware = argv => {
@@ -50,8 +50,9 @@ async function cmdCompare(options) {
     console.log('from structure');
   }
 
-  console.log(db1);
-  console.log(db2);
+  console.log(jsondiff.diffString(db1, db2));
+  // console.log(db1);
+  // console.log(db2);
 }
 
 const yarg = yargs(hideBin(process.argv));

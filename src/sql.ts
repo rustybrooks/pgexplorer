@@ -1,10 +1,5 @@
 import * as pg from 'pg';
-// import pgspice from 'pg-spice';
-
-// import { Pool } from 'pg';
 import { URL } from 'url';
-
-// pgspice.patch(pg);
 
 const sqlObjects = {};
 
@@ -51,14 +46,16 @@ export class SQLBase {
     return inList.map((el, i) => `$${i + 1}`).join(',');
   }
 
-  orderBy(sortKey : string | string[]) {
-    if (!sortKey) { return ''; }
-    const sortList = typeof (sortKey) === 'string' ? sortKey.split(',') : sortKey;
+  orderBy(sortKey: string | string[]) {
+    if (!sortKey) {
+      return '';
+    }
+    const sortList = typeof sortKey === 'string' ? sortKey.split(',') : sortKey;
     const orderbyList = sortList.map(k => {
       if (k[0] === '-') {
         return `${k.slice(1)} desc`;
       }
-        return k;
+      return k;
     });
     return `${orderbyList ? 'order by ' : ''}${orderbyList.join(', ')}`;
   }

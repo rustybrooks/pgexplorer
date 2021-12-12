@@ -42,7 +42,8 @@
     "chalk": "latest",
     "dotenv": "latest",
     "pg": "latest",
-    "yargs": "latest"
+    "yargs": "latest",
+    "json-diff": "latest"
   },
   "bin": {
     "pgexplorer": "./lib/bin/index.js"
