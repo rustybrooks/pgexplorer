@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+import * as fs from 'fs';
 import { sqlFactory } from './sql';
 
 let SQL = null;
@@ -39,12 +41,13 @@ export const tableClassMap = {
 
 export const tableClassMapReversed = Object.fromEntries(Object.entries(tableClassMap).map(k => [k[1], k[0]]));
 
-export function setupDb() {
+export function setupDb(envfile) {
+  const econfig = dotenv.parse(fs.readFileSync(envfile));
   const sqlKey = 'main';
   const protocol = 'http';
-  const writeUrl = `${protocol}://${process.env.PGUSER.replace('%40', '@')}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${
-    process.env.PGPORT
-  }/${process.env.PGDATABASE}`;
+  const writeUrl = `${protocol}://${econfig.PGUSER.replace('%40', '@')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT}/${
+    econfig.PGDATABASE
+  }`;
   const config = {
     sqlKey,
     writeUrl,
@@ -277,4 +280,38 @@ export async function indexes({
       ${SQL.limit(page, limit)}
   `;
   return SQL.select(query, bindvars);
+}
+
+export async function structure() {
+  const out: { [id: string]: any } = {};
+  // const tables = await tables();
+  const tblColumns = await classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
+  tblColumns.forEach(row => {
+    const outKey: string = TableClass[tableClassMapReversed[row.class_type]];
+    // const outKey = row.class_type;
+    if (!(outKey in out)) {
+      out[outKey] = [];
+    }
+    out[outKey].push(row);
+  });
+
+  const constraints = await tableConstraints({ sort: ['constraint_table', 'constraint_name'] });
+  out.constraint = await Promise.all(
+    constraints.map(async row => ({
+      constraint_table: row.constraint_table,
+      constraint_name: row.constraint_name,
+      constraint_type: row.constraint_type,
+      constraint_attribute_columns: await Promise.all(
+        row.constraint_attribute_keys.map(async a => (await lookupAttribute(row.constraint_table_id, a)).attname),
+      ),
+      constraint_foreign_table_attribute_columns: await Promise.all(
+        (row.constraint_foreign_table_attribute_keys || []).map(
+          async a => (await lookupAttribute(row.constraint_foreign_table_id, a)).attname,
+        ),
+      ),
+    })),
+  );
+
+  out.index = await indexes({ sort: ['class_name'] });
+  return out;
 }

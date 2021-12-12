@@ -1,6 +1,5 @@
 #!/usr/bin/env ts-node
 
-import dotenv from 'dotenv';
 import yargs, { describe } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 // import * as JSON from 'JSON';
@@ -9,8 +8,7 @@ import * as db from '../src/db';
 
 const setupDbMiddleware = argv => {
   // eslint-disable-next-line @typescript-eslint/dot-notation
-  dotenv.config({ path: argv['env'] });
-  db.setupDb();
+  db.setupDb(argv['env']);
 };
 
 async function cmdList(options) {
@@ -35,39 +33,25 @@ async function cmdDump(options) {
 }
 
 async function cmdStructure(options) {
-  const out: { [id: string]: any } = {};
-  // const tables = await db.tables();
-  const tblColumns = await db.classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
-  tblColumns.forEach(row => {
-    const outKey: string = db.TableClass[db.tableClassMapReversed[row.class_type]];
-    // const outKey = row.class_type;
-    if (!(outKey in out)) {
-      out[outKey] = [];
-    }
-    out[outKey].push(row);
-  });
-
-  const constraints = await db.tableConstraints({ sort: ['constraint_table', 'constraint_name'] });
-  out.constraint = await Promise.all(
-    constraints.map(async row => ({
-      constraint_table: row.constraint_table,
-      constraint_name: row.constraint_name,
-      constraint_type: row.constraint_type,
-      constraint_attribute_columns: await Promise.all(
-        row.constraint_attribute_keys.map(async a => (await db.lookupAttribute(row.constraint_table_id, a)).attname),
-      ),
-      constraint_foreign_table_attribute_columns: await Promise.all(
-        (row.constraint_foreign_table_attribute_keys || []).map(
-          async a => (await db.lookupAttribute(row.constraint_foreign_table_id, a)).attname,
-        ),
-      ),
-    })),
-  );
-
-  out.index = await db.indexes({ sort: ['class_name'] });
-
-  // console.log();
+  const out = await db.structure();
   fs.writeFileSync(options.output, JSON.stringify(out, null, 2));
+}
+
+async function cmdCompare(options) {
+  const db1 = await db.structure();
+  let db2;
+
+  if (options.env2) {
+    db.setupDb(options.env2);
+    db2 = await db.structure();
+    console.log('from env2');
+  } else if (options.structure) {
+    db2 = JSON.parse(fs.readFileSync(options.structure, 'utf8'));
+    console.log('from structure');
+  }
+
+  console.log(db1);
+  console.log(db2);
 }
 
 const yarg = yargs(hideBin(process.argv));
@@ -98,6 +82,16 @@ yarg.command({
     return y;
   },
   handler: options => cmdStructure(options).then(() => process.exit()),
+});
+
+yarg.command({
+  command: 'compare',
+  builder: y => {
+    y.option('env2', { describe: 'Env file for 2nd database', default: null });
+    y.option('structure', { describe: 'output file from previous structure run', default: 'structure.json' });
+    return y;
+  },
+  handler: options => cmdCompare(options).then(() => process.exit()),
 });
 
 // Add normalizeCredentials to yargs
