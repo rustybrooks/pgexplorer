@@ -91,7 +91,7 @@ export async function tableConstraints({
   schema?: string;
   constraintTypes?: TableConstraint | TableConstraint[];
   sort?: string | string[];
-}) {
+} = {}) {
   const where = ['nsp.nspname = $1'];
   const bindvars = [schema];
   if (table) {

@@ -20,6 +20,12 @@ async function cmdList(options) {
   } else if (['index', 'indexes', 'indices'].includes(options.type)) {
     const indexes = await db.indexes();
     console.table(indexes);
+  } else if (['constraints', 'constraint'].includes(options.type)) {
+    const constraints = (await db.tableConstraints({ sort: ['constraint_table', 'constraint_name'] })).map(row => {
+      const cols = ['constraint_table', 'constraint_name', 'constraint_type', 'constraint_attribute_columns'];
+      return Object.fromEntries(cols.map(c => [c, row[c]]));
+    });
+    console.table(constraints);
   }
 }
 
