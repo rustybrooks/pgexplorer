@@ -56,6 +56,58 @@ async function cmdCompare(options) {
   i2.forEach(i => console.log('+', chalk.green(i)));
 }
 
+async function cmdCheckConstraints(options) {
+  const output: any[] = [];
+
+  const config = JSON.parse(fs.readFileSync(options.config, 'utf8'));
+  const { tableRefs, ignoreTables } = config;
+
+  const tableMap = {};
+  for (const key of Object.keys(tableRefs)) {
+    tableMap[key] = [];
+    for (const col of tableRefs[key]) {
+      const tables = await db.tables({ columns: [col] });
+      tableMap[key].push(...tables.map(row => row.table_name).filter(t => !ignoreTables.includes(t)).map(t => [t, col]));
+    }
+  }
+
+  if (options.table) {
+    console.log('|parent|child|conflicts|percentage|');
+  }
+
+  for (const parentTable of Object.keys(tableMap)) {
+    for (const childTable of tableMap[parentTable]) {
+      const query = `
+          select count(*) as count
+          from ${childTable[0]} c
+          left join ${parentTable} p on (c.${childTable[1]} = p.id)
+          where p.id is null
+      `;
+      console.log(query);
+      const count = await db.SQL.selectOne(query);
+      const countAll = await db.SQL.selectOne(`select count(*) as count from ${childTable[0]}`);
+      const countPct = (100.0 * count.count) / countAll.count;
+
+      if (options.table) {
+        const countStr = `${count.count} / ${countAll.count}|${countPct.toFixed(2)}%`;
+        console.log(`|${parentTable}|${childTable}|${countStr}|`);
+      } else {
+        let countStr = `${count.count} / ${countAll.count} = ${countPct.toFixed(2)}%`;
+        if (countPct < 0.0001) {
+            countStr = chalk.green(countStr);
+        } else if (countPct >= 10) {
+            countStr = chalk.red(countStr);
+        } else if (countPct >= 1) {
+            countStr = chalk.yellow(countStr);
+        }
+        console.log(chalk.magenta(parentTable), '<-', chalk.cyan(`${childTable[0]}(${childTable[1]}`), ': ', countStr);
+      }
+    }
+  }
+}
+
+// ************************************
+
 const yarg = yargs(hideBin(process.argv));
 
 yarg.usage('Usage: <subcommand>');
@@ -94,6 +146,18 @@ yarg.command({
     return y;
   },
   handler: options => cmdCompare(options).then(() => process.exit()),
+});
+
+yarg.command({
+  command: 'check-constraints',
+  builder: y => {
+    y.option('config', { describe: 'config file describing new constraints', default: 'structure.json' });
+    y.boolean('table');
+    y.describe('table', 'Output in JIRA-compliant table markdown');
+    y.default('table', false);
+    return y;
+  },
+  handler: options => cmdCheckConstraints(options).then(() => process.exit()),
 });
 
 // Add normalizeCredentials to yargs

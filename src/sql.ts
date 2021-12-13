@@ -45,8 +45,8 @@ export class SQLBase {
     return `${prefix ? `${prefix} ` : ''}${clause2.join(joinWith2)}`;
   }
 
-  inClause(inList: any[]) {
-    return inList.map((el, i) => `$${i + 1}`).join(',');
+  inClause(inList: any[], offset = 0) {
+    return inList.map((el, i) => `$${offset + i + 1}`).join(',');
   }
 
   orderBy(sortKey: string | string[]) {

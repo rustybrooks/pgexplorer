@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import * as fs from 'fs';
 import { sqlFactory } from './sql';
 
-let SQL = null;
+export let SQL = null;
 
 export enum TableConstraint {
   'all',
@@ -35,7 +35,7 @@ export const tableClassMap = {
   [TableClass.view]: 'v',
   [TableClass.materializedView]: 'm',
   [TableClass.compositeType]: 'c',
-  [TableClass.table]: 't',
+  [TableClass.toastTable]: 't',
   [TableClass.foreignTable]: 'f',
 };
 
@@ -70,16 +70,27 @@ export async function lookupAttribute(tableId, attributeKey) {
   return attributeMap[attrKey];
 }
 
-export async function tables({ schema = 'public', sort = 'table_name' }: { schema?: string; sort?: string | string[] } = {}) {
-  const where = ['schemaname=$1'];
+export async function tables({
+ schema = 'public', columns = null, sort = 'table_name', page = null, limit = null,
+}: {
+ schema?: string, columns?: string[], sort?: string | string[], page?: number, limit?: number
+} = {}) {
+  const where = ['n.nspname = $1', `c.relkind='${tableClassMap[TableClass.table]}'`];
   const bindvars = [schema];
+
+  if (columns) {
+    where.push(`c.oid in (select attrelid from pg_attribute a where a.attname in (${SQL.inClause(columns, 1)}))`);
+    bindvars.push(...columns);
+  }
+
   const query = `
-    select tablename as table_name, hasindexes, hasrules, hastriggers, schemaname as schema_name
-    from pg_catalog.pg_tables
+    select relname as table_name, nspname as schema_name
+    from pg_catalog.pg_namespace n
+    join pg_catalog.pg_class c on (n.oid=c.relnamespace)
     ${SQL.whereClause(where)}
     ${SQL.orderBy(sort)}
+    ${SQL.limit(page, limit)}
   `;
-  console.log(query);
   return SQL.select(query, bindvars);
 }
 
@@ -164,19 +175,19 @@ export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema
   return out;
 }
 
-// change to use pg_tables?
-export async function tablesWithColumn({ column }: { column: string }) {
-  const query = `
-    select t.table_name
-    from information_schema.tables t
-    inner join information_schema.columns c using (table_name, table_schema)
-    where c.column_name = '${column}'
-    and t.table_schema not in ('information_schema', 'pg_catalog')
-    and t.table_type = 'BASE TABLE'
-    order by t.table_schema
-  `;
-  return (await SQL.select(query)).map(row => row.table_name);
-}
+// // change to use pg_tables?
+// export async function tablesWithColumn({ column }: { column: string }) {
+//   const query = `
+//     select t.table_name
+//     from information_schema.tables t
+//     inner join information_schema.columns c using (table_name, table_schema)
+//     where c.column_name = '${column}'
+//     and t.table_schema not in ('information_schema', 'pg_catalog')
+//     and t.table_type = 'BASE TABLE'
+//     order by t.table_schema
+//   `;
+//   return (await SQL.select(query)).map(row => row.table_name);
+// }
 
 export async function indexFromTableColumns({ table, columns }: { table: string; columns: string[] }) {
   const query = `
