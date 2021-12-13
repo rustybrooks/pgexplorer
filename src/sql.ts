@@ -14,6 +14,8 @@ interface SQLBaseParams {
 export class SQLBase {
   pool = null;
 
+  writeUrl = null;
+
   constructor({ writeUrl, poolSize = 5 }: SQLBaseParams) {
     const params = new URL(writeUrl);
 
@@ -30,6 +32,7 @@ export class SQLBase {
       maxUses: 1000, // close (and replace) a connection after it has been used 7500 times (see below for discussion)
     };
     this.pool = new pg.Pool(config);
+    this.writeUrl = writeUrl;
   }
 
   whereClause(clauseList: string | string[], joinWith = 'and', prefix = 'where'): string {

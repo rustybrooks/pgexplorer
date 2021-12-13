@@ -41,9 +41,8 @@ export const tableClassMap = {
 
 export const tableClassMapReversed = Object.fromEntries(Object.entries(tableClassMap).map(k => [k[1], k[0]]));
 
-export function setupDb(envfile) {
+export function setupDb(envfile, sqlKey = 'default') {
   const econfig = dotenv.parse(fs.readFileSync(envfile));
-  const sqlKey = 'main';
   const protocol = econfig.PGSSL === 'true' ? 'https' : 'http';
   const writeUrl = `${protocol}://${econfig.PGUSER.replace('@', '%40')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT || 5432}/${
     econfig.PGDATABASE
@@ -263,19 +262,22 @@ export async function indexes({
   page?: number;
   limit?: number;
 } = {}) {
-  const where = ['n.nspname=$1', "relkind='i'"];
+  const where = ['n.nspname=$1', "c.relkind='i'"];
   const bindvars = [schema];
   const query = `
       select
-          c.relname as class_name,
+          ct.relname as table_name,
+          c.relname as index_name,
           array_agg(a.attname) as column_names,
-         indisunique, indisprimary
+          indisunique as is_unique, 
+          indisprimary as is_primary
       from pg_catalog.pg_namespace n
       join pg_catalog.pg_class c on (n.oid=c.relnamespace)
       join pg_catalog.pg_index i on (i.indexrelid=c.oid)
       join pg_catalog.pg_attribute a on (a.attrelid=c.oid)
+      join pg_catalog.pg_class ct on (ct.oid=i.indrelid)
       ${SQL.whereClause(where)}
-      group by class_name, indisunique, indisprimary
+      group by table_name, index_name, indisunique, indisprimary
       ${SQL.orderBy(sort)}
       ${SQL.limit(page, limit)}
   `;
@@ -312,6 +314,6 @@ export async function structure() {
     })),
   );
 
-  out.index = await indexes({ sort: ['class_name'] });
+  out.index = await indexes({ sort: ['index_name'] });
   return out;
 }

@@ -1,14 +1,15 @@
 #!/usr/bin/env ts-node
+import chalk from 'chalk';
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import * as fs from 'fs';
-import * as jsondiff from 'json-diff';
 import * as db from '../src/db';
+import * as diff from '../src/diff';
 
 const setupDbMiddleware = argv => {
   // eslint-disable-next-line @typescript-eslint/dot-notation
-  db.setupDb(argv['env']);
+  db.setupDb(argv['env'], argv['env']);
 };
 
 async function cmdList(options) {
@@ -42,17 +43,17 @@ async function cmdCompare(options) {
   let db2;
 
   if (options.env2) {
-    db.setupDb(options.env2);
+    db.setupDb(options.env2, options.env2);
     db2 = await db.structure();
-    console.log('from env2');
   } else if (options.structure) {
     db2 = JSON.parse(fs.readFileSync(options.structure, 'utf8'));
-    console.log('from structure');
   }
 
-  console.log(jsondiff.diffString(db1, db2));
-  // console.log(db1);
-  // console.log(db2);
+  // console.log(jsondiff.diffString(db1, db2));
+  console.log(chalk.magenta('======== indexes'));
+  const [i1, i2] = diff.diffIndexes(db1.index, db2.index);
+  i1.forEach(i => console.log('-', chalk.red(i)));
+  i2.forEach(i => console.log('+', chalk.green(i)));
 }
 
 const yarg = yargs(hideBin(process.argv));

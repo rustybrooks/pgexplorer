@@ -39,7 +39,7 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "chalk": "latest",
+    "chalk": "4.1.2",
     "dotenv": "latest",
     "pg": "latest",
     "yargs": "latest",
