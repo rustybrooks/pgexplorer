@@ -44,8 +44,8 @@ export const tableClassMapReversed = Object.fromEntries(Object.entries(tableClas
 export function setupDb(envfile) {
   const econfig = dotenv.parse(fs.readFileSync(envfile));
   const sqlKey = 'main';
-  const protocol = 'http';
-  const writeUrl = `${protocol}://${econfig.PGUSER.replace('%40', '@')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT}/${
+  const protocol = econfig.PGSSL === 'true' ? 'https' : 'http';
+  const writeUrl = `${protocol}://${econfig.PGUSER.replace('@', '%40')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT || 5432}/${
     econfig.PGDATABASE
   }`;
   const config = {

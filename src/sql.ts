@@ -18,7 +18,7 @@ export class SQLBase {
     const params = new URL(writeUrl);
 
     const config = {
-      user: params.username,
+      user: params.username.replace('%40', '@'),
       password: params.password,
       host: params.hostname,
       port: params.port,
