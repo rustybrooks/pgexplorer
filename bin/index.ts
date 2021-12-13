@@ -57,8 +57,6 @@ async function cmdCompare(options) {
 }
 
 async function cmdCheckConstraints(options) {
-  const output: any[] = [];
-
   const config = JSON.parse(fs.readFileSync(options.config, 'utf8'));
   const { tableRefs, ignoreTables } = config;
 
@@ -66,7 +64,7 @@ async function cmdCheckConstraints(options) {
   for (const key of Object.keys(tableRefs)) {
     tableMap[key] = [];
     for (const col of tableRefs[key]) {
-      const tables = await db.tables({ columns: [col] });
+      const tables = await db.tables({ columns: [col], sort: ['table_name'] });
       tableMap[key].push(...tables.map(row => row.table_name).filter(t => !ignoreTables.includes(t)).map(t => [t, col]));
     }
   }
@@ -80,10 +78,10 @@ async function cmdCheckConstraints(options) {
       const query = `
           select count(*) as count
           from ${childTable[0]} c
-          left join ${parentTable} p on (c.${childTable[1]} = p.id)
+          left join ${parentTable} p on (c."${childTable[1]}" = p.id)
           where p.id is null
       `;
-      console.log(query);
+      // console.log(query);
       const count = await db.SQL.selectOne(query);
       const countAll = await db.SQL.selectOne(`select count(*) as count from ${childTable[0]}`);
       const countPct = (100.0 * count.count) / countAll.count;
@@ -100,7 +98,7 @@ async function cmdCheckConstraints(options) {
         } else if (countPct >= 1) {
             countStr = chalk.yellow(countStr);
         }
-        console.log(chalk.magenta(parentTable), '<-', chalk.cyan(`${childTable[0]}(${childTable[1]}`), ': ', countStr);
+        console.log(chalk.magenta(parentTable), '<-', chalk.cyan(`${childTable[0]}(${childTable[1]})`), ': ', countStr);
       }
     }
   }
