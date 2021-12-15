@@ -161,7 +161,6 @@ export class SQLBase {
       const cursor = await client.query(new Cursor(query, bindvars));
       while (true) {
         const rows = await cursor.read(batchSize);
-        console.log('rows', rows.length);
         if (!rows.length) {
           break;
         }

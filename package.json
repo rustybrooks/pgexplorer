@@ -51,7 +51,8 @@
     "pg": "latest",
     "pg-cursor": "latest",
     "sprintf-js": "latest",
-    "yargs": "latest"
+    "yargs": "latest",
+    "csv-writer": "latest"
   },
   "bin": {
     "pgexplorer": "./lib/bin/index.js"

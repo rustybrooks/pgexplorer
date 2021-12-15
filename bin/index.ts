@@ -1,9 +1,10 @@
 #!/usr/bin/env ts-node
 import chalk from 'chalk';
-
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import * as fs from 'fs';
+import * as csv from 'csv-writer';
+
 import * as db from '../src/db';
 import * as diff from '../src/diff';
 
@@ -29,8 +30,40 @@ async function cmdList(options) {
 }
 
 async function cmdDump(options) {
-  const data = await db.dumpTable({ table: options.table });
-  console.table(data);
+  let fh = null;
+
+  const dumpRows = (rows) => {
+    if (!rows.length) return;
+    if (options.output) {
+      if (fh === null) {
+        fh = csv.createObjectCsvWriter({
+          path: options.output,
+          header: Object.keys(rows[0]).map(k => ({ id: k, title: k })),
+        });
+      }
+      fh.writeRecords(rows);
+      console.log(`wrote ${rows.length}`);
+    } else {
+      console.table(rows);
+    }
+  };
+
+  const gen = options.table.split(' ') === 1 ?
+    await db.dumpTable({ table: options.table }) :
+    await db.dumpQuery({ query: options.table });
+
+  let these = [];
+  while (true) {
+    const i = await gen.next();
+    if (i.done) break;
+
+    these.push(i.value);
+    if (these.length === 1000) {
+      dumpRows(these);
+      these = [];
+    }
+  }
+  dumpRows(these);
 }
 
 async function cmdStructure(options) {
@@ -124,6 +157,10 @@ yarg.command({
 
 yarg.command({
   command: 'dump <table>',
+  builder: y => {
+    y.option('output', { describe: 'output file name', default: 'dump.csv' });
+    return y;
+  },
   handler: options => cmdDump(options).then(() => process.exit()),
 });
 
