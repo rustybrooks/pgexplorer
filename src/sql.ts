@@ -71,7 +71,7 @@ export class SQLBase {
     return `offset ${(page - 1) * limit} limit ${limit}`;
   }
 
-  async insert(tableName, data, batch_size = 200, on_duplicate = null, returning = null) {
+  async insert(tableName, data, batch_size = 200, on_duplicate = null, returning = false) {
     if (Array.isArray(data)) {
       console.log('batch size not handled', batch_size);
     }
@@ -84,23 +84,31 @@ export class SQLBase {
 
     const query = `
         insert into ${tableName}(${columns.join(', ')})
-        values (${values.join(', ')})
-            ${on_duplicate || ''} ${returning ? 'returning *' : ''}
+        values (${values.join(', ')}) 
+        ${on_duplicate || ''} ${returning ? 'returning *' : ''}
     `;
+
     const client = await this.pool.connect();
+    console.log('insert', query, data);
     return (await client.query(query, data)).rows; // what to return?
   }
 
   async update(tableName, where, data = null, whereData = null) {
     const bindvars = { ...data, ...whereData };
-    const bindMap = Object.fromEntries(Object.keys(bindvars).map((c, i) => [c, i]));
+    const bindnames = Object.keys(bindvars);
+    const bindMap = Object.fromEntries(bindnames.map((c, i) => [c, i]));
     const setValues = Object.keys(data).map(c => `$c=$${bindMap[c]}`);
     const query = `
         update ${tableName} set ${setValues.join(', ')}
         ${this.whereClause(where)}
     `;
     const client = await this.pool.connect();
-    return (await client.query(query, bindvars)).rows;
+    return (
+      await client.query(
+        query,
+        bindnames.map(k => bindvars[k]),
+      )
+    ).rows;
   }
 
   async delete(tableName, where, data = null) {
