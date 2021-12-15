@@ -162,13 +162,13 @@ export async function tableConstraints({
 
 export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema?: string }) {
   const tbls = (await tables({ schema })).map(t => t.table_name);
-  let constraints = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
+  let constraints : any = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
 
   const out = [];
   while (constraints.length) {
-    const constraintMap = Object.fromEntries(constraints.map(c => [c.constraint_foreign_table, c.constraint_table]));
-    out.push(...tbls.filter(t => !out.includes(t) && !(t in constraintMap)));
-    constraints = constraints.filter(c => !out.includes(c.constraint_table));
+    const ourconstraintMap = Object.fromEntries(constraints.map((c : any) => [c.constraint_foreign_table, c.constraint_table]));
+    out.push(...tbls.filter(t => !out.includes(t) && !(t in ourconstraintMap)));
+    constraints = constraints.filter((c : any) => !out.includes(c.constraint_table));
   }
 
   out.push(...tbls.filter(t => !out.includes(t)));
@@ -215,11 +215,13 @@ export async function indexFromTableColumns({ table, columns }: { table: string;
 
 export async function dumpTable({
   table,
+  batchSize = 1000,
   sort = null,
   page = null,
   limit = null,
 }: {
   table: string;
+  batchSize?: number;
   sort?: string | string[];
   page?: number;
   limit?: number;
@@ -230,7 +232,18 @@ export async function dumpTable({
       ${SQL.orderBy(sort)}
       ${SQL.limit(page, limit)}
   `;
-  return SQL.select(query);
+  return SQL.selectGenerator(query, [], batchSize);
+}
+
+export async function dumpQuery(
+{
+  query,
+  batchSize = 1000,
+}: {
+  query: string;
+  batchSize?: number;
+}) {
+  return SQL.selectGenerator(query, [], batchSize);
 }
 
 export async function classColumns({
@@ -310,7 +323,7 @@ export async function structure() {
 
   const constraints = await tableConstraints({ sort: ['constraint_table', 'constraint_name'] });
   out.constraint = await Promise.all(
-    constraints.map(async row => ({
+    constraints.map(async (row : any) => ({
       constraint_table: row.constraint_table,
       constraint_name: row.constraint_name,
       constraint_type: row.constraint_type,
