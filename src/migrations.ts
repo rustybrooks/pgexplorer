@@ -1,7 +1,6 @@
-/*
 import { sprintf } from 'sprintf-js';
 
-import * as sql from './sql';
+import * as pgexplorer from '.';
 
 export class MigrationStatement {
   statement: string = null;
@@ -25,14 +24,14 @@ export class MigrationStatement {
     console.log(formatted);
   }
 
-  execute(SQL: sql.SQLBase, dryRun = false, logs: string[] = null) {
+  async execute(SQL: pgexplorer.sql.SQLBase, dryRun = false, logs: string[] = null) {
     if (this.message) {
       this.log(logs, '%s', [this.message]);
     }
 
     try {
       this.log(logs, 'SQL Execute: %s', [this.statement]);
-      SQL.execute(this.statement, null, dryRun, false);
+      await SQL.execute(this.statement, null, dryRun, false);
     } catch (e) {
       this.log(logs, 'Error while running statment: %r', e);
       if (!this.ignoreError) {
@@ -42,53 +41,49 @@ export class MigrationStatement {
   }
 }
 
-const registry = {};
 export class Migration {
-  version = null;
+  static registry: { [id: string]: Migration } = {};
 
-  message = null;
+  version: number = null;
 
-  logs = null;
+  message: string = null;
 
-  statements = null;
+  logs: string[] = null;
 
-  constructor(version, message) {
-    registry[version] = this;
+  statements: MigrationStatement[] = null;
+
+  constructor(version: number, message: string) {
+    Migration.registry[version] = this;
     this.version = version;
     this.message = message;
     this.statements = [];
     this.logs = [];
   }
 
-  log(logs, msg, args = null) {
-    const formatted = sprintf(msg, ...args);
+  static log(logs: string[], msg: string, args: any[] = null) {
+    const formatted = sprintf(msg, ...(args || []));
     logs.push(formatted);
     console.log(formatted);
   }
 
-  async migrate(SQL: sql.SQLBase, dryRun = false, initial = false, apply_versions = null) {
-    const logs = [];
+  static async migrate(SQL: pgexplorer.sql.SQLBase, initial = false, applyVersions: number[] = null, dryRun = false) {
+    const logs: string[] = [];
 
     await SQL.execute(`
-        create table if not exists migrations
-        (
-            migration_id
-            serial
-            primary
-            key,
-            migration_datetime
-            timestamp,
-            version_pre
-            int,
-            version_post
-            int
-        )`,
-    );
+        create table if not exists migrations (
+            migration_id serial primary key,
+            migration_datetime timestamp,
+            version_pre int,
+            version_post int
+        )
+    `);
 
-    const res = await SQL.selectOne('select max(versionPost) as version from migrations');
+    const res = await SQL.selectOne('select max(version_post) as version from migrations');
     const { version } = res;
-    let todo = Object.keys(registry).filter(x => x > version);
-    todo.push(...apply_versions || []);
+    let todo = Object.keys(Migration.registry)
+      .filter(x => initial || x > version)
+      .map(x => parseInt(x, 10));
+    todo.push(...(applyVersions || []));
     todo = todo.sort();
     this.log(logs, `Version = ${version}, todo = ${todo}, initial=${initial}`);
 
@@ -96,32 +91,33 @@ export class Migration {
     let versionPost = version;
 
     for (const v of todo) {
-      this.log(logs, 'Running migration %d: %s', [v, registry[v].message]);
-      for (const statement of registry[v].statements) {
-        statement.execute(SQL, dryRun, logs);
+      Migration.log(logs, 'Running migration %d: %s', [v, Migration.registry[v].message]);
+      for (const statement of Migration.registry[v].statements) {
+        console.log('before statement');
+        await statement.execute(SQL, dryRun, logs);
+        console.log('after statement');
       }
-
+      console.log('migration done 1');
       if (v > versionPre) {
         versionPost = v;
       }
+      console.log('migration done 2');
     }
 
+    console.log('migration inserting');
     if (todo.length && !dryRun) {
-      SQL.insert(
-        'migrations',
-        {
-          migration_datetime: 'datetime.datetime.utcnow()',
-          versionPre: version,
-          versionPost,
-        },
-      );
+      await SQL.insert('migrations', {
+        migration_datetime: new Date(),
+        version_pre: version,
+        version_post: versionPost,
+      });
     }
 
+    console.log('migration returning');
     return logs;
   }
 
-  addStatement(statement: string, ignoreError: boolean, message: string) {
+  addStatement(statement: string, ignoreError = false, message: string = null) {
     this.statements.push(new MigrationStatement(statement, message, ignoreError));
   }
 }
-*/

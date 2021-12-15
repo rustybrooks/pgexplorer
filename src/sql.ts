@@ -169,7 +169,7 @@ export class SQLBase {
 
   async selectZeroOrOne(query, bindvars = []) {
     const res = await this.selectOne(query, bindvars, true);
-    res.length ? res : null;
+    return res.length ? res : null;
   }
 }
 
