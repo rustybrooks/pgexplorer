@@ -88,8 +88,7 @@ export class SQLBase {
             ${on_duplicate || ''} ${returning ? 'returning *' : ''}
     `;
     const client = await this.pool.connect();
-    client.query(query, data); // what to return?
-    return null;
+    return (await client.query(query, data)).rows; // what to return?
   }
 
   async update(tableName, where, data = null, whereData = null) {
@@ -101,23 +100,23 @@ export class SQLBase {
         ${this.whereClause(where)}
     `;
     const client = await this.pool.connect();
-    client.query(query, bindvars); // what to return?
+    return (await client.query(query, bindvars)).rows;
   }
 
   async delete(tableName, where, data = null) {
     const query = `delete from ${tableName} ${this.whereClause(where)}`;
     const client = await this.pool.connect();
-    client.query(query, data || []); // what to return?
+    return (await client.query(query, data || [])).rows;
   }
 
-  async execute(query, data : any[] = null, dryRun = false, log = false) {
+  async execute(query, data: any[] = null, dryRun = false, log = false) {
     if (dryRun || log) {
       console.log(`SQL Run: ${query}`);
     }
-    if (dryRun) return;
+    if (dryRun) return null;
 
     const client = await this.pool.connect();
-    client.query(query, data || []);
+    return (await client.query(query, data || [])).rows;
   }
 
   async select(query, bindvars = []) {
