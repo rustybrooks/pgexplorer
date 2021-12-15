@@ -238,12 +238,14 @@ export async function dumpTable({
 export async function dumpQuery(
 {
   query,
+  bindvars = [],
   batchSize = 1000,
 }: {
   query: string;
+  bindvars: any[];
   batchSize?: number;
 }) {
-  return SQL.selectGenerator(query, [], batchSize);
+  return SQL.selectGenerator(query, bindvars, batchSize);
 }
 
 export async function classColumns({
