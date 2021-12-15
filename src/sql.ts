@@ -38,7 +38,7 @@ export class SQLBase {
   }
 
   whereClause(clauseList: string | string[], joinWith = 'and', prefix = 'where'): string {
-    if (!clauseList) {
+    if (!clauseList.length) {
       return '';
     }
 
@@ -99,11 +99,11 @@ export class SQLBase {
     }
   }
 
-  async update(tableName, where, data = null, whereData = null) {
+  async update(tableName, where, whereData = null, data = null) {
     const bindvars = { ...data, ...whereData };
     const bindnames = Object.keys(bindvars);
     const bindMap = Object.fromEntries(bindnames.map((c, i) => [c, i]));
-    const setValues = Object.keys(data).map(c => `$c=$${bindMap[c] + 1}`);
+    const setValues = Object.keys(data).map(c => `${c}=$${bindMap[c] + 1}`);
     const query = `
         update ${tableName} set ${setValues.join(', ')}
         ${this.whereClause(where)}
@@ -176,7 +176,9 @@ export class SQLBase {
 
   async selectColumn(query, bindvars = []) {
     const rows = await this.select(query, bindvars);
-    if (!rows.length) { return []; }
+    if (!rows.length) {
+      return [];
+    }
     const col = Object.keys(rows[0])[0];
     return rows.map(row => row[col]);
   }
@@ -187,7 +189,9 @@ export class SQLBase {
       const res = await client.query(query, bindvars);
       const cols = res.fields.map(x => x.name);
       const out = Object.fromEntries(cols.map(c => [c, []]));
-      res.rows.forEach(row => { cols.forEach(c => out[c].push(row[c])); });
+      res.rows.forEach(row => {
+        cols.forEach(c => out[c].push(row[c]));
+      });
       return out;
     } finally {
       client.release();
@@ -195,9 +199,7 @@ export class SQLBase {
   }
 }
 
-export function sqlFactory({
- writeUrl, poolSize = 5, sqlKey = 'default',
-}: SQLBaseParams) {
+export function sqlFactory({ writeUrl, poolSize = 5, sqlKey = 'default' }: SQLBaseParams) {
   if (!(sqlKey in sqlObjects)) {
     sqlObjects[sqlKey] = new SQLBase({
       writeUrl,

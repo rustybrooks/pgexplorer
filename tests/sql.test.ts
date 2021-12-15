@@ -4,7 +4,7 @@ const SQL = sql.sqlFactory({
   writeUrl: 'http://wombat:1wombat2@localhost:5434/pgexplorer_test',
 });
 
-describe('TestSQLBasic', () => {
+describe('Test SQL Basic', () => {
   beforeEach(async () => {
     await SQL.execute('drop table if exists foo');
     await SQL.execute('create table foo(bar integer, baz varchar(20))');
@@ -42,8 +42,12 @@ describe('TestSQLBasic', () => {
     await SQL.insert('foo', { bar: 2, baz: 'bbb' });
     await SQL.insert('foo', { bar: 2, baz: 'ccc' });
     expect(await SQL.selectOne('select * from foo where bar=1')).toStrictEqual({ bar: 1, baz: 'aaa' });
-    await expect(async () => { await SQL.selectOne('select * from foo where bar=3'); }).rejects.toThrow(Error);
-    await expect(async () => { await SQL.selectOne('select * from foo where bar=2'); }).rejects.toThrow(Error);
+    await expect(async () => {
+      await SQL.selectOne('select * from foo where bar=3');
+    }).rejects.toThrow(Error);
+    await expect(async () => {
+      await SQL.selectOne('select * from foo where bar=2');
+    }).rejects.toThrow(Error);
   });
 
   it('test_selectZeroOrOne', async () => {
@@ -52,8 +56,121 @@ describe('TestSQLBasic', () => {
     await SQL.insert('foo', { bar: 2, baz: 'ccc' });
     expect(await SQL.selectOne('select * from foo where bar=1')).toStrictEqual({ bar: 1, baz: 'aaa' });
     expect(await SQL.selectZeroOrOne('select * from foo where bar=3')).toBe(null);
-    await expect(async () => { await SQL.selectZeroOrOne('select * from foo where bar=2'); }).rejects.toThrow(Error);
+    await expect(async () => {
+      await SQL.selectZeroOrOne('select * from foo where bar=2');
+    }).rejects.toThrow(Error);
   });
+
+  it('test_update_delete', async () => {
+    await SQL.insert('foo', { bar: 1, baz: 'aaa' });
+    await SQL.insert('foo', { bar: 2, baz: 'bbb' });
+    await SQL.insert('foo', { bar: 2, baz: 'ccc' });
+    expect(await SQL.select('select * from foo order by bar')).toStrictEqual([
+      { bar: 1, baz: 'aaa' },
+      { bar: 2, baz: 'bbb' },
+      { bar: 2, baz: 'ccc' },
+    ]);
+
+    await SQL.update('foo', 'bar=$1', [2], { baz: 'xxx' });
+    expect(await SQL.select('select * from foo order by bar')).toStrictEqual([
+      { bar: 1, baz: 'aaa' },
+      { bar: 2, baz: 'xxx' },
+      { bar: 2, baz: 'xxx' },
+    ]);
+
+    await SQL.delete('foo', 'bar=$1', [1]);
+    expect(await SQL.select('select * from foo order by bar')).toStrictEqual([
+      { bar: 2, baz: 'xxx' },
+      { bar: 2, baz: 'xxx' },
+    ]);
+  });
+});
+
+describe('Test Helpers', () => {
+  it('test_inClause', () => {
+    const mylist = [1, 2, 3, 4, 5];
+    const expected = '$1,$2,$3,$4,$5';
+    expect(expected).toStrictEqual(SQL.inClause(mylist));
+  });
+
+  it('test_whereClause', () => {
+    expect(SQL.whereClause([])).toStrictEqual('');
+    expect(SQL.whereClause(['a=b'])).toStrictEqual('where a=b');
+    expect(SQL.whereClause('a=b')).toStrictEqual('where a=b');
+    expect(SQL.whereClause(['a=b'], 'and', 'and')).toStrictEqual('and a=b');
+    expect(SQL.whereClause(['a=b'], 'and', '')).toStrictEqual('a=b');
+    expect(SQL.whereClause(['a=b', 'b=c'])).toStrictEqual('where a=b and b=c');
+    expect(SQL.whereClause(['a=b', 'b=c'], 'or')).toStrictEqual('where a=b or b=c');
+  });
+
+  it('test_', async () => {});
+  it('test_', async () => {});
+  it('test_', async () => {});
+
+  /*
+    def test_orderby(self):
+        self.assertEquals("", SQL.orderby(None))
+        self.assertEquals("order by foo asc", SQL.orderby(None, "foo"))
+        self.assertEquals("order by foo desc", SQL.orderby(None, "-foo"))
+        self.assertEquals("order by bar asc", SQL.orderby("bar", "foo"))
+        self.assertEquals("order by bar desc", SQL.orderby("-bar", "foo"))
+
+        self.assertEquals("order by foo asc", SQL.orderby(None, ("foo", "asc")))
+        self.assertEquals("order by foo desc", SQL.orderby(None, ("foo", "desc")))
+        self.assertEquals("order by bar asc", SQL.orderby("bar", ("foo", "asc")))
+        self.assertEquals("order by bar desc", SQL.orderby("-bar", ("foo", "asc")))
+
+        self.assertEquals("order by bar asc", SQL.orderby(("bar", "asc"), None))
+        self.assertEquals("order by bar desc", SQL.orderby(("bar", "desc"), None))
+
+        self.assertEqual("", SQL.orderby(1))
+
+    def test_limit(self):
+        self.assertEquals("", SQL.limit(start=0, limit=0))
+        self.assertEquals("limit 10,1", SQL.limit(start=10, limit=0))
+        self.assertEquals("limit 10,10", SQL.limit(start=10, limit=10))
+        self.assertEquals("limit 10", SQL.limit(start=0, limit=10))
+        self.assertEquals("limit 10", SQL.limit(page=1, limit=10))
+        self.assertEquals("limit 10,10", SQL.limit(page=2, limit=10))
+
+    def test_chunked(self):
+        input = list(range(8))
+        self.assertEqual(
+            [list(x) for x in chunked(input, 3)], [[0, 1, 2], [3, 4, 5], [6, 7]]
+        )
+
+    def test_auto_where_mysql(self):
+        SQL.mysql = True
+        SQL.postgres = False
+
+        w, b = SQL.auto_where(a=1, b=2, c=3)
+        self.assertEqual(w, ["a=%s", "b=%s", "c=%s"])
+        self.assertEqual(b, [1, 2, 3])
+
+        w, b = SQL.auto_where(a=1, b=2, c=3, asdict=True)
+        self.assertEqual(w, ["a=%(a)s", "b=%(b)s", "c=%(c)s"])
+        self.assertEqual(b, {"a": 1, "b": 2, "c": 3})
+
+    def test_process_date(self):
+        self.assertEqual(SQL.process_date(""), None)
+        self.assertEqual(SQL.process_date(None), None)
+        self.assertEqual(
+            SQL.process_date(None, "1900-01-01"), datetime.datetime(1900, 1, 1)
+        )
+        self.assertEqual(
+            SQL.process_date("2020-01-01", strip_timezone=False),
+            datetime.datetime(2020, 1, 1, tzinfo=pytz.utc),
+        )
+        self.assertEqual(
+            SQL.process_date("2020-01-01", strip_timezone=True),
+            datetime.datetime(2020, 1, 1),
+        )
+        self.assertEqual(
+            SQL.process_date("2020-01-01T10:10:10", strip_timezone=True),
+            datetime.datetime(2020, 1, 1, 10, 10, 10),
+        )
+
+ */
 });
 
 /*
@@ -102,38 +219,6 @@ class TestTransactions(unittest.TestCase):
         self.assertEqual(
             SQL.result_count(True, r, count_query),
             {"results": [{"bar": 1}, {"bar": 2}], "count": 2},
-        )
-
-    def test_update_delete(self):
-        SQL.insert("foo", {"bar": 1, "baz": "aaa"})
-        SQL.insert("foo", {"bar": 2, "baz": "bbb"})
-        SQL.insert("foo", {"bar": 2, "baz": "ccc"})
-
-        self.assertEqual(
-            list(SQL.select_foreach("select * from foo order by baz")),
-            [
-                {"bar": 1, "baz": "aaa"},
-                {"bar": 2, "baz": "bbb"},
-                {"bar": 2, "baz": "ccc"},
-            ],
-        )
-
-        SQL.update("foo", where="bar=%s", where_data=[2], data={"baz": "xxx"})
-
-        self.assertEqual(
-            list(SQL.select_foreach("select * from foo order by baz")),
-            [
-                {"bar": 1, "baz": "aaa"},
-                {"bar": 2, "baz": "xxx"},
-                {"bar": 2, "baz": "xxx"},
-            ],
-        )
-
-        SQL.delete("foo", where="bar=%s", data=[1])
-
-        self.assertEqual(
-            list(SQL.select_foreach("select * from foo order by baz")),
-            [{"bar": 2, "baz": "xxx"}, {"bar": 2, "baz": "xxx"}],
         )
 
     @SQL.is_transaction
@@ -264,12 +349,6 @@ class TestTransactions(unittest.TestCase):
         SQL.insert("foo", data)
         vals = list(SQL.select_column("select bar from foo order by bar"))
         self.assertEqual(vals, list(range(num)))
-
-    def test_ensure_table(self):
-        SQL.execute("drop table if exists xxx")
-        SQL.ensure_table("xxx", "foo integer", dry_run=True)
-        SQL.ensure_table("xxx", "foo integer", dry_run=False, drop_first=False)
-        SQL.ensure_table("xxx", "foo integer", dry_run=True, drop_first=True)
 
     def test_execute_fail(self):
         with self.assertRaises(Exception):
