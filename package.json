@@ -1,6 +1,6 @@
 {
   "name": "@rustybrooks/pgexplorer",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Expore postgres stuff",
   "exports": {
     ".": "./lib/src/index.js",
@@ -9,7 +9,7 @@
   },
   "main": "./lib/src/index.js",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "rm -rf lib && tsc -p .",
     "packlist": "npx npm-packlist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
