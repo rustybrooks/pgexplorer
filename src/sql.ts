@@ -9,6 +9,8 @@ interface SQLBaseParams {
   poolSize?: number;
   writerIsReader?: boolean;
   sqlKey?: string;
+  password?: string;
+  database?: string;
 }
 
 export class SQLBase {
@@ -72,7 +74,6 @@ export class SQLBase {
   }
 
   async insert(tableName, data, batch_size = 200, on_duplicate = null, returning = false) {
-    console.log('insert start', tableName, data);
     if (Array.isArray(data)) {
       console.log('batch size not handled', batch_size);
     }
@@ -91,7 +92,6 @@ export class SQLBase {
 
     const client = await this.pool.connect();
     const bindvars = columns.map(c => data[c]);
-    console.log('insert', query, bindvars);
     try {
       return (await client.query(query, bindvars)).rows; // what to return?
     } finally {
@@ -158,7 +158,9 @@ export class SQLBase {
     const client = await this.pool.connect();
     try {
       const res = await client.query(query, bindvars);
+      console.log('len', res.rows.length, allowZero);
       if (res.rows.length > 1 || (!allowZero && res.rows.length === 0)) {
+        console.log('throw');
         throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
       }
       return res.rows[0] || [];
@@ -171,9 +173,31 @@ export class SQLBase {
     const res = await this.selectOne(query, bindvars, true);
     return res.length ? res : null;
   }
+
+  async selectColumn(query, bindvars = []) {
+    const rows = await this.select(query, bindvars);
+    if (!rows.length) { return []; }
+    const col = Object.keys(rows[0])[0];
+    return rows.map(row => row[col]);
+  }
+
+  async selectColumns(query, bindvars = []) {
+    const client = await this.pool.connect();
+    try {
+      const res = await client.query(query, bindvars);
+      const cols = res.fields.map(x => x.name);
+      const out = Object.fromEntries(cols.map(c => [c, []]));
+      res.rows.forEach(row => { cols.forEach(c => out[c].push(row[c])); });
+      return out;
+    } finally {
+      client.release();
+    }
+  }
 }
 
-export function sqlFactory({ writeUrl, poolSize = 5, sqlKey }: SQLBaseParams) {
+export function sqlFactory({
+ writeUrl, poolSize = 5, sqlKey = 'default',
+}: SQLBaseParams) {
   if (!(sqlKey in sqlObjects)) {
     sqlObjects[sqlKey] = new SQLBase({
       writeUrl,

@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  pgexplorer-postgres:
+    image: postgres:13
+    container_name: pgexplorer-postgres
+    environment:
+      - POSTGRES_DB=pgexplorer_test
+      - POSTGRES_USER=wombat
+      - POSTGRES_PASSWORD=1wombat2
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5434:5432
+    # uncomment to see all queries
+    # command: ["postgres", "-c", "log_statement=all"]

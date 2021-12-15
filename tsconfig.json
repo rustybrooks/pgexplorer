@@ -12,7 +12,7 @@
     "sourceMap": true
   },
   "include": [
-    "src", "bin"
+    "src", "bin", "tests"
   ],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

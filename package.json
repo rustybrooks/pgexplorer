@@ -11,7 +11,10 @@
   "scripts": {
     "build": "rm -rf lib && tsc -p .",
     "packlist": "npx npm-packlist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "repository": {
     "type": "git",
@@ -37,7 +40,10 @@
     "eslint-plugin-airbnb-base": "^0.0.1-security",
     "prettier": "^2.5.1",
     "ts-node": "latest",
-    "typescript": "latest"
+    "jest": "latest",
+    "ts-jest": "latest",
+    "@jest/types": "latest",
+    "@types/jest": "latest"
   },
   "dependencies": {
     "chalk": "4.1.2",
@@ -48,5 +54,15 @@
   },
   "bin": {
     "pgexplorer": "./lib/bin/index.js"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "transform": {
+      "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!variables/.*)"
+    ]
   }
 }
