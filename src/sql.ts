@@ -81,7 +81,7 @@ export class SQLBase {
     }
     const sample = Array.isArray(data) ? data[0] : data;
     const columns = Object.keys(sample).sort();
-    const values = columns.map((c, i) => `$${i}`);
+    const values = columns.map((c, i) => `$${i + 1}`);
 
     const query = `
         insert into ${tableName}(${columns.join(', ')})
@@ -90,9 +90,10 @@ export class SQLBase {
     `;
 
     const client = await this.pool.connect();
-    console.log('insert', query, data);
+    const bindvars = columns.map(c => data[c]);
+    console.log('insert', query, bindvars);
     try {
-      return (await client.query(query, data)).rows; // what to return?
+      return (await client.query(query, bindvars)).rows; // what to return?
     } finally {
       client.release();
     }
@@ -102,7 +103,7 @@ export class SQLBase {
     const bindvars = { ...data, ...whereData };
     const bindnames = Object.keys(bindvars);
     const bindMap = Object.fromEntries(bindnames.map((c, i) => [c, i]));
-    const setValues = Object.keys(data).map(c => `$c=$${bindMap[c]}`);
+    const setValues = Object.keys(data).map(c => `$c=$${bindMap[c] + 1}`);
     const query = `
         update ${tableName} set ${setValues.join(', ')}
         ${this.whereClause(where)}
@@ -139,7 +140,7 @@ export class SQLBase {
     const client = await this.pool.connect();
     try {
       return (await client.query(query, data || [])).rows;
-    } finnaly {
+    } finally {
       client.release();
     }
   }
