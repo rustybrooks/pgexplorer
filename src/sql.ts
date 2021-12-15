@@ -72,6 +72,7 @@ export class SQLBase {
   }
 
   async insert(tableName, data, batch_size = 200, on_duplicate = null, returning = false) {
+    console.log('insert start', tableName, data);
     if (Array.isArray(data)) {
       console.log('batch size not handled', batch_size);
     }
@@ -90,7 +91,11 @@ export class SQLBase {
 
     const client = await this.pool.connect();
     console.log('insert', query, data);
-    return (await client.query(query, data)).rows; // what to return?
+    try {
+      return (await client.query(query, data)).rows; // what to return?
+    } finally {
+      client.release();
+    }
   }
 
   async update(tableName, where, data = null, whereData = null) {
@@ -103,18 +108,26 @@ export class SQLBase {
         ${this.whereClause(where)}
     `;
     const client = await this.pool.connect();
-    return (
-      await client.query(
-        query,
-        bindnames.map(k => bindvars[k]),
-      )
-    ).rows;
+    try {
+      return (
+        await client.query(
+          query,
+          bindnames.map(k => bindvars[k]),
+        )
+      ).rows;
+    } finally {
+      client.release();
+    }
   }
 
   async delete(tableName, where, data = null) {
     const query = `delete from ${tableName} ${this.whereClause(where)}`;
     const client = await this.pool.connect();
-    return (await client.query(query, data || [])).rows;
+    try {
+      return (await client.query(query, data || [])).rows;
+    } finally {
+      client.release();
+    }
   }
 
   async execute(query, data: any[] = null, dryRun = false, log = false) {
@@ -124,7 +137,11 @@ export class SQLBase {
     if (dryRun) return null;
 
     const client = await this.pool.connect();
-    return (await client.query(query, data || [])).rows;
+    try {
+      return (await client.query(query, data || [])).rows;
+    } finnaly {
+      client.release();
+    }
   }
 
   async select(query, bindvars = []) {
