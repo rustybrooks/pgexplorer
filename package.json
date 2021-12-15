@@ -49,6 +49,7 @@
     "chalk": "4.1.2",
     "dotenv": "latest",
     "pg": "latest",
+    "pg-cursor": "latest",
     "sprintf-js": "latest",
     "yargs": "latest"
   },

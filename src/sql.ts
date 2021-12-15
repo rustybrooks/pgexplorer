@@ -1,5 +1,6 @@
 import * as pg from 'pg';
 import { URL } from 'url';
+import Cursor from 'pg-cursor';
 
 const sqlObjects = {};
 
@@ -154,13 +155,30 @@ export class SQLBase {
     }
   }
 
+  async* selectGenerator(query, bindvars = [], batchSize = 100) {
+    const client = await this.pool.connect();
+    try {
+      const cursor = await client.query(new Cursor(query, bindvars));
+      while (true) {
+        const rows = await cursor.read(batchSize);
+        console.log('rows', rows.length);
+        if (!rows.length) {
+          break;
+        }
+        for (const row of rows) {
+          yield row;
+        }
+      }
+    } finally {
+      client.release();
+    }
+  }
+
   async selectOne(query, bindvars = [], allowZero = false) {
     const client = await this.pool.connect();
     try {
       const res = await client.query(query, bindvars);
-      console.log('len', res.rows.length, allowZero);
       if (res.rows.length > 1 || (!allowZero && res.rows.length === 0)) {
-        console.log('throw');
         throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
       }
       return res.rows[0] || [];

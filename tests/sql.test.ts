@@ -37,6 +37,22 @@ describe('Test SQL Basic', () => {
     ]);
   });
 
+  it('test_selectGenerator', async () => {
+    await SQL.insert('foo', { bar: 1, baz: 'aaa' });
+    await SQL.insert('foo', { bar: 2, baz: 'bbb' });
+    const fe = await SQL.selectGenerator('select * from foo order by bar');
+    const feval = [];
+    while (true) {
+      const i = await fe.next();
+      if (i.done) break;
+      feval.push(i.value);
+    }
+    expect(feval).toStrictEqual([
+      { bar: 1, baz: 'aaa' },
+      { bar: 2, baz: 'bbb' },
+    ]);
+  });
+
   it('test_selectOne', async () => {
     await SQL.insert('foo', { bar: 1, baz: 'aaa' });
     await SQL.insert('foo', { bar: 2, baz: 'bbb' });
