@@ -168,7 +168,8 @@ export class SQLBase {
   }
 
   async selectZeroOrOne(query, bindvars = []) {
-    return this.selectOne(query, bindvars, true);
+    const res = await this.selectOne(query, bindvars, true);
+    res.length ? res : null;
   }
 }
 
