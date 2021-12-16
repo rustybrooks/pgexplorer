@@ -41,11 +41,11 @@ export const tableClassMap = {
 
 export const tableClassMapReversed = Object.fromEntries(Object.entries(tableClassMap).map(k => [k[1], k[0]]));
 
-export function envToDbUrl(envfile) {
+export function envToDbUrl(envfile, { database = null } : { database?: string } = {}) {
   const econfig = dotenv.parse(fs.readFileSync(envfile));
   const protocol = econfig.PGSSL === 'true' ? 'https' : 'http';
   return `${protocol}://${econfig.PGUSER.replace('@', '%40')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT || 5432}/${
-    econfig.PGDATABASE
+    database || econfig.PGDATABASE
   }`;
 }
 

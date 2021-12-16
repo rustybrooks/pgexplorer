@@ -1,6 +1,6 @@
 {
   "name": "@rustybrooks/pgexplorer",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Expore postgres stuff",
   "exports": {
     ".": "./lib/src/index.js",
@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/rustybrooks/pgexplorer#readme",
   "devDependencies": {
+    "@jest/types": "latest",
+    "@types/jest": "latest",
     "@types/node": "latest",
     "@types/sprintf-js": "latest",
     "@types/yargs": "latest",
@@ -38,21 +40,19 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-plugin-airbnb-base": "^0.0.1-security",
-    "prettier": "^2.5.1",
-    "ts-node": "latest",
     "jest": "latest",
+    "prettier": "^2.5.1",
     "ts-jest": "latest",
-    "@jest/types": "latest",
-    "@types/jest": "latest"
+    "ts-node": "latest"
   },
   "dependencies": {
     "chalk": "4.1.2",
+    "csv-writer": "latest",
     "dotenv": "latest",
     "pg": "latest",
     "pg-cursor": "latest",
     "sprintf-js": "latest",
-    "yargs": "latest",
-    "csv-writer": "latest"
+    "yargs": "latest"
   },
   "bin": {
     "pgexplorer": "./lib/bin/index.js"
