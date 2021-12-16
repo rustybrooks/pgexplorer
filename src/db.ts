@@ -41,15 +41,18 @@ export const tableClassMap = {
 
 export const tableClassMapReversed = Object.fromEntries(Object.entries(tableClassMap).map(k => [k[1], k[0]]));
 
-export function setupDb(envfile, sqlKey = 'default') {
+export function envToDbUrl(envfile) {
   const econfig = dotenv.parse(fs.readFileSync(envfile));
   const protocol = econfig.PGSSL === 'true' ? 'https' : 'http';
-  const writeUrl = `${protocol}://${econfig.PGUSER.replace('@', '%40')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT || 5432}/${
+  return `${protocol}://${econfig.PGUSER.replace('@', '%40')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT || 5432}/${
     econfig.PGDATABASE
   }`;
+}
+
+export function setupDb(envfile, sqlKey = 'default') {
   const config = {
     sqlKey,
-    writeUrl,
+    writeUrl: envToDbUrl(envfile),
   };
   SQL = sqlFactory(config);
   return SQL;
@@ -238,9 +241,11 @@ export async function dumpTable({
 export async function dumpQuery(
 {
   query,
+  bindvars = [],
   batchSize = 1000,
 }: {
   query: string;
+  bindvars?: string[];
   batchSize?: number;
 }) {
   return SQL.selectGenerator(query, [], batchSize);
