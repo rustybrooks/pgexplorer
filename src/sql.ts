@@ -57,17 +57,16 @@ export class SQLBase {
     return inList.map((el, i) => `$${offset + i + 1}`).join(',');
   }
 
-  orderBy(sortKey: string | string[]) {
-    if (!sortKey) {
-      return '';
-    }
-    const sortList = typeof sortKey === 'string' ? sortKey.split(',') : sortKey;
-    const orderbyList = sortList.map(k => {
+  orderBy(...sortKey) {
+    const sortList = (sortKey.length === 1 && typeof sortKey[0] === 'string') ? sortKey[0].split(',') : sortKey;
+
+    const orderbyList = sortList.filter(k => k).map(k => {
       if (k[0] === '-') {
         return `${k.slice(1)} desc`;
       }
-      return k;
+        return `${k} asc`;
     });
+    if (!orderbyList.length) { return ''; }
     return `${orderbyList ? 'order by ' : ''}${orderbyList.join(', ')}`;
   }
 

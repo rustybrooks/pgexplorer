@@ -119,31 +119,22 @@ describe('Test Helpers', () => {
     expect(SQL.whereClause(['a=b', 'b=c'], 'or')).toStrictEqual('where a=b or b=c');
   });
 
-  it('test_', async () => {
+  it('test_autoWhere', async () => {
     const [w, b] = SQL.autoWhere({ a: 1, b: 2, c: 3 });
     expect(w).toStrictEqual(['a=$1', 'b=$2', 'c=$3']);
     expect(b).toStrictEqual([1, 2, 3]);
   });
-  it('test_', async () => {});
+
+  it('test_orderBy', async () => {
+    expect(SQL.orderBy(null)).toBe('');
+    expect(SQL.orderBy(null, 'foo')).toBe('order by foo asc');
+    expect(SQL.orderBy(null, '-foo')).toBe('order by foo desc');
+    expect(SQL.orderBy('-bar', 'foo')).toBe('order by bar desc, foo asc');
+    expect(SQL.orderBy('-bar,foo')).toBe('order by bar desc, foo asc');
+  });
   it('test_', async () => {});
 
   /*
-    def test_orderby(self):
-        self.assertEquals("", SQL.orderby(None))
-        self.assertEquals("order by foo asc", SQL.orderby(None, "foo"))
-        self.assertEquals("order by foo desc", SQL.orderby(None, "-foo"))
-        self.assertEquals("order by bar asc", SQL.orderby("bar", "foo"))
-        self.assertEquals("order by bar desc", SQL.orderby("-bar", "foo"))
-
-        self.assertEquals("order by foo asc", SQL.orderby(None, ("foo", "asc")))
-        self.assertEquals("order by foo desc", SQL.orderby(None, ("foo", "desc")))
-        self.assertEquals("order by bar asc", SQL.orderby("bar", ("foo", "asc")))
-        self.assertEquals("order by bar desc", SQL.orderby("-bar", ("foo", "asc")))
-
-        self.assertEquals("order by bar asc", SQL.orderby(("bar", "asc"), None))
-        self.assertEquals("order by bar desc", SQL.orderby(("bar", "desc"), None))
-
-        self.assertEqual("", SQL.orderby(1))
 
     def test_limit(self):
         self.assertEquals("", SQL.limit(start=0, limit=0))
@@ -160,10 +151,10 @@ describe('Test Helpers', () => {
         )
 
     def test_process_date(self):
-        self.assertEqual(SQL.process_date(""), None)
-        self.assertEqual(SQL.process_date(None), None)
+        self.assertEqual(SQL.process_date(""), null)
+        self.assertEqual(SQL.process_date(null), null)
         self.assertEqual(
-            SQL.process_date(None, "1900-01-01"), datetime.datetime(1900, 1, 1)
+            SQL.process_date(null, "1900-01-01"), datetime.datetime(1900, 1, 1)
         )
         self.assertEqual(
             SQL.process_date("2020-01-01", strip_timezone=False),
@@ -209,7 +200,7 @@ class TestTransactions(unittest.TestCase):
         self.assertEqual(SQLW2.get_readonly(), False)
 
         SQLRO = SQLBase(
-            write_url=None,
+            write_url=null,
             read_urls=[
                 "mysql+pymysql://wombat:{password}@unit_test-mysql/{database}?charset=utf8mb4"
             ],
@@ -230,7 +221,7 @@ class TestTransactions(unittest.TestCase):
         )
 
     @SQL.is_transaction
-    def _myfn(self, data, data2=None, err=False, err2=False):
+    def _myfn(self, data, data2=null, err=False, err2=False):
         for el in data:
             SQL.insert("foo", {"bar": el})
 
@@ -409,105 +400,6 @@ class TestMigration(unittest.TestCase):
         logs = Migration.migrate(SQL, dry_run=False, initial=False, apply_versions=[2])
         self.assertTrue(SQL.table_exists("test1"))
         self.assertTrue(SQL.table_exists("test2"))
-
-class TestHelpers(unittest.TestCase):
-    def test_in_clause(self):
-        mylist = [1, 2, 3, 4, 5]
-        expected = "%s,%s,%s,%s,%s"
-        self.assertEquals(expected, SQL.in_clause(mylist))
-
-    def test_dict_in_clause(self):
-        bindvars = {}
-        mylist = [1, 2, 3, 4, 5]
-        self.assertEquals(
-            "%(x_0)s,%(x_1)s,%(x_2)s,%(x_3)s,%(x_4)s",
-            SQL.dict_in_clause(bindvars, mylist, "x"),
-        )
-
-        # this function has the side effect of adding entries to bindvars
-        self.assertEqual(bindvars, {"x_0": 1, "x_1": 2, "x_2": 3, "x_3": 4, "x_4": 5})
-
-    def test_construct_where(self):
-        b, w = SQL.construct_where({"a": 1, "b": 2})
-        self.assertEqual(w, "where (a=%s and b=%s)")
-        self.assertEqual(b, [1, 2])
-
-        b, w = SQL.construct_where([{"a": 1, "b": 2}, {"c": 3}])
-        self.assertEqual(w, "where (a=%s and b=%s) or (c=%s)")
-        self.assertEqual(b, [1, 2, 3])
-
-    def test_where_clause(self):
-        self.assertEquals("", SQL.where_clause([]))
-        self.assertEquals("where a=b", SQL.where_clause(["a=b"]))
-        self.assertEquals("where a=b", SQL.where_clause("a=b"))
-        self.assertEquals("and a=b", SQL.where_clause(["a=b"], prefix="and"))
-        self.assertEquals("a=b", SQL.where_clause(["a=b"], prefix=""))
-        self.assertEquals("where a=b and b=c", SQL.where_clause(["a=b", "b=c"]))
-        self.assertEquals(
-            "where a=b or b=c", SQL.where_clause(["a=b", "b=c"], join_with="or")
-        )
-
-    def test_orderby(self):
-        self.assertEquals("", SQL.orderby(None))
-        self.assertEquals("order by foo asc", SQL.orderby(None, "foo"))
-        self.assertEquals("order by foo desc", SQL.orderby(None, "-foo"))
-        self.assertEquals("order by bar asc", SQL.orderby("bar", "foo"))
-        self.assertEquals("order by bar desc", SQL.orderby("-bar", "foo"))
-
-        self.assertEquals("order by foo asc", SQL.orderby(None, ("foo", "asc")))
-        self.assertEquals("order by foo desc", SQL.orderby(None, ("foo", "desc")))
-        self.assertEquals("order by bar asc", SQL.orderby("bar", ("foo", "asc")))
-        self.assertEquals("order by bar desc", SQL.orderby("-bar", ("foo", "asc")))
-
-        self.assertEquals("order by bar asc", SQL.orderby(("bar", "asc"), None))
-        self.assertEquals("order by bar desc", SQL.orderby(("bar", "desc"), None))
-
-        self.assertEqual("", SQL.orderby(1))
-
-    def test_limit(self):
-        self.assertEquals("", SQL.limit(start=0, limit=0))
-        self.assertEquals("limit 10,1", SQL.limit(start=10, limit=0))
-        self.assertEquals("limit 10,10", SQL.limit(start=10, limit=10))
-        self.assertEquals("limit 10", SQL.limit(start=0, limit=10))
-        self.assertEquals("limit 10", SQL.limit(page=1, limit=10))
-        self.assertEquals("limit 10,10", SQL.limit(page=2, limit=10))
-
-    def test_chunked(self):
-        input = list(range(8))
-        self.assertEqual(
-            [list(x) for x in chunked(input, 3)], [[0, 1, 2], [3, 4, 5], [6, 7]]
-        )
-
-    def test_auto_where_mysql(self):
-        SQL.mysql = True
-        SQL.postgres = False
-
-        w, b = SQL.auto_where(a=1, b=2, c=3)
-        self.assertEqual(w, ["a=%s", "b=%s", "c=%s"])
-        self.assertEqual(b, [1, 2, 3])
-
-        w, b = SQL.auto_where(a=1, b=2, c=3, asdict=True)
-        self.assertEqual(w, ["a=%(a)s", "b=%(b)s", "c=%(c)s"])
-        self.assertEqual(b, {"a": 1, "b": 2, "c": 3})
-
-    def test_process_date(self):
-        self.assertEqual(SQL.process_date(""), None)
-        self.assertEqual(SQL.process_date(None), None)
-        self.assertEqual(
-            SQL.process_date(None, "1900-01-01"), datetime.datetime(1900, 1, 1)
-        )
-        self.assertEqual(
-            SQL.process_date("2020-01-01", strip_timezone=False),
-            datetime.datetime(2020, 1, 1, tzinfo=pytz.utc),
-        )
-        self.assertEqual(
-            SQL.process_date("2020-01-01", strip_timezone=True),
-            datetime.datetime(2020, 1, 1),
-        )
-        self.assertEqual(
-            SQL.process_date("2020-01-01T10:10:10", strip_timezone=True),
-            datetime.datetime(2020, 1, 1, 10, 10, 10),
-        )
 
 class TestStructures(unittest.TestCase):
     def test_dictobj(self):
