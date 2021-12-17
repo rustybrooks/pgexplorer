@@ -242,7 +242,7 @@ export async function dumpQuery(
   batchSize = 1000,
 }: {
   query: string;
-  bindvars: any[];
+  bindvars?: any[];
   batchSize?: number;
 }) {
   return SQL.selectGenerator(query, bindvars, batchSize);
