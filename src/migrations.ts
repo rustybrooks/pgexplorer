@@ -81,8 +81,8 @@ export class Migration {
     const res = await SQL.selectOne('select max(version_post) as version from migrations');
     const { version } = res;
     let todo = Object.keys(Migration.registry)
-      .filter(x => initial || x > version)
-      .map(x => parseInt(x, 10));
+      .map(x => parseInt(x, 10))
+      .filter(x => initial || x > version);
     todo.push(...(applyVersions || []));
     todo = todo.sort();
     this.log(logs, `Version = ${version}, todo = ${todo}, initial=${initial}`);
@@ -93,18 +93,13 @@ export class Migration {
     for (const v of todo) {
       Migration.log(logs, 'Running migration %d: %s', [v, Migration.registry[v].message]);
       for (const statement of Migration.registry[v].statements) {
-        console.log('before statement');
         await statement.execute(SQL, dryRun, logs);
-        console.log('after statement');
       }
-      console.log('migration done 1');
       if (v > versionPre) {
         versionPost = v;
       }
-      console.log('migration done 2');
     }
 
-    console.log('migration inserting');
     if (todo.length && !dryRun) {
       await SQL.insert('migrations', {
         migration_datetime: new Date(),
@@ -113,7 +108,6 @@ export class Migration {
       });
     }
 
-    console.log('migration returning');
     return logs;
   }
 

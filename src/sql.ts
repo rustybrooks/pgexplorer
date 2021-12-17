@@ -38,6 +38,11 @@ export class SQLBase {
     this.writeUrl = writeUrl;
   }
 
+  autoWhere(data, first = 0) {
+    const cols = Object.keys(data);
+    return [cols.map((k, i) => `${k}=${first + i + 1}`), cols.map(k => data[k])];
+  }
+
   whereClause(clauseList: string | string[], joinWith = 'and', prefix = 'where'): string {
     if (!clauseList.length) {
       return '';
@@ -155,7 +160,7 @@ export class SQLBase {
     }
   }
 
-  async* selectGenerator(query, bindvars = [], batchSize = 100) {
+  async *selectGenerator(query, bindvars = [], batchSize = 100) {
     const client = await this.pool.connect();
     try {
       const cursor = await client.query(new Cursor(query, bindvars));
@@ -180,7 +185,7 @@ export class SQLBase {
       if (res.rows.length > 1 || (!allowZero && res.rows.length === 0)) {
         throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
       }
-      return res.rows[0] || [];
+      return res.rows.length ? res.rows[0] : null;
     } finally {
       client.release();
     }
@@ -188,7 +193,7 @@ export class SQLBase {
 
   async selectZeroOrOne(query, bindvars = []) {
     const res = await this.selectOne(query, bindvars, true);
-    return res.length ? res : null;
+    return res;
   }
 
   async selectColumn(query, bindvars = []) {
