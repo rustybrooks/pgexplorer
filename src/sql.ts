@@ -180,7 +180,7 @@ export class SQLBase {
       if (res.rows.length > 1 || (!allowZero && res.rows.length === 0)) {
         throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
       }
-      return res.rows[0] || [];
+      return res.rows.length ? res.rows[0] : null;
     } finally {
       client.release();
     }
@@ -188,7 +188,7 @@ export class SQLBase {
 
   async selectZeroOrOne(query, bindvars = []) {
     const res = await this.selectOne(query, bindvars, true);
-    return res.length ? res : null;
+    return res;
   }
 
   async selectColumn(query, bindvars = []) {
