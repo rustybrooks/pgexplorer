@@ -119,7 +119,11 @@ describe('Test Helpers', () => {
     expect(SQL.whereClause(['a=b', 'b=c'], 'or')).toStrictEqual('where a=b or b=c');
   });
 
-  it('test_', async () => {});
+  it('test_', async () => {
+    const [w, b] = SQL.autoWhere({ a: 1, b: 2, c: 3 });
+    expect(w).toStrictEqual(['a=$1', 'b=$2', 'c=$3']);
+    expect(b).toStrictEqual([1, 2, 3]);
+  });
   it('test_', async () => {});
   it('test_', async () => {});
 
@@ -154,18 +158,6 @@ describe('Test Helpers', () => {
         self.assertEqual(
             [list(x) for x in chunked(input, 3)], [[0, 1, 2], [3, 4, 5], [6, 7]]
         )
-
-    def test_auto_where_mysql(self):
-        SQL.mysql = True
-        SQL.postgres = False
-
-        w, b = SQL.auto_where(a=1, b=2, c=3)
-        self.assertEqual(w, ["a=%s", "b=%s", "c=%s"])
-        self.assertEqual(b, [1, 2, 3])
-
-        w, b = SQL.auto_where(a=1, b=2, c=3, asdict=True)
-        self.assertEqual(w, ["a=%(a)s", "b=%(b)s", "c=%(c)s"])
-        self.assertEqual(b, {"a": 1, "b": 2, "c": 3})
 
     def test_process_date(self):
         self.assertEqual(SQL.process_date(""), None)

@@ -40,7 +40,7 @@ export class SQLBase {
 
   autoWhere(data, first = 0) {
     const cols = Object.keys(data);
-    return [cols.map((k, i) => `${k}=${first + i + 1}`), cols.map(k => data[k])];
+    return [cols.map((k, i) => `${k}=$${first + i + 1}`), cols.map(k => data[k])];
   }
 
   whereClause(clauseList: string | string[], joinWith = 'and', prefix = 'where'): string {
@@ -160,7 +160,7 @@ export class SQLBase {
     }
   }
 
-  async *selectGenerator(query, bindvars = [], batchSize = 100) {
+  async* selectGenerator(query, bindvars = [], batchSize = 100) {
     const client = await this.pool.connect();
     try {
       const cursor = await client.query(new Cursor(query, bindvars));
