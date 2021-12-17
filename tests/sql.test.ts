@@ -132,44 +132,19 @@ describe('Test Helpers', () => {
     expect(SQL.orderBy('-bar', 'foo')).toBe('order by bar desc, foo asc');
     expect(SQL.orderBy('-bar,foo')).toBe('order by bar desc, foo asc');
   });
+
+  it('test_limit', async () => {
+    expect(SQL.limit(0, 0)).toBe('');
+    expect(SQL.limit(null, 0)).toBe('');
+    expect(SQL.limit(null, 10)).toBe('');
+    expect(SQL.limit(1, 10)).toBe('limit 10');
+    expect(SQL.limit(2, 10)).toBe('offset 10 limit 10');
+  });
+
   it('test_', async () => {});
-
-  /*
-
-    def test_limit(self):
-        self.assertEquals("", SQL.limit(start=0, limit=0))
-        self.assertEquals("limit 10,1", SQL.limit(start=10, limit=0))
-        self.assertEquals("limit 10,10", SQL.limit(start=10, limit=10))
-        self.assertEquals("limit 10", SQL.limit(start=0, limit=10))
-        self.assertEquals("limit 10", SQL.limit(page=1, limit=10))
-        self.assertEquals("limit 10,10", SQL.limit(page=2, limit=10))
-
-    def test_chunked(self):
-        input = list(range(8))
-        self.assertEqual(
-            [list(x) for x in chunked(input, 3)], [[0, 1, 2], [3, 4, 5], [6, 7]]
-        )
-
-    def test_process_date(self):
-        self.assertEqual(SQL.process_date(""), null)
-        self.assertEqual(SQL.process_date(null), null)
-        self.assertEqual(
-            SQL.process_date(null, "1900-01-01"), datetime.datetime(1900, 1, 1)
-        )
-        self.assertEqual(
-            SQL.process_date("2020-01-01", strip_timezone=False),
-            datetime.datetime(2020, 1, 1, tzinfo=pytz.utc),
-        )
-        self.assertEqual(
-            SQL.process_date("2020-01-01", strip_timezone=True),
-            datetime.datetime(2020, 1, 1),
-        )
-        self.assertEqual(
-            SQL.process_date("2020-01-01T10:10:10", strip_timezone=True),
-            datetime.datetime(2020, 1, 1, 10, 10, 10),
-        )
-
- */
+  it('test_', async () => {});
+  it('test_', async () => {});
+  it('test_', async () => {});
 });
 
 /*
@@ -400,51 +375,4 @@ class TestMigration(unittest.TestCase):
         logs = Migration.migrate(SQL, dry_run=False, initial=False, apply_versions=[2])
         self.assertTrue(SQL.table_exists("test1"))
         self.assertTrue(SQL.table_exists("test2"))
-
-class TestStructures(unittest.TestCase):
-    def test_dictobj(self):
-        def _testit(d):
-            self.assertEqual(d.to_json(), {"x": 1, "y": 2})
-            self.assertEqual(d.asdict(), {"x": 1, "y": 2})
-            self.assertEqual(d.x, 1)
-            self.assertEqual(d.y, 2)
-            self.assertEqual(d["x"], 1)
-            self.assertEqual(d["y"], 2)
-
-            self.assertEqual(repr(d), repr({"x": 1, "y": 2}))
-            self.assertEqual(len(d), 2)
-            self.assertEqual("x" in d, True)
-            self.assertEqual("z" in d, False)
-
-            self.assertEqual(list(sorted(d.items())), [("x", 1), ("y", 2)])
-            self.assertEqual(list(sorted(d.keys())), ["x", "y"])
-            self.assertEqual(list(sorted(d.values())), [1, 2])
-
-        d1 = dictobj({"x": 1, "y": 2})
-        d2 = copy.deepcopy(d1)
-        d3 = dictobj(d1)
-        d4 = d1.copy()
-        _testit(d1)
-        _testit(d2)
-        _testit(d3)
-        _testit(d4)
-
-        d1.x = -1
-        self.assertEquals(d1.x, -1)
-        d1["x"] = -2
-        self.assertEquals(d1.x, -2)
-        d1.pop("x")
-        self.assertEqual(d1.to_json(), {"y": 2})
-
-        d1.update({"x": -2, "z": 5})
-        self.assertEqual(d1.to_json(), {"x": -2, "y": 2, "z": 5})
-
-        self.assertEqual(d1.setdefault("x", -3), -2)
-        self.assertEqual(d1.setdefault("a", -3), -3)
-
-        d1.popitem()  # should get rid of last item, 'a'
-        self.assertEqual(d1.to_json(), {"x": -2, "y": 2, "z": 5})
-
-        d1.clear()
-        self.assertEqual(d1.to_json(), {})
  */

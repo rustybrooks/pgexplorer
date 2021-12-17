@@ -71,11 +71,11 @@ export class SQLBase {
   }
 
   limit(page = null, limit = null) {
-    if (page === null || limit === null) {
+    if (!page || !limit) {
       return '';
     }
 
-    return `offset ${(page - 1) * limit} limit ${limit}`;
+    return `${page > 1 ? `offset ${(page - 1) * limit} ` : ''}limit ${limit}`;
   }
 
   async insert(tableName, data, batch_size = 200, on_duplicate = null, returning = false) {
