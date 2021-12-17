@@ -191,8 +191,7 @@ export class SQLBase {
   }
 
   async selectZeroOrOne(query, bindvars = []) {
-    const res = await this.selectOne(query, bindvars, true);
-    return res;
+    return this.selectOne(query, bindvars, true);
   }
 
   async selectColumn(query, bindvars = []) {
