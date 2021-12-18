@@ -33,7 +33,7 @@ export class MigrationStatement {
       this.log(logs, 'SQL Execute: %s', [this.statement]);
       await SQL.execute(this.statement, null, dryRun, false);
     } catch (e) {
-      this.log(logs, 'Error while running statment: %r', e);
+      this.log(logs, `Error while running statment: ${e}`, []);
       if (!this.ignoreError) {
         throw e;
       }
