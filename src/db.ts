@@ -41,7 +41,7 @@ export const tableClassMap = {
 
 export const tableClassMapReversed = Object.fromEntries(Object.entries(tableClassMap).map(k => [k[1], k[0]]));
 
-export function envToDbUrl(envfile, { database = null } : { database?: string } = {}) {
+export function envToDbUrl(envfile, { database = null }: { database?: string } = {}) {
   const econfig = dotenv.parse(fs.readFileSync(envfile));
   const protocol = econfig.PGSSL === 'true' ? 'https' : 'http';
   return `${protocol}://${econfig.PGUSER.replace('@', '%40')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT || 5432}/${
@@ -74,9 +74,17 @@ export async function lookupAttribute(tableId, attributeKey) {
 }
 
 export async function tables({
- schema = 'public', columns = null, sort = 'table_name', page = null, limit = null,
+  schema = 'public',
+  columns = null,
+  sort = 'table_name',
+  page = null,
+  limit = null,
 }: {
- schema?: string, columns?: string[], sort?: string | string[], page?: number, limit?: number
+  schema?: string;
+  columns?: string[];
+  sort?: string | string[];
+  page?: number;
+  limit?: number;
 } = {}) {
   const where = ['n.nspname = $1', `c.relkind='${tableClassMap[TableClass.table]}'`];
   const bindvars = [schema];
@@ -87,7 +95,7 @@ export async function tables({
   }
 
   const query = `
-    select relname as table_name, nspname as schema_name
+    select relname as table_name, nspname as schema_name, pg_relation_size('"' || relname || '"')::real as table_size
     from pg_catalog.pg_namespace n
     join pg_catalog.pg_class c on (n.oid=c.relnamespace)
     ${SQL.whereClause(where)}
@@ -165,13 +173,13 @@ export async function tableConstraints({
 
 export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema?: string }) {
   const tbls = (await tables({ schema })).map(t => t.table_name);
-  let constraints : any = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
+  let constraints: any = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
 
   const out = [];
   while (constraints.length) {
-    const ourconstraintMap = Object.fromEntries(constraints.map((c : any) => [c.constraint_foreign_table, c.constraint_table]));
+    const ourconstraintMap = Object.fromEntries(constraints.map((c: any) => [c.constraint_foreign_table, c.constraint_table]));
     out.push(...tbls.filter(t => !out.includes(t) && !(t in ourconstraintMap)));
-    constraints = constraints.filter((c : any) => !out.includes(c.constraint_table));
+    constraints = constraints.filter((c: any) => !out.includes(c.constraint_table));
   }
 
   out.push(...tbls.filter(t => !out.includes(t)));
@@ -238,16 +246,7 @@ export async function dumpTable({
   return SQL.selectGenerator(query, [], batchSize);
 }
 
-export async function dumpQuery(
-{
-  query,
-  bindvars = [],
-  batchSize = 1000,
-}: {
-  query: string;
-  bindvars?: any[];
-  batchSize?: number;
-}) {
+export async function dumpQuery({ query, bindvars = [], batchSize = 1000 }: { query: string; bindvars?: any[]; batchSize?: number }) {
   return SQL.selectGenerator(query, bindvars, batchSize);
 }
 
@@ -328,7 +327,7 @@ export async function structure() {
 
   const constraints = await tableConstraints({ sort: ['constraint_table', 'constraint_name'] });
   out.constraint = await Promise.all(
-    constraints.map(async (row : any) => ({
+    constraints.map(async (row: any) => ({
       constraint_table: row.constraint_table,
       constraint_name: row.constraint_name,
       constraint_type: row.constraint_type,
