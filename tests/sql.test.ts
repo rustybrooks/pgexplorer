@@ -120,9 +120,24 @@ describe('Test Helpers', () => {
   });
 
   it('test_autoWhere', async () => {
-    const [w, b] = SQL.autoWhere({ a: 1, b: 2, c: 3 });
+    let [w, b] = SQL.autoWhere({ a: 1, b: 2, c: 3 }, true);
     expect(w).toStrictEqual(['a=$1', 'b=$2', 'c=$3']);
     expect(b).toStrictEqual([1, 2, 3]);
+
+    [w, b] = SQL.autoWhere({ a: 1, b: 2, c: 3 });
+    expect(w).toStrictEqual(['a=$(a)', 'b=$(b)', 'c=$(c)']);
+    expect(b).toStrictEqual([1, 2, 3]);
+
+    [w, b] = SQL.autoWhere({
+      a: 1,
+      b: 2,
+      c: 3,
+      d: null,
+      e: undefined,
+      f: false,
+    });
+    expect(w).toStrictEqual(['a=$(a)', 'b=$(b)', 'c=$(c)', 'f=$(f)']);
+    expect(b).toStrictEqual([1, 2, 3, false]);
   });
 
   it('test_orderBy', async () => {

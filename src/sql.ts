@@ -49,9 +49,13 @@ export class SQLBase {
     this.writeUrl = writeUrl;
   }
 
-  autoWhere(data, first = 0) {
-    const cols = Object.keys(data);
-    return [cols.map((k, i) => `${k}=$${first + i + 1}`), cols.map(k => data[k])];
+  autoWhere(data, asList = false, first = 0) {
+    const cols = Object.keys(data).filter(v => data[v] !== null && data[v] !== undefined);
+    const bindvars = cols.map(k => data[k]);
+    if (asList) {
+      return [cols.map((k, i) => `${k}=$${first + i + 1}`), bindvars];
+    }
+    return [cols.map(k => `${k}=$(${k})`), bindvars];
   }
 
   whereClause(clauseList: string | string[], joinWith = 'and', prefix = 'where'): string {
