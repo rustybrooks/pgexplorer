@@ -11,7 +11,7 @@ describe('Test SQL Basic', () => {
   });
 
   afterAll(async () => {
-    SQL.pool.end();
+    await SQL.db.$pool.end();
   });
 
   it('test_select_column', async () => {

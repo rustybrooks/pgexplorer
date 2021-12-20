@@ -243,11 +243,11 @@ export async function dumpTable({
       ${SQL.orderBy(sort)}
       ${SQL.limit(page, limit)}
   `;
-  return SQL.selectGenerator(query, [], batchSize);
+  return SQL.select(query, [], batchSize);
 }
 
 export async function dumpQuery({ query, bindvars = [], batchSize = 1000 }: { query: string; bindvars?: any[]; batchSize?: number }) {
-  return SQL.selectGenerator(query, bindvars, batchSize);
+  return SQL.select(query, bindvars, batchSize);
 }
 
 export async function classColumns({

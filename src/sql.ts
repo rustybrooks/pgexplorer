@@ -1,6 +1,17 @@
-import * as pg from 'pg';
+// import * as pg from 'pg';
+import pgPromise from 'pg-promise';
+import { IMain } from 'pg-promise';
 import { URL } from 'url';
 import Cursor from 'pg-cursor';
+
+const pgp: IMain = pgPromise({
+  // query(e: any) {
+  //   console.log('QUERY RESULT:', e.query);
+  // },
+  // receive(data: any, result: any, e: any) {
+  //   console.log(`DATA FROM QUERY ${e.query} WAS RECEIVED.`);
+  // },
+});
 
 const sqlObjects = {};
 
@@ -15,7 +26,7 @@ interface SQLBaseParams {
 }
 
 export class SQLBase {
-  pool = null;
+  db = null;
 
   writeUrl = null;
 
@@ -26,7 +37,7 @@ export class SQLBase {
       user: params.username.replace('%40', '@'),
       password: params.password,
       host: params.hostname,
-      port: params.port,
+      port: parseInt(params.port, 10),
       database: params.pathname.split('/')[1],
       ssl: params.protocol === 'https:',
       max: poolSize || 5,
@@ -34,7 +45,7 @@ export class SQLBase {
       // connectionTimeoutMillis: 1000, // return an error after 1 second if connection could not be established
       maxUses: 1000, // close (and replace) a connection after it has been used 7500 times (see below for discussion)
     };
-    this.pool = new pg.Pool(config);
+    this.db = pgp(config);
     this.writeUrl = writeUrl;
   }
 
@@ -58,15 +69,19 @@ export class SQLBase {
   }
 
   orderBy(...sortKey) {
-    const sortList = (sortKey.length === 1 && typeof sortKey[0] === 'string') ? sortKey[0].split(',') : sortKey;
+    const sortList = sortKey.length === 1 && typeof sortKey[0] === 'string' ? sortKey[0].split(',') : sortKey;
 
-    const orderbyList = sortList.filter(k => k).map(k => {
-      if (k[0] === '-') {
-        return `${k.slice(1)} desc`;
-      }
+    const orderbyList = sortList
+      .filter(k => k)
+      .map(k => {
+        if (k[0] === '-') {
+          return `${k.slice(1)} desc`;
+        }
         return `${k} asc`;
-    });
-    if (!orderbyList.length) { return ''; }
+      });
+    if (!orderbyList.length) {
+      return '';
+    }
     return `${orderbyList ? 'order by ' : ''}${orderbyList.join(', ')}`;
   }
 
@@ -95,13 +110,8 @@ export class SQLBase {
         ${on_duplicate || ''} ${returning ? 'returning *' : ''}
     `;
 
-    const client = await this.pool.connect();
     const bindvars = columns.map(c => data[c]);
-    try {
-      return (await client.query(query, bindvars)).rows; // what to return?
-    } finally {
-      client.release();
-    }
+    return this.db.query(query, bindvars);
   }
 
   async update(tableName, where, whereData = null, data = null) {
@@ -113,27 +123,15 @@ export class SQLBase {
         update ${tableName} set ${setValues.join(', ')}
         ${this.whereClause(where)}
     `;
-    const client = await this.pool.connect();
-    try {
-      return (
-        await client.query(
-          query,
-          bindnames.map(k => bindvars[k]),
-        )
-      ).rows;
-    } finally {
-      client.release();
-    }
+    return this.db.query(
+      query,
+      bindnames.map(k => bindvars[k]),
+    );
   }
 
   async delete(tableName, where, data = null) {
     const query = `delete from ${tableName} ${this.whereClause(where)}`;
-    const client = await this.pool.connect();
-    try {
-      return (await client.query(query, data || [])).rows;
-    } finally {
-      client.release();
-    }
+    return this.db.query(query, data || []);
   }
 
   async execute(query, data: any[] = null, dryRun = false, log = false) {
@@ -142,25 +140,15 @@ export class SQLBase {
     }
     if (dryRun) return null;
 
-    const client = await this.pool.connect();
-    try {
-      return (await client.query(query, data || [])).rows;
-    } finally {
-      client.release();
-    }
+    return this.db.query(query, data || []);
   }
 
   async select(query, bindvars = []) {
-    const client = await this.pool.connect();
-    try {
-      return (await client.query(query, bindvars)).rows;
-    } finally {
-      client.release();
-    }
+    return this.db.query(query, bindvars);
   }
 
-  async* selectGenerator(query, bindvars = [], batchSize = 100) {
-    const client = await this.pool.connect();
+  async *selectGenerator(query, bindvars = [], batchSize = 100) {
+    const client = await this.db.$pool.connect();
     try {
       const cursor = await client.query(new Cursor(query, bindvars));
       while (true) {
@@ -178,16 +166,11 @@ export class SQLBase {
   }
 
   async selectOne(query, bindvars = [], allowZero = false) {
-    const client = await this.pool.connect();
-    try {
-      const res = await client.query(query, bindvars);
-      if (res.rows.length > 1 || (!allowZero && res.rows.length === 0)) {
-        throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
-      }
-      return res.rows.length ? res.rows[0] : null;
-    } finally {
-      client.release();
+    const res = await this.db.query(query, bindvars);
+    if (res.length > 1 || (!allowZero && res.length === 0)) {
+      throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
     }
+    return res.length ? res[0] : null;
   }
 
   async selectZeroOrOne(query, bindvars = []) {
@@ -204,18 +187,13 @@ export class SQLBase {
   }
 
   async selectColumns(query, bindvars = []) {
-    const client = await this.pool.connect();
-    try {
-      const res = await client.query(query, bindvars);
-      const cols = res.fields.map(x => x.name);
-      const out = Object.fromEntries(cols.map(c => [c, []]));
-      res.rows.forEach(row => {
-        cols.forEach(c => out[c].push(row[c]));
-      });
-      return out;
-    } finally {
-      client.release();
-    }
+    const res = await this.db.query(query, bindvars);
+    const cols = res.length ? Object.keys(res[0]) : [];
+    const out = Object.fromEntries(cols.map(c => [c, []]));
+    res.forEach(row => {
+      cols.forEach(c => out[c].push(row[c]));
+    });
+    return out;
   }
 }
 

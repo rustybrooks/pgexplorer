@@ -49,11 +49,10 @@
     "chalk": "4.1.2",
     "csv-writer": "latest",
     "dotenv": "latest",
-    "pg": "latest",
     "pg-cursor": "latest",
+    "pg-promise": "latest",
     "sprintf-js": "latest",
-    "yargs": "latest",
-    "csv-writer": "latest"
+    "yargs": "latest"
   },
   "bin": {
     "pgexplorer": "./lib/bin/index.js"
