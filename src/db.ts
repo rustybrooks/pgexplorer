@@ -171,7 +171,7 @@ export async function tableConstraints({
   );
 }
 
-export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema?: string }) {
+export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema?: string } = {}) {
   const tbls = (await tables({ schema })).map(t => t.table_name);
   let constraints: any = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
 

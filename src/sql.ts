@@ -137,6 +137,10 @@ export class SQLBase {
     );
   }
 
+  async truncate(tableName) {
+    return this.db.query(`truncate table ${tableName}`);
+  }
+
   async delete(tableName, where, data = null) {
     const query = `delete from ${tableName} ${this.whereClause(where)}`;
     return this.db.query(query, data || []);
