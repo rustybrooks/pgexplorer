@@ -126,7 +126,7 @@ describe('Test Helpers', () => {
 
     [w, b] = SQL.autoWhere({ a: 1, b: 2, c: 3 });
     expect(w).toStrictEqual(['a=$(a)', 'b=$(b)', 'c=$(c)']);
-    expect(b).toStrictEqual([1, 2, 3]);
+    expect(b).toStrictEqual({ a: 1, b: 2, c: 3 });
 
     [w, b] = SQL.autoWhere({
       a: 1,
@@ -137,7 +137,12 @@ describe('Test Helpers', () => {
       f: false,
     });
     expect(w).toStrictEqual(['a=$(a)', 'b=$(b)', 'c=$(c)', 'f=$(f)']);
-    expect(b).toStrictEqual([1, 2, 3, false]);
+    expect(b).toStrictEqual({
+      a: 1,
+      b: 2,
+      c: 3,
+      f: false,
+    });
   });
 
   it('test_orderBy', async () => {

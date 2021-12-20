@@ -51,11 +51,11 @@ export class SQLBase {
 
   autoWhere(data, asList = false, first = 0) {
     const cols = Object.keys(data).filter(v => data[v] !== null && data[v] !== undefined);
-    const bindvars = cols.map(k => data[k]);
     if (asList) {
+      const bindvars = cols.map(k => data[k]);
       return [cols.map((k, i) => `${k}=$${first + i + 1}`), bindvars];
     }
-    return [cols.map(k => `${k}=$(${k})`), bindvars];
+    return [cols.map(k => `${k}=$(${k})`), Object.fromEntries(cols.map(c => [c, data[c]]))];
   }
 
   whereClause(clauseList: string | string[], joinWith = 'and', prefix = 'where'): string {
