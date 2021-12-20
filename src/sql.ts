@@ -49,6 +49,10 @@ export class SQLBase {
     this.writeUrl = writeUrl;
   }
 
+  shutdown() {
+    this.db.$pool.end();
+  }
+
   autoWhere(data, asList = false, first = 0) {
     const cols = Object.keys(data).filter(v => data[v] !== null && data[v] !== undefined);
     if (asList) {

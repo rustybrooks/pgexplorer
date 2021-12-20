@@ -11,7 +11,7 @@ describe('Test SQL Basic', () => {
   });
 
   afterAll(async () => {
-    await SQL.db.$pool.end();
+    await SQL.shutdown();
   });
 
   it('test_select_column', async () => {
@@ -28,9 +28,12 @@ describe('Test SQL Basic', () => {
   });
 
   it('test_select', async () => {
+    let fe = await SQL.select('select * from foo order by bar');
+    expect(fe).toStrictEqual([]);
+
     await SQL.insert('foo', { bar: 1, baz: 'aaa' });
     await SQL.insert('foo', { bar: 2, baz: 'bbb' });
-    const fe = await SQL.select('select * from foo order by bar');
+    fe = await SQL.select('select * from foo order by bar');
     expect(fe).toStrictEqual([
       { bar: 1, baz: 'aaa' },
       { bar: 2, baz: 'bbb' },
