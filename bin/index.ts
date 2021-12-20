@@ -10,7 +10,7 @@ import * as diff from '../src/diff';
 
 const setupDbMiddleware = argv => {
   // eslint-disable-next-line @typescript-eslint/dot-notation
-  db.setupDb(argv['env'], argv['env']);
+  db.setupDb(argv['env'], null, argv['env']);
 };
 
 async function cmdList(options) {
@@ -32,7 +32,7 @@ async function cmdList(options) {
 async function cmdDump(options) {
   let fh = null;
 
-  const dumpRows = (rows) => {
+  const dumpRows = rows => {
     if (!rows.length) return;
     if (options.output) {
       if (fh === null) {
@@ -48,9 +48,7 @@ async function cmdDump(options) {
     }
   };
 
-  const gen = options.table.split(' ') === 1 ?
-    await db.dumpTable({ table: options.table }) :
-    await db.dumpQuery({ query: options.table });
+  const gen = options.table.split(' ') === 1 ? await db.dumpTable({ table: options.table }) : await db.dumpQuery({ query: options.table });
 
   let these = [];
   while (true) {
@@ -76,7 +74,7 @@ async function cmdCompare(options) {
   let db2;
 
   if (options.env2) {
-    db.setupDb(options.env2, options.env2);
+    db.setupDb(options.env2, null, options.env2);
     db2 = await db.structure();
   } else if (options.structure) {
     db2 = JSON.parse(fs.readFileSync(options.structure, 'utf8'));
@@ -98,7 +96,12 @@ async function cmdCheckConstraints(options) {
     tableMap[key] = [];
     for (const col of tableRefs[key]) {
       const tables = await db.tables({ columns: [col], sort: ['table_name'] });
-      tableMap[key].push(...tables.map(row => row.table_name).filter(t => !ignoreTables.includes(t)).map(t => [t, col]));
+      tableMap[key].push(
+        ...tables
+          .map(row => row.table_name)
+          .filter(t => !ignoreTables.includes(t))
+          .map(t => [t, col]),
+      );
     }
   }
 
@@ -125,11 +128,11 @@ async function cmdCheckConstraints(options) {
       } else {
         let countStr = `${count.count} / ${countAll.count} = ${countPct.toFixed(2)}%`;
         if (countPct < 0.0001) {
-            countStr = chalk.green(countStr);
+          countStr = chalk.green(countStr);
         } else if (countPct >= 10) {
-            countStr = chalk.red(countStr);
+          countStr = chalk.red(countStr);
         } else if (countPct >= 1) {
-            countStr = chalk.yellow(countStr);
+          countStr = chalk.yellow(countStr);
         }
         console.log(chalk.magenta(parentTable), '<-', chalk.cyan(`${childTable[0]}(${childTable[1]})`), ': ', countStr);
       }

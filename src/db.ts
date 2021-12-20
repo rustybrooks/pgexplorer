@@ -49,10 +49,10 @@ export function envToDbUrl(envfile, { database = null }: { database?: string } =
   }`;
 }
 
-export function setupDb(envfile, sqlKey = 'default') {
+export function setupDb(envfile = null, writeUrl = null, sqlKey = 'default') {
   const config = {
     sqlKey,
-    writeUrl: envToDbUrl(envfile),
+    writeUrl: writeUrl || envToDbUrl(envfile),
   };
   SQL = sqlFactory(config);
   return SQL;
