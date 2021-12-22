@@ -1,6 +1,6 @@
 {
   "name": "@rustybrooks/pgexplorer",
-  "version": "1.0.29",
+  "version": "1.0.30",
   "description": "Expore postgres stuff",
   "exports": {
     ".": "./lib/src/index.js",
