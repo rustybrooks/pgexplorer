@@ -4,7 +4,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import * as fs from 'fs';
 import * as csv from 'csv-writer';
-
+import * as path from 'path';
 import * as db from '../src/db';
 import * as diff from '../src/diff';
 
@@ -140,6 +140,56 @@ async function cmdCheckConstraints(options) {
   }
 }
 
+export interface UniqueIndexType {
+  table: string;
+  columns: string[];
+  reference_column: string | null;
+}
+
+export class SqlHandler {
+  dirname!: string;
+
+  file: any;
+
+  constructor(dirname: string) {
+    this.dirname = dirname;
+    if (fs.existsSync(this.dirname)) {
+      throw Error(`directory ${this.dirname} already exists, will not continue`);
+    }
+    fs.mkdirSync(this.dirname);
+  }
+
+  add(idx: UniqueIndexType, sqlData: string) {
+    const fname = `${path.join(this.dirname, idx.table)}.sql`;
+    if (!fs.existsSync(fname)) {
+      fs.writeFileSync(fname, `-- begin dump ${idx.table}(${idx.columns.join(',')})\n\n`);
+    }
+
+    fs.appendFileSync(fname, sqlData);
+  }
+}
+
+async function cmdCheckUnique(options: any) {
+  const uniqueIndices = JSON.parse(fs.readFileSync(options.config, 'utf8'));
+
+  const sql = new SqlHandler(options.outdir);
+
+  for (const idx of uniqueIndices) {
+    const relatedTableRows = idx.reference_column ? await db.tables({ columns: [idx.reference_column] }) : [];
+    const relatedTables = relatedTableRows.map(x => x.table_name);
+
+    const duplicateRows = await db.findDuplicateRows(idx);
+
+    console.log(
+      chalk.green('-----------------------------------', idx.table, idx.columns, `related=${relatedTables}`, duplicateRows.length),
+    );
+
+    for (const row of duplicateRows) {
+      sql.add(idx, await db.findRowsByKeys(row, idx.table, idx.columns, idx.reference_column, relatedTables));
+    }
+  }
+}
+
 // ************************************
 
 const yarg = yargs(hideBin(process.argv));
@@ -196,6 +246,16 @@ yarg.command({
     return y;
   },
   handler: options => cmdCheckConstraints(options).then(() => process.exit()),
+});
+
+yarg.command({
+  command: 'check-unique',
+  builder: y => {
+    y.option('config', { describe: 'config file describing new indexes', default: 'indexes.json' });
+    y.option('outdir', { describe: 'directory to output SQL to (must not exist already)' });
+    return y;
+  },
+  handler: options => cmdCheckUnique(options).then(() => process.exit()),
 });
 
 // Add normalizeCredentials to yargs

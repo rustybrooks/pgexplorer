@@ -314,7 +314,6 @@ export async function indexes({
 
 export async function structure() {
   const out: { [id: string]: any } = {};
-  // const tables = await tables();
   const tblColumns = await classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
   tblColumns.forEach(row => {
     const outKey: string = TableClass[tableClassMapReversed[row.class_type]];
@@ -344,4 +343,107 @@ export async function structure() {
 
   out.index = await indexes({ sort: ['index_name'] });
   return out;
+}
+
+export async function findDuplicateRows({ table, columns }: { table: string; columns: string[] }) {
+  const indexColumns = columns.map(c => `"${c}"`).join(',');
+
+  const query = `
+      select ${indexColumns}, count(*)
+      from ${table}
+      group by ${indexColumns}
+      having count(*) > 1
+      order by ${indexColumns}
+    `;
+  return SQL.select(query);
+}
+
+export async function findRelatedRows(
+  table: string,
+  columns: string[],
+  referenceColumn: string,
+  relatedTable: string,
+  tableId: any,
+  keepId: any,
+): Promise<string> {
+  let sqlData = '';
+
+  const query = `
+    select count(*)
+    from ${relatedTable}
+    where ${referenceColumn} = '${tableId}'
+  `;
+  const res = await SQL.select(query);
+
+  if (res[0].count === '0') return '';
+
+  console.log(`parent_id=${tableId} ref_table=${relatedTable} count=${res[0].count}`);
+  if (keepId === tableId) {
+    return sqlData;
+  }
+
+  sqlData += `delete from ${relatedTable} where ${referenceColumn} = '${tableId}';\n`;
+  return sqlData;
+}
+
+export async function findRelatedRowsMany(
+  table: string,
+  columns: string[],
+  referenceColumn: string,
+  relatedTables: string[],
+  tableId: any,
+  keepId: any,
+): Promise<string> {
+  let sqlData = '';
+
+  for (const t of relatedTables) {
+    sqlData += await findRelatedRows(table, columns, referenceColumn, t, tableId, keepId);
+  }
+
+  return sqlData;
+}
+
+export async function findRowsByKeys(
+  values: any,
+  table: string,
+  columns: string[],
+  referenceColumn: string,
+  relatedTables: string[],
+): Promise<string> {
+  let sqlData = '';
+  console.log(columns.map(c => `${c}=${values[c]}`, `(count=${values.count})`));
+  const clause = columns.map(c => {
+    if (values[c] === null) {
+      return `"${c}" is null`;
+    }
+    return `"${c}"='${values[c]}'`;
+  });
+  const query = `
+    select *
+    from ${table}
+    where ${clause.join(' and ')}
+    order by id
+  `;
+  const res = await SQL.select(query);
+  if (!res.length) return '';
+
+  const keepId = res.at(-1).id;
+
+  if (referenceColumn) {
+    sqlData += `-- update ${res.length - 1} ids to ${referenceColumn}=${keepId} (keys=${columns.map(c => `${c}=${values[c]}`)})\n`;
+  }
+  for (const row of res) {
+    if (referenceColumn) {
+      sqlData += await findRelatedRowsMany(table, columns, referenceColumn, relatedTables, row.id, keepId);
+    }
+    if (row.id !== keepId) {
+      sqlData += `delete from ${table} where id = '${row.id}';\n`;
+    }
+  }
+
+  if (sqlData) {
+    sqlData = `\n\nbegin transaction;\n${sqlData}commit;\n`;
+  }
+
+  return sqlData;
 }
