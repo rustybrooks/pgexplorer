@@ -1,7 +1,7 @@
 import * as sql from '../src/sql';
 
 const SQL = sql.sqlFactory({
-  writeUrl: 'http://wombat:1wombat2@localhost:5434/pgexplorer_test',
+  writeUrl: 'http://wombat:1wombat2@localhost:5555/pgexplorer_test',
 });
 
 describe('Test SQL Basic', () => {
@@ -12,6 +12,28 @@ describe('Test SQL Basic', () => {
 
   afterAll(async () => {
     await SQL.shutdown();
+  });
+
+  it('test_insertMany', async () => {
+    const res = await SQL.insert('foo', { bar: 1, baz: 'aaa' }, '*');
+    expect(res).toStrictEqual({ bar: 1, baz: 'aaa' });
+  });
+
+  it('test_insertMany', async () => {
+    const res = await SQL.insert(
+      'foo',
+      [
+        { bar: 1, baz: 'aaa' },
+        { bar: 2, baz: 'bbb' },
+        { bar: 3, baz: 'ccc' },
+      ],
+      '*',
+    );
+    expect(res).toStrictEqual([
+      { bar: 1, baz: 'aaa' },
+      { bar: 2, baz: 'bbb' },
+      { bar: 3, baz: 'ccc' },
+    ]);
   });
 
   it('test_select_column', async () => {
@@ -163,11 +185,6 @@ describe('Test Helpers', () => {
     expect(SQL.limit(1, 10)).toBe('limit 10');
     expect(SQL.limit(2, 10)).toBe('offset 10 limit 10');
   });
-
-  it('test_', async () => {});
-  it('test_', async () => {});
-  it('test_', async () => {});
-  it('test_', async () => {});
 });
 
 /*

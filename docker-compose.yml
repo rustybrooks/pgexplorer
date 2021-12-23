@@ -10,6 +10,6 @@ services:
       - POSTGRES_PASSWORD=1wombat2
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
-      - 5434:5432
+      - 5555:5432
     # uncomment to see all queries
     # command: ["postgres", "-c", "log_statement=all"]

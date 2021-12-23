@@ -1,6 +1,4 @@
-// import * as pg from 'pg';
-import pgPromise from 'pg-promise';
-import { IMain } from 'pg-promise';
+import pgPromise, { IMain } from 'pg-promise';
 import { URL } from 'url';
 import Cursor from 'pg-cursor';
 
@@ -101,25 +99,29 @@ export class SQLBase {
     return `${page > 1 ? `offset ${(page - 1) * limit} ` : ''}limit ${limit}`;
   }
 
-  async insert(tableName, data, batch_size = 200, on_duplicate = null, returning = false) {
+  // FIXME refactor this to be more efficient later
+  // add chunking and maybe use bind vars only?
+  async insertMany(tableName, data, returning = null, onDuplicate = null, batchSize = 200) {
+    const columns = Object.keys(data[0]).sort();
+    const cs = new pgp.helpers.ColumnSet(columns, { table: tableName });
+    const query = `${pgp.helpers.insert(data, cs)} ${onDuplicate || ''} ${returning ? `returning ${returning}` : ''}`;
+    return this.db.many(query);
+  }
+
+  async insert(tableName, data, returning = null, onDuplicate = null, batchSize = 200) {
     if (Array.isArray(data)) {
-      console.log('batch size not handled', batch_size);
+      return this.insertMany(tableName, data, returning, onDuplicate, batchSize);
     }
-    if (!data) {
-      return 0;
-    }
-    const sample = Array.isArray(data) ? data[0] : data;
-    const columns = Object.keys(sample).sort();
-    const values = columns.map((c, i) => `$${i + 1}`);
+    const columns = Object.keys(data).sort();
+    const values = columns.map((c, i) => `$(${c})`);
 
     const query = `
         insert into ${tableName}(${columns.join(', ')})
         values (${values.join(', ')}) 
-        ${on_duplicate || ''} ${returning ? 'returning *' : ''}
+        ${onDuplicate || ''} ${returning ? `returning ${returning}` : ''}
     `;
 
-    const bindvars = columns.map(c => data[c]);
-    return this.db.query(query, bindvars);
+    return (returning ? this.db.one : this.db.query)(query, data);
   }
 
   async update(tableName, where, whereData = null, data = null) {
