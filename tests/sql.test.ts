@@ -28,6 +28,8 @@ describe('Test SQL Basic', () => {
         { bar: 3, baz: 'ccc' },
       ],
       '*',
+      null,
+      2,
     );
     expect(res).toStrictEqual([
       { bar: 1, baz: 'aaa' },

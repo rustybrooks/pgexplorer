@@ -13,6 +13,16 @@ const pgp: IMain = pgPromise({
 
 const sqlObjects = {};
 
+function* chunked(it, chunkSize) {
+  let temporary;
+  let i;
+  let j;
+  for (i = 0, j = it.length; i < j; i += chunkSize) {
+    temporary = it.slice(i, i + chunkSize);
+    yield temporary;
+  }
+}
+
 interface SQLBaseParams {
   writeUrl: string;
   readUrls?: string[];
@@ -104,8 +114,13 @@ export class SQLBase {
   async insertMany(tableName, data, returning = null, onDuplicate = null, batchSize = 200) {
     const columns = Object.keys(data[0]).sort();
     const cs = new pgp.helpers.ColumnSet(columns, { table: tableName });
-    const query = `${pgp.helpers.insert(data, cs)} ${onDuplicate || ''} ${returning ? `returning ${returning}` : ''}`;
-    return this.db.many(query);
+    let query;
+    const out = [];
+    for (const chunk of chunked(data, batchSize)) {
+      query = `${pgp.helpers.insert(chunk, cs)} ${onDuplicate || ''} ${returning ? `returning ${returning}` : ''}`;
+      out.push(...(await this.db.many(query)));
+    }
+    return out;
   }
 
   async insert(tableName, data, returning = null, onDuplicate = null, batchSize = 200) {
