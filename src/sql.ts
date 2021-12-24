@@ -141,17 +141,12 @@ export class SQLBase {
 
   async update(tableName, where, whereData = null, data = null) {
     const bindvars = { ...data, ...whereData };
-    const bindnames = Object.keys(bindvars);
-    const bindMap = Object.fromEntries(bindnames.map((c, i) => [c, i]));
-    const setValues = Object.keys(data).map(c => `${c}=$${bindMap[c] + 1}`);
+    const setValues = Object.keys(data).map(c => `${c}=$(${c})`);
     const query = `
         update ${tableName} set ${setValues.join(', ')}
         ${this.whereClause(where)}
     `;
-    return this.db.query(
-      query,
-      bindnames.map(k => bindvars[k]),
-    );
+    return this.db.query(query, bindvars);
   }
 
   async truncate(tableName) {
