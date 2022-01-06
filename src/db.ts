@@ -296,7 +296,7 @@ export async function indexes({
       select
           ct.relname as table_name,
           c.relname as index_name,
-          array_agg(a.attname order by attname) as column_names,
+          array_agg(a.attname order by attnum) as column_names,
           indisunique as is_unique, 
           indisprimary as is_primary
       from pg_catalog.pg_namespace n
