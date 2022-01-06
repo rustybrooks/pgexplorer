@@ -32,7 +32,7 @@ async function cmdList(options) {
 async function cmdDump(options) {
   let fh = null;
 
-  const dumpRows = rows => {
+  const dumpRows = async (rows) => {
     if (!rows.length) return;
     if (options.output) {
       if (fh === null) {
@@ -41,14 +41,14 @@ async function cmdDump(options) {
           header: Object.keys(rows[0]).map(k => ({ id: k, title: k })),
         });
       }
-      fh.writeRecords(rows);
+      await fh.writeRecords(rows);
       console.log(`wrote ${rows.length}`);
     } else {
       console.table(rows);
     }
   };
 
-  const gen = options.table.split(' ') === 1 ? await db.dumpTable({ table: options.table }) : await db.dumpQuery({ query: options.table });
+  const gen = options.table.split(' ').length === 1 ? await db.dumpTable({ table: options.table }) : await db.dumpQuery({ query: options.table });
 
   let these = [];
   while (true) {
@@ -57,11 +57,12 @@ async function cmdDump(options) {
 
     these.push(i.value);
     if (these.length === 1000) {
-      dumpRows(these);
+      await dumpRows(these);
       these = [];
     }
   }
-  dumpRows(these);
+  await dumpRows(these);
+
 }
 
 async function cmdStructure(options) {
@@ -185,7 +186,7 @@ async function cmdCheckUnique(options: any) {
     );
 
     for (const row of duplicateRows) {
-      sql.add(idx, await db.findRowsByKeys(row, idx.table, idx.columns, idx.reference_column, relatedTables));
+      sql.add(idx, await db.findRowsByKeys(row, idx.table, idx.primary_key, idx.columns, idx.reference_column, relatedTables));
     }
   }
 }
@@ -211,7 +212,7 @@ yarg.command({
 yarg.command({
   command: 'dump <table>',
   builder: y => {
-    y.option('output', { describe: 'output file name', default: 'dump.csv' });
+    y.option('output', { describe: 'output file name', default: null });
     return y;
   },
   handler: options => cmdDump(options).then(() => process.exit()),
