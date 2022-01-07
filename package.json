@@ -33,17 +33,11 @@
     "@types/node": "latest",
     "@types/sprintf-js": "latest",
     "@types/yargs": "latest",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
-    "eslint": "^8.4.1",
-    "eslint-config-airbnb": "^19.0.2",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^16.1.0",
-    "eslint-plugin-airbnb-base": "^0.0.1-security",
     "jest": "latest",
     "prettier": "^2.5.1",
     "ts-jest": "latest",
-    "ts-node": "latest"
+    "ts-node": "latest",
+    "@rustybrooks/eslint-prettier-config": "latest"
   },
   "dependencies": {
     "chalk": "4.1.2",

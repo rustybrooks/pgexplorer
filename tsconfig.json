@@ -1,15 +1,8 @@
 {
-  "compilerOptions": {
+    "extends": "@rustybrooks/eslint-prettier-config",
+    "compilerOptions": {
     "incremental": true,            /* Enable incremental compilation */
-    "target": "es2017",             /* Specify ECMAScript target version: */
-    "module": "commonjs",             /* 'none', 'commonjs', 'amd', 'system', etc */
-    "moduleResolution": "node",
-    "declaration": true,            /* Concatenate & emit output to single file.*/
     "outDir": "lib",                /* Redirect output to the directory. */
-    "esModuleInterop": true,        /* Enables intero between CommonJS and ES */
-    "skipLibCheck": true,           /* Skip type checking of declaration files. */
-    "forceConsistentCasingInFileNames": true, /* Disallow inconsistently */
-    "sourceMap": true
   },
   "include": [
     "src", "bin", "tests"
