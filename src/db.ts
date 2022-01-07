@@ -243,11 +243,11 @@ export async function dumpTable({
       ${SQL.orderBy(sort)}
       ${SQL.limit(page, limit)}
   `;
-  return SQL.select(query, [], batchSize);
+  return SQL.selectGenerator(query, [], batchSize);
 }
 
 export async function dumpQuery({ query, bindvars = [], batchSize = 1000 }: { query: string; bindvars?: any[]; batchSize?: number }) {
-  return SQL.select(query, bindvars, batchSize);
+  return SQL.selectGenerator(query, bindvars, batchSize);
 }
 
 export async function classColumns({
@@ -296,7 +296,7 @@ export async function indexes({
       select
           ct.relname as table_name,
           c.relname as index_name,
-          array_agg(a.attname) as column_names,
+          array_agg(a.attname order by attnum) as column_names,
           indisunique as is_unique, 
           indisprimary as is_primary
       from pg_catalog.pg_namespace n
@@ -406,6 +406,7 @@ export async function findRelatedRowsMany(
 export async function findRowsByKeys(
   values: any,
   table: string,
+  primaryKey: string,
   columns: string[],
   referenceColumn: string,
   relatedTables: string[],
@@ -422,22 +423,22 @@ export async function findRowsByKeys(
     select *
     from ${table}
     where ${clause.join(' and ')}
-    order by id
+    order by ${primaryKey}
   `;
   const res = await SQL.select(query);
   if (!res.length) return '';
 
-  const keepId = res.at(-1).id;
+  const keepId = res.at(-1)[primaryKey];
 
   if (referenceColumn) {
     sqlData += `-- update ${res.length - 1} ids to ${referenceColumn}=${keepId} (keys=${columns.map(c => `${c}=${values[c]}`)})\n`;
   }
   for (const row of res) {
     if (referenceColumn) {
-      sqlData += await findRelatedRowsMany(table, columns, referenceColumn, relatedTables, row.id, keepId);
+      sqlData += await findRelatedRowsMany(table, columns, referenceColumn, relatedTables, row[primaryKey], keepId);
     }
-    if (row.id !== keepId) {
-      sqlData += `delete from ${table} where id = '${row.id}';\n`;
+    if (row[primaryKey] !== keepId) {
+      sqlData += `delete from ${table} where ${primaryKey} = '${row[primaryKey]}';\n`;
     }
   }
 
