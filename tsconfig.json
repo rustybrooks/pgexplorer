@@ -1,6 +1,6 @@
 {
-    "extends": "@rustybrooks/eslint-prettier-config",
-    "compilerOptions": {
+  "extends": "@rustybrooks/eslint-prettier-config",
+  "compilerOptions": {
     "incremental": true,            /* Enable incremental compilation */
     "outDir": "lib",                /* Redirect output to the directory. */
   },
