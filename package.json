@@ -37,7 +37,7 @@
     "prettier": "^2.5.1",
     "ts-jest": "latest",
     "ts-node": "latest",
-    "@rustybrooks/eslint-prettier-config": "latest"
+    "@rustybrooks/eslint-config-prettier": "latest"
   },
   "dependencies": {
     "chalk": "4.1.2",
