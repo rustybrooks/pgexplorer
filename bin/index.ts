@@ -5,15 +5,48 @@ import { hideBin } from 'yargs/helpers';
 import * as fs from 'fs';
 import * as csv from 'csv-writer';
 import * as path from 'path';
+import { CsvWriter } from 'csv-writer/src/lib/csv-writer';
+import { ObjectMap } from 'csv-writer/src/lib/lang/object';
 import * as db from '../src/db';
 import * as diff from '../src/diff';
 
-const setupDbMiddleware = argv => {
-  // eslint-disable-next-line @typescript-eslint/dot-notation
-  db.setupDb(argv['env'], null, argv['env']);
+interface OverallArgs {
+  env: string;
+}
+
+type ListArgs = {
+  type: string;
+} & OverallArgs;
+
+type DumpArgs = {
+  table: string;
+  output: string;
+} & OverallArgs;
+
+type StructureArgs = {
+  output: string;
+} & OverallArgs;
+
+type CompareArgs = {
+  env2: string;
+  structure: string;
+} & OverallArgs;
+
+type CheckConstraintsArgs = {
+  config: string;
+  table: string;
+} & OverallArgs;
+
+type CheckUniqueArgs = {
+  config: string;
+  outdir: string;
+} & OverallArgs;
+
+const setupDbMiddleware = (argv: yargs.ArgumentsCamelCase<OverallArgs>) => {
+  db.setupDb(argv.env, null, argv.env);
 };
 
-async function cmdList(options) {
+async function cmdList(options: yargs.ArgumentsCamelCase<ListArgs>) {
   if (['tables', 'table'].includes(options.type)) {
     const tables = await db.tables();
     console.table(tables);
@@ -21,7 +54,7 @@ async function cmdList(options) {
     const indexes = await db.indexes();
     console.table(indexes);
   } else if (['constraints', 'constraint'].includes(options.type)) {
-    const constraints = (await db.tableConstraints({ sort: ['constraint_table', 'constraint_name'] })).map(row => {
+    const constraints = (await db.tableConstraints({ sort: ['constraint_table', 'constraint_name'] })).map((row: any) => {
       const cols = ['constraint_table', 'constraint_name', 'constraint_type', 'constraint_attribute_columns'];
       return Object.fromEntries(cols.map(c => [c, row[c]]));
     });
@@ -29,10 +62,10 @@ async function cmdList(options) {
   }
 }
 
-async function cmdDump(options) {
-  let fh = null;
+async function cmdDump(options: yargs.ArgumentsCamelCase<DumpArgs>) {
+  let fh: CsvWriter<ObjectMap<any>> = null;
 
-  const dumpRows = async (rows) => {
+  const dumpRows = async (rows: any[]) => {
     if (!rows.length) return;
     if (options.output) {
       if (fh === null) {
@@ -48,7 +81,8 @@ async function cmdDump(options) {
     }
   };
 
-  const gen = options.table.split(' ').length === 1 ? await db.dumpTable({ table: options.table }) : await db.dumpQuery({ query: options.table });
+  const gen =
+    options.table.split(' ').length === 1 ? await db.dumpTable({ table: options.table }) : await db.dumpQuery({ query: options.table });
 
   let these = [];
   while (true) {
@@ -62,15 +96,14 @@ async function cmdDump(options) {
     }
   }
   await dumpRows(these);
-
 }
 
-async function cmdStructure(options) {
+async function cmdStructure(options: any) {
   const out = await db.structure();
   fs.writeFileSync(options.output, JSON.stringify(out, null, 2));
 }
 
-async function cmdCompare(options) {
+async function cmdCompare(options: any) {
   const db1 = await db.structure();
   let db2;
 
@@ -88,20 +121,20 @@ async function cmdCompare(options) {
   i2.forEach(i => console.log('+', chalk.green(i)));
 }
 
-async function cmdCheckConstraints(options) {
+async function cmdCheckConstraints(options: any) {
   const config = JSON.parse(fs.readFileSync(options.config, 'utf8'));
   const { tableRefs, ignoreTables } = config;
 
-  const tableMap = {};
+  const tableMap: { [id: string]: [string, string][] } = {};
   for (const key of Object.keys(tableRefs)) {
     tableMap[key] = [];
     for (const col of tableRefs[key]) {
       const tables = await db.tables({ columns: [col], sort: ['table_name'] });
       tableMap[key].push(
         ...tables
-          .map(row => row.table_name)
-          .filter(t => !ignoreTables.includes(t))
-          .map(t => [t, col]),
+          .map((row: any) => row.table_name)
+          .filter((t: string) => !ignoreTables.includes(t))
+          .map((t: string) => [t, col]),
       );
     }
   }
@@ -177,7 +210,7 @@ async function cmdCheckUnique(options: any) {
 
   for (const idx of uniqueIndices) {
     const relatedTableRows = idx.reference_column ? await db.tables({ columns: [idx.reference_column] }) : [];
-    const relatedTables = relatedTableRows.map(x => x.table_name);
+    const relatedTables = relatedTableRows.map((x: any) => x.table_name);
 
     const duplicateRows = await db.findDuplicateRows(idx);
 
@@ -206,7 +239,7 @@ yarg.option('env', {
 
 yarg.command({
   command: 'list <type>',
-  handler: options => cmdList(options).then(() => process.exit()),
+  handler: options => cmdList(options as yargs.ArgumentsCamelCase<ListArgs>).then(() => process.exit()),
 });
 
 yarg.command({
@@ -215,7 +248,7 @@ yarg.command({
     y.option('output', { describe: 'output file name', default: null });
     return y;
   },
-  handler: options => cmdDump(options).then(() => process.exit()),
+  handler: options => cmdDump(options as yargs.ArgumentsCamelCase<DumpArgs>).then(() => process.exit()),
 });
 
 yarg.command({
@@ -224,7 +257,7 @@ yarg.command({
     y.option('output', { describe: 'output file name', default: 'structure.json' });
     return y;
   },
-  handler: options => cmdStructure(options).then(() => process.exit()),
+  handler: options => cmdStructure(options as yargs.ArgumentsCamelCase<StructureArgs>).then(() => process.exit()),
 });
 
 yarg.command({
@@ -234,7 +267,7 @@ yarg.command({
     y.option('structure', { describe: 'output file from previous structure run', default: 'structure.json' });
     return y;
   },
-  handler: options => cmdCompare(options).then(() => process.exit()),
+  handler: options => cmdCompare(options as yargs.ArgumentsCamelCase<CompareArgs>).then(() => process.exit()),
 });
 
 yarg.command({
@@ -246,7 +279,7 @@ yarg.command({
     y.default('table', false);
     return y;
   },
-  handler: options => cmdCheckConstraints(options).then(() => process.exit()),
+  handler: options => cmdCheckConstraints(options as yargs.ArgumentsCamelCase<CheckConstraintsArgs>).then(() => process.exit()),
 });
 
 yarg.command({
@@ -256,7 +289,7 @@ yarg.command({
     y.option('outdir', { describe: 'directory to output SQL to (must not exist already)' });
     return y;
   },
-  handler: options => cmdCheckUnique(options).then(() => process.exit()),
+  handler: options => cmdCheckUnique(options as yargs.ArgumentsCamelCase<CheckUniqueArgs>).then(() => process.exit()),
 });
 
 // Add normalizeCredentials to yargs

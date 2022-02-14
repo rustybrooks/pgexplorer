@@ -113,15 +113,14 @@ describe('Test SQL Basic', () => {
       { bar: 2, baz: 'bbb' },
       { bar: 2, baz: 'ccc' },
     ]);
-
-    await SQL.update('foo', 'bar=$1', [2], { baz: 'xxx' });
+    await SQL.update('foo', 'bar=$(a)', { a: 2 }, { baz: 'xxx' });
     expect(await SQL.select('select * from foo order by bar')).toStrictEqual([
       { bar: 1, baz: 'aaa' },
       { bar: 2, baz: 'xxx' },
       { bar: 2, baz: 'xxx' },
     ]);
 
-    await SQL.delete('foo', 'bar=$1', [1]);
+    await SQL.delete('foo', 'bar=$(a)', { a: 1 });
     expect(await SQL.select('select * from foo order by bar')).toStrictEqual([
       { bar: 2, baz: 'xxx' },
       { bar: 2, baz: 'xxx' },

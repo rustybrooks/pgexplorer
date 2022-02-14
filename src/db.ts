@@ -2,7 +2,8 @@ import dotenv from 'dotenv';
 import * as fs from 'fs';
 import { sqlFactory } from './sql';
 
-export let SQL = null;
+// eslint-disable-next-line import/no-mutable-exports
+export let SQL: any = null;
 
 export enum TableConstraint {
   'all',
@@ -22,13 +23,14 @@ export enum TableClass {
   'foreignTable',
 }
 
-export const constraintMap = {
+export const constraintMap: { [key in TableConstraint]: string } = {
+  [TableConstraint.all]: 'a',
   [TableConstraint.foreign]: 'f',
   [TableConstraint.check]: 'c',
   [TableConstraint.unique]: 'u',
 };
 
-export const tableClassMap = {
+export const tableClassMap: { [key in TableClass]: string } = {
   [TableClass.table]: 'r',
   [TableClass.index]: 'i',
   [TableClass.sequence]: 'S',
@@ -39,9 +41,9 @@ export const tableClassMap = {
   [TableClass.foreignTable]: 'f',
 };
 
-export const tableClassMapReversed = Object.fromEntries(Object.entries(tableClassMap).map(k => [k[1], k[0]]));
+export const tableClassMapReversed: { [key: string]: string } = Object.fromEntries(Object.entries(tableClassMap).map(k => [k[1], k[0]]));
 
-export function envToDbUrl(envfile, { database = null }: { database?: string } = {}) {
+export function envToDbUrl(envfile: string, { database = null }: { database?: string } = {}) {
   const econfig = dotenv.parse(fs.readFileSync(envfile));
   const protocol = econfig.PGSSL === 'true' ? 'https' : 'http';
   return `${protocol}://${econfig.PGUSER.replace('@', '%40')}:${econfig.PGPASSWORD}@${econfig.PGHOST}:${econfig.PGPORT || 5432}/${
@@ -49,7 +51,7 @@ export function envToDbUrl(envfile, { database = null }: { database?: string } =
   }`;
 }
 
-export function setupDb(envfile = null, writeUrl = null, sqlKey = 'default') {
+export function setupDb(envfile: string = null, writeUrl: string = null, sqlKey = 'default') {
   const config = {
     sqlKey,
     writeUrl: writeUrl || envToDbUrl(envfile),
@@ -58,8 +60,8 @@ export function setupDb(envfile = null, writeUrl = null, sqlKey = 'default') {
   return SQL;
 }
 
-const attributeMap = {};
-export async function lookupAttribute(tableId, attributeKey) {
+const attributeMap: { [id: string]: any } = {};
+export async function lookupAttribute(tableId: number, attributeKey: string) {
   const attrKey = `${tableId}:${attributeKey}`;
   if (!(attrKey in attributeMap)) {
     const query = `
@@ -148,10 +150,10 @@ export async function tableConstraints({
   const constraints = await SQL.select(query, bindvars);
 
   return Promise.all(
-    constraints.map(async row => {
+    constraints.map(async (row: any) => {
       const trow = { ...row };
       trow.constraint_attribute_columns = await Promise.all(
-        row.constraint_attribute_keys.map(async a => {
+        row.constraint_attribute_keys.map(async (a: any) => {
           const r = await lookupAttribute(row.constraint_table_id, a);
           return r.attname;
         }),
@@ -159,7 +161,7 @@ export async function tableConstraints({
 
       if (row.constraint_foreign_table_attribute_keys) {
         trow.constraint_foreign_table_attribute_columns = await Promise.all(
-          row.constraint_foreign_table_attribute_keys.map(async a => {
+          row.constraint_foreign_table_attribute_keys.map(async (a: string) => {
             const r = await lookupAttribute(row.constraint_foreign_table_id, a);
             return r.attname;
           }),
@@ -172,17 +174,17 @@ export async function tableConstraints({
 }
 
 export async function tableConstraintDeleteOrder({ schema = 'public' }: { schema?: string } = {}) {
-  const tbls = (await tables({ schema })).map(t => t.table_name);
+  const tbls = (await tables({ schema })).map((t: any) => t.table_name);
   let constraints: any = await tableConstraints({ schema, constraintTypes: TableConstraint.foreign });
 
-  const out = [];
+  const out: string[] = [];
   while (constraints.length) {
     const ourconstraintMap = Object.fromEntries(constraints.map((c: any) => [c.constraint_foreign_table, c.constraint_table]));
-    out.push(...tbls.filter(t => !out.includes(t) && !(t in ourconstraintMap)));
+    out.push(...tbls.filter((t: string) => !out.includes(t) && !(t in ourconstraintMap)));
     constraints = constraints.filter((c: any) => !out.includes(c.constraint_table));
   }
 
-  out.push(...tbls.filter(t => !out.includes(t)));
+  out.push(...tbls.filter((t: string) => !out.includes(t)));
   return out;
 }
 
@@ -315,8 +317,8 @@ export async function indexes({
 export async function structure() {
   const out: { [id: string]: any } = {};
   const tblColumns = await classColumns({ sort: ['class_type', 'class_name', 'attnum'] });
-  tblColumns.forEach(row => {
-    const outKey: string = TableClass[tableClassMapReversed[row.class_type]];
+  tblColumns.forEach((row: any) => {
+    const outKey: string = TableClass[tableClassMapReversed[row.class_type] as unknown as TableClass];
     // const outKey = row.class_type;
     if (!(outKey in out)) {
       out[outKey] = [];
@@ -331,11 +333,11 @@ export async function structure() {
       constraint_name: row.constraint_name,
       constraint_type: row.constraint_type,
       constraint_attribute_columns: await Promise.all(
-        row.constraint_attribute_keys.map(async a => (await lookupAttribute(row.constraint_table_id, a)).attname),
+        row.constraint_attribute_keys.map(async (a: string) => (await lookupAttribute(row.constraint_table_id, a)).attname),
       ),
       constraint_foreign_table_attribute_columns: await Promise.all(
         (row.constraint_foreign_table_attribute_keys || []).map(
-          async a => (await lookupAttribute(row.constraint_foreign_table_id, a)).attname,
+          async (a: string) => (await lookupAttribute(row.constraint_foreign_table_id, a)).attname,
         ),
       ),
     })),

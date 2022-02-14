@@ -1,5 +1,6 @@
 import pgPromise, { IMain } from 'pg-promise';
 import { URL } from 'url';
+// @ts-ignore
 import Cursor from 'pg-cursor';
 
 const pgp: IMain = pgPromise({
@@ -11,9 +12,9 @@ const pgp: IMain = pgPromise({
   // },
 });
 
-const sqlObjects = {};
+const sqlObjects: { [id: string]: any } = {};
 
-function* chunked(it, chunkSize) {
+function* chunked<X>(it: X[], chunkSize: number) {
   let temporary;
   let i;
   let j;
@@ -34,9 +35,9 @@ interface SQLBaseParams {
 }
 
 export class SQLBase {
-  db = null;
+  db: any = null;
 
-  writeUrl = null;
+  writeUrl: string = null;
 
   constructor({ writeUrl, poolSize = 5 }: SQLBaseParams) {
     const params = new URL(writeUrl);
@@ -61,7 +62,7 @@ export class SQLBase {
     this.db.$pool.end();
   }
 
-  autoWhere(data, asList = false, first = 0) {
+  autoWhere(data: { [id: string]: any }, asList = false, first = 0) {
     const cols = Object.keys(data).filter(v => data[v] !== null && data[v] !== undefined);
     if (asList) {
       const bindvars = cols.map(k => data[k]);
@@ -84,9 +85,8 @@ export class SQLBase {
     return inList.map((el, i) => `$${offset + i + 1}`).join(',');
   }
 
-  orderBy(...sortKey) {
+  orderBy(...sortKey: string[]) {
     const sortList = sortKey.length === 1 && typeof sortKey[0] === 'string' ? sortKey[0].split(',') : sortKey;
-
     const orderbyList = sortList
       .filter(k => k)
       .map(k => {
@@ -101,7 +101,7 @@ export class SQLBase {
     return `${orderbyList ? 'order by ' : ''}${orderbyList.join(', ')}`;
   }
 
-  limit(page = null, limit = null) {
+  limit(page: number = null, limit: number = null) {
     if (!page || !limit) {
       return '';
     }
@@ -111,7 +111,7 @@ export class SQLBase {
 
   // FIXME refactor this to be more efficient later
   // add chunking and maybe use bind vars only?
-  async insertMany(tableName, data, returning = null, onDuplicate = null, batchSize = 200) {
+  async insertMany(tableName: string, data: any, returning: any = null, onDuplicate: string = null, batchSize = 200) {
     const columns = Object.keys(data[0]).sort();
     const cs = new pgp.helpers.ColumnSet(columns, { table: tableName });
     let query;
@@ -123,7 +123,7 @@ export class SQLBase {
     return out;
   }
 
-  async insert(tableName, data, returning = null, onDuplicate = null, batchSize = 200) {
+  async insert(tableName: string, data: any, returning: any = null, onDuplicate: string = null, batchSize = 200) {
     if (Array.isArray(data)) {
       return this.insertMany(tableName, data, returning, onDuplicate, batchSize);
     }
@@ -139,7 +139,7 @@ export class SQLBase {
     return (returning ? this.db.one : this.db.query)(query, data);
   }
 
-  async update(tableName, where, whereData = null, data = null) {
+  async update(tableName: string, where: string | string[], whereData: { [id: string]: any } = null, data: { [id: string]: any } = null) {
     const bindvars = { ...data, ...whereData };
     const setValues = Object.keys(data).map(c => `${c}=$(${c})`);
     const query = `
@@ -149,16 +149,16 @@ export class SQLBase {
     return this.db.query(query, bindvars);
   }
 
-  async truncate(tableName) {
+  async truncate(tableName: string) {
     return this.db.query(`truncate table ${tableName}`);
   }
 
-  async delete(tableName, where, data = null) {
+  async delete(tableName: string, where: string | string[], data: { [id: string]: any } = null) {
     const query = `delete from ${tableName} ${this.whereClause(where)}`;
     return this.db.query(query, data || []);
   }
 
-  async execute(query, data: any[] = null, dryRun = false, log = false) {
+  async execute(query: string, data: any[] = null, dryRun = false, log = false) {
     if (dryRun || log) {
       console.log(`SQL Run: ${query}`);
     }
@@ -167,11 +167,11 @@ export class SQLBase {
     return this.db.query(query, data || []);
   }
 
-  async select(query, bindvars = []) {
+  async select(query: string, bindvars: { [id: string]: any } | any[]) {
     return this.db.query(query, bindvars);
   }
 
-  async *selectGenerator(query, bindvars = [], batchSize = 100) {
+  async *selectGenerator(query: string, bindvars: { [id: string]: any } | any[] = [], batchSize = 100) {
     const client = await this.db.$pool.connect();
     try {
       const cursor = await client.query(new Cursor(query, bindvars));
@@ -189,7 +189,7 @@ export class SQLBase {
     }
   }
 
-  async selectOne(query, bindvars = [], allowZero = false) {
+  async selectOne(query: string, bindvars: { [id: string]: any } | any[] = [], allowZero = false) {
     const res = await this.db.query(query, bindvars);
     if (res.length > 1 || (!allowZero && res.length === 0)) {
       throw new Error(`Expected ${allowZero ? 'zero or one rows' : 'exactly one row'}, got ${res.rows.length}`);
@@ -197,24 +197,24 @@ export class SQLBase {
     return res.length ? res[0] : null;
   }
 
-  async selectZeroOrOne(query, bindvars = []) {
+  async selectZeroOrOne(query: string, bindvars: { [id: string]: any } | any[] = []) {
     return this.selectOne(query, bindvars, true);
   }
 
-  async selectColumn(query, bindvars = []) {
+  async selectColumn(query: string, bindvars: { [id: string]: any } | any[] = []) {
     const rows = await this.select(query, bindvars);
     if (!rows.length) {
       return [];
     }
     const col = Object.keys(rows[0])[0];
-    return rows.map(row => row[col]);
+    return rows.map((row: any) => row[col]);
   }
 
-  async selectColumns(query, bindvars = []) {
+  async selectColumns(query: string, bindvars: { [id: string]: any } | any[] = []) {
     const res = await this.db.query(query, bindvars);
     const cols = res.length ? Object.keys(res[0]) : [];
     const out = Object.fromEntries(cols.map(c => [c, []]));
-    res.forEach(row => {
+    res.forEach((row: any) => {
       cols.forEach(c => out[c].push(row[c]));
     });
     return out;
